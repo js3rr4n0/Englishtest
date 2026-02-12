@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Notch 3 - Complete Test (108 Questions)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            padding: 20px; 
+            line-height: 1.6; 
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+            padding: 40px; 
+            margin-bottom: 40px; 
+        }
+        h1 { 
+            text-align: center; 
+            color: #667eea; 
+            margin-bottom: 10px; 
+            font-size: 2.5em; 
+        }
+        .subtitle { 
+            text-align: center; 
+            color: #666; 
+            margin-bottom: 30px; 
+            font-size: 1.1em; 
+        }
+        .instructions { 
+            background: #f0f4ff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 30px; 
+            border-left: 5px solid #667eea; 
+        }
+        .progress-bar {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .progress-text {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .unit-scores {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .unit-score-badge {
+            background: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .unit-score-badge.completed {
+            background: #28a745;
+            color: white;
+        }
+        .unit-section { 
+            background: #fafafa; 
+            padding: 25px; 
+            margin-bottom: 30px; 
+            border-radius: 10px; 
+            border: 2px solid #e0e0e0; 
+        }
+        .unit-section.graded { 
+            border: 2px solid #667eea; 
+            background: #f8f9ff;
+        }
+        .unit-title { 
+            color: #764ba2; 
+            margin-bottom: 20px; 
+            font-size: 1.8em; 
+            border-bottom: 3px solid #667eea; 
+            padding-bottom: 10px; 
+        }
+        .question { 
+            background: white; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+        }
+        .question.correct { 
+            background: #d4edda; 
+            border: 2px solid #28a745; 
+        }
+        .question.incorrect { 
+            background: #f8d7da; 
+            border: 2px solid #dc3545; 
+        }
+        .question-number { 
+            font-weight: bold; 
+            color: #667eea; 
+            margin-bottom: 10px; 
+            font-size: 1.1em; 
+        }
+        .question-text { 
+            margin-bottom: 15px; 
+            font-size: 1.05em; 
+            color: #333; 
+        }
+        .options { 
+            margin-left: 20px; 
+        }
+        .option { 
+            margin: 10px 0; 
+            display: flex; 
+            align-items: center; 
+            padding: 8px; 
+            border-radius: 5px; 
+        }
+        .option.selected-correct { 
+            background: #d4edda; 
+            font-weight: bold; 
+        }
+        .option.selected-incorrect { 
+            background: #f8d7da; 
+            font-weight: bold; 
+        }
+        .option.show-correct { 
+            background: #d4edda; 
+            font-weight: bold; 
+        }
+        .option input[type="radio"] { 
+            margin-right: 10px; 
+            cursor: pointer; 
+            width: 18px; 
+            height: 18px; 
+        }
+        .option input[type="radio"]:disabled { 
+            cursor: not-allowed; 
+        }
+        .option label { 
+            cursor: pointer; 
+            font-size: 1em; 
+            flex: 1; 
+        }
+        .explanation { 
+            margin-top: 15px; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-size: 0.95em; 
+            display: none; 
+        }
+        .explanation.correct { 
+            background: #d4edda; 
+            border-left: 4px solid #28a745; 
+            color: #155724; 
+            display: block; 
+        }
+        .explanation.incorrect { 
+            background: #f8d7da; 
+            border-left: 4px solid #dc3545; 
+            color: #721c24; 
+            display: block; 
+        }
+        .submit-btn { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 12px 30px; 
+            border: none; 
+            border-radius: 50px; 
+            font-size: 1.1em; 
+            cursor: pointer; 
+            display: block; 
+            margin: 20px auto; 
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); 
+            transition: transform 0.3s ease; 
+        }
+        .submit-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); 
+        }
+        .submit-btn:disabled { 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+            transform: none; 
+        }
+        .unit-result { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-top: 20px; 
+            text-align: center; 
+            font-size: 1.2em; 
+            font-weight: bold; 
+            display: none; 
+        }
+        .unit-result.show { 
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Top Notch 3 Complete Test</h1>
+        <p class="subtitle">Intermediate English II - 108 Questions with Individual Unit Grading</p>
+
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Complete each unit (12 questions) and click "Submit Unit X"</li>
+                <li>Each unit is graded individually with instant feedback</li>
+                <li><span style="color: #28a745; font-weight: bold;">✓ Green</span> = Correct | <span style="color: #dc3545; font-weight: bold;">✗ Red</span> = Incorrect (with explanation)</li>
+                <li>Track your progress at the top of the page</li>
+                <li>Total: 108 questions across 9 units</li>
+            </ul>
+        </div>
+
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-text">Units Completed: 0/9</div>
+            <div class="unit-scores" id="unitScores">
+                <div class="unit-score-badge" id="badge1">Unit 1: --</div>
+                <div class="unit-score-badge" id="badge2">Unit 2: --</div>
+                <div class="unit-score-badge" id="badge3">Unit 3: --</div>
+                <div class="unit-score-badge" id="badge4">Unit 4: --</div>
+                <div class="unit-score-badge" id="badge5">Unit 5: --</div>
+                <div class="unit-score-badge" id="badge6">Unit 6: --</div>
+                <div class="unit-score-badge" id="badge7">Unit 7: --</div>
+                <div class="unit-score-badge" id="badge8">Unit 8: --</div>
+                <div class="unit-score-badge" id="badge9">Unit 9: --</div>
+            </div>
+        </div>
+
+        <div class="unit-section" id="unit1">
+            <h2 class="unit-title">Unit 1 — Make Small Talk</h2>
+            <div class="question" data-question="q1">
+                <div class="question-number">Question 1</div>
+                <div class="question-text">You haven't been to Tokyo before, _______?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q1" value="a" id="q1a"><label for="q1a">A) do you</label></div>
+                    <div class="option"><input type="radio" name="q1" value="b" id="q1b"><label for="q1b">B) have you</label></div>
+                    <div class="option"><input type="radio" name="q1" value="c" id="q1c"><label for="q1c">C) haven't you</label></div>
+                    <div class="option"><input type="radio" name="q1" value="d" id="q1d"><label for="q1d">D) did you</label></div>
+                </div>
+                <div class="explanation" data-explanation="Tag questions use opposite polarity. Negative "haven't" → positive "have you""></div>
+            </div>
+            <div class="question" data-question="q2">
+                <div class="question-number">Question 2</div>
+                <div class="question-text">By the time I arrived at the party, everyone _______ already left.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q2" value="a" id="q2a"><label for="q2a">A) has</label></div>
+                    <div class="option"><input type="radio" name="q2" value="b" id="q2b"><label for="q2b">B) had</label></div>
+                    <div class="option"><input type="radio" name="q2" value="c" id="q2c"><label for="q2c">C) have</label></div>
+                    <div class="option"><input type="radio" name="q2" value="d" id="q2d"><label for="q2d">D) was</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past Perfect "had + past participle" for action before another past action"></div>
+            </div>
+            <div class="question" data-question="q3">
+                <div class="question-number">Question 3</div>
+                <div class="question-text">What does "When in Rome, do as the Romans do" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q3" value="a" id="q3a"><label for="q3a">A) Travel to Rome often</label></div>
+                    <div class="option"><input type="radio" name="q3" value="b" id="q3b"><label for="q3b">B) Follow local customs when visiting a place</label></div>
+                    <div class="option"><input type="radio" name="q3" value="c" id="q3c"><label for="q3c">C) Learn Italian</label></div>
+                    <div class="option"><input type="radio" name="q3" value="d" id="q3d"><label for="q3d">D) Visit historical sites</label></div>
+                </div>
+                <div class="explanation" data-explanation="This idiom means follow the customs of the place you're visiting"></div>
+            </div>
+            <div class="question" data-question="q4">
+                <div class="question-number">Question 4</div>
+                <div class="question-text">Choose the appropriate response: "Do you mind if I sit here?"</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q4" value="a" id="q4a"><label for="q4a">A) Yes, please do</label></div>
+                    <div class="option"><input type="radio" name="q4" value="b" id="q4b"><label for="q4b">B) Absolutely not, go ahead</label></div>
+                    <div class="option"><input type="radio" name="q4" value="c" id="q4c"><label for="q4c">C) Yes, I mind</label></div>
+                    <div class="option"><input type="radio" name="q4" value="d" id="q4d"><label for="q4d">D) No, I do</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Absolutely not" = "I don't mind at all, go ahead""></div>
+            </div>
+            <div class="question" data-question="q5">
+                <div class="question-number">Question 5</div>
+                <div class="question-text">She had _______ finished her homework when her friends arrived.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q5" value="a" id="q5a"><label for="q5a">A) yet</label></div>
+                    <div class="option"><input type="radio" name="q5" value="b" id="q5b"><label for="q5b">B) already</label></div>
+                    <div class="option"><input type="radio" name="q5" value="c" id="q5c"><label for="q5c">C) still</label></div>
+                    <div class="option"><input type="radio" name="q5" value="d" id="q5d"><label for="q5d">D) never</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Already" with Past Perfect for completed action before another past action"></div>
+            </div>
+            <div class="question" data-question="q6">
+                <div class="question-number">Question 6</div>
+                <div class="question-text">What does "on a first-name basis" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q6" value="a" id="q6a"><label for="q6a">A) Using formal titles</label></div>
+                    <div class="option"><input type="radio" name="q6" value="b" id="q6b"><label for="q6b">B) Calling someone by their first name informally</label></div>
+                    <div class="option"><input type="radio" name="q6" value="c" id="q6c"><label for="q6c">C) Not knowing someone well</label></div>
+                    <div class="option"><input type="radio" name="q6" value="d" id="q6d"><label for="q6d">D) Meeting someone for the first time</label></div>
+                </div>
+                <div class="explanation" data-explanation="It means you know someone well enough to use their first name"></div>
+            </div>
+            <div class="question" data-question="q7">
+                <div class="question-number">Question 7</div>
+                <div class="question-text">Choose the correct tag: "They can speak French, _______?"</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q7" value="a" id="q7a"><label for="q7a">A) can they</label></div>
+                    <div class="option"><input type="radio" name="q7" value="b" id="q7b"><label for="q7b">B) can't they</label></div>
+                    <div class="option"><input type="radio" name="q7" value="c" id="q7c"><label for="q7c">C) do they</label></div>
+                    <div class="option"><input type="radio" name="q7" value="d" id="q7d"><label for="q7d">D) don't they</label></div>
+                </div>
+                <div class="explanation" data-explanation="Affirmative "can" → negative tag "can't they""></div>
+            </div>
+            <div class="question" data-question="q8">
+                <div class="question-number">Question 8</div>
+                <div class="question-text">Which word is an intensifier?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q8" value="a" id="q8a"><label for="q8a">A) gesture</label></div>
+                    <div class="option"><input type="radio" name="q8" value="b" id="q8b"><label for="q8b">B) incredibly</label></div>
+                    <div class="option"><input type="radio" name="q8" value="c" id="q8c"><label for="q8c">C) promptly</label></div>
+                    <div class="option"><input type="radio" name="q8" value="d" id="q8d"><label for="q8d">D) appropriate</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Incredibly" intensifies adjectives (incredibly beautiful, incredibly difficult)"></div>
+            </div>
+            <div class="question" data-question="q9">
+                <div class="question-number">Question 9</div>
+                <div class="question-text">When I called her, she _______ already eaten dinner.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q9" value="a" id="q9a"><label for="q9a">A) has</label></div>
+                    <div class="option"><input type="radio" name="q9" value="b" id="q9b"><label for="q9b">B) have</label></div>
+                    <div class="option"><input type="radio" name="q9" value="c" id="q9c"><label for="q9c">C) had</label></div>
+                    <div class="option"><input type="radio" name="q9" value="d" id="q9d"><label for="q9d">D) having</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past Perfect "had eaten" - eating happened before calling"></div>
+            </div>
+            <div class="question" data-question="q10">
+                <div class="question-number">Question 10</div>
+                <div class="question-text">What does "refrain from" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q10" value="a" id="q10a"><label for="q10a">A) To continue doing something</label></div>
+                    <div class="option"><input type="radio" name="q10" value="b" id="q10b"><label for="q10b">B) To stop or avoid doing something</label></div>
+                    <div class="option"><input type="radio" name="q10" value="c" id="q10c"><label for="q10c">C) To start doing something</label></div>
+                    <div class="option"><input type="radio" name="q10" value="d" id="q10d"><label for="q10d">D) To repeat something</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Refrain from" means to stop yourself from doing or avoid doing something"></div>
+            </div>
+            <div class="question" data-question="q11">
+                <div class="question-number">Question 11</div>
+                <div class="question-text">You're coming to the meeting, _______?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q11" value="a" id="q11a"><label for="q11a">A) isn't it</label></div>
+                    <div class="option"><input type="radio" name="q11" value="b" id="q11b"><label for="q11b">B) aren't you</label></div>
+                    <div class="option"><input type="radio" name="q11" value="c" id="q11c"><label for="q11c">C) are you</label></div>
+                    <div class="option"><input type="radio" name="q11" value="d" id="q11d"><label for="q11d">D) don't you</label></div>
+                </div>
+                <div class="explanation" data-explanation="Affirmative "you're" (are) → negative tag "aren't you""></div>
+            </div>
+            <div class="question" data-question="q12">
+                <div class="question-number">Question 12</div>
+                <div class="question-text">What is a "surname"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q12" value="a" id="q12a"><label for="q12a">A) A nickname</label></div>
+                    <div class="option"><input type="radio" name="q12" value="b" id="q12b"><label for="q12b">B) A first name</label></div>
+                    <div class="option"><input type="radio" name="q12" value="c" id="q12c"><label for="q12c">C) A last name or family name</label></div>
+                    <div class="option"><input type="radio" name="q12" value="d" id="q12d"><label for="q12d">D) A middle name</label></div>
+                </div>
+                <div class="explanation" data-explanation="Surname = family name/last name (e.g., "Smith" in John Smith)"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(1)">Submit Unit 1 📝</button>
+            <div class="unit-result" id="result1"></div>
+        </div>
+
+        <div class="unit-section" id="unit2">
+            <h2 class="unit-title">Unit 2 — Health Matters</h2>
+            <div class="question" data-question="q13">
+                <div class="question-number">Question 13</div>
+                <div class="question-text">He looks very pale. He _______ be feeling well.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q13" value="a" id="q13a"><label for="q13a">A) can't</label></div>
+                    <div class="option"><input type="radio" name="q13" value="b" id="q13b"><label for="q13b">B) must</label></div>
+                    <div class="option"><input type="radio" name="q13" value="c" id="q13c"><label for="q13c">C) should</label></div>
+                    <div class="option"><input type="radio" name="q13" value="d" id="q13d"><label for="q13d">D) would</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Can't" for strong negative deduction based on evidence"></div>
+            </div>
+            <div class="question" data-question="q14">
+                <div class="question-number">Question 14</div>
+                <div class="question-text">If I _______ you, I would see a doctor immediately.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q14" value="a" id="q14a"><label for="q14a">A) am</label></div>
+                    <div class="option"><input type="radio" name="q14" value="b" id="q14b"><label for="q14b">B) was</label></div>
+                    <div class="option"><input type="radio" name="q14" value="c" id="q14c"><label for="q14c">C) were</label></div>
+                    <div class="option"><input type="radio" name="q14" value="d" id="q14d"><label for="q14d">D) be</label></div>
+                </div>
+                <div class="explanation" data-explanation="Unreal conditional Type 2 uses "were" for all persons"></div>
+            </div>
+            <div class="question" data-question="q15">
+                <div class="question-number">Question 15</div>
+                <div class="question-text">What symptom means feeling like you might fall?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q15" value="a" id="q15a"><label for="q15a">A) nauseous</label></div>
+                    <div class="option"><input type="radio" name="q15" value="b" id="q15b"><label for="q15b">B) dizzy</label></div>
+                    <div class="option"><input type="radio" name="q15" value="c" id="q15c"><label for="q15c">C) weak</label></div>
+                    <div class="option"><input type="radio" name="q15" value="d" id="q15d"><label for="q15d">D) swollen</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Dizzy" = feeling like you might fall or lose balance"></div>
+            </div>
+            <div class="question" data-question="q16">
+                <div class="question-number">Question 16</div>
+                <div class="question-text">She _______ be able to walk next week after the surgery.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q16" value="a" id="q16a"><label for="q16a">A) can</label></div>
+                    <div class="option"><input type="radio" name="q16" value="b" id="q16b"><label for="q16b">B) will be able to</label></div>
+                    <div class="option"><input type="radio" name="q16" value="c" id="q16c"><label for="q16c">C) must</label></div>
+                    <div class="option"><input type="radio" name="q16" value="d" id="q16d"><label for="q16d">D) should</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Will be able to" expresses future ability"></div>
+            </div>
+            <div class="question" data-question="q17">
+                <div class="question-number">Question 17</div>
+                <div class="question-text">What does "throw up" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q17" value="a" id="q17a"><label for="q17a">A) to cough</label></div>
+                    <div class="option"><input type="radio" name="q17" value="b" id="q17b"><label for="q17b">B) to vomit</label></div>
+                    <div class="option"><input type="radio" name="q17" value="c" id="q17c"><label for="q17c">C) to sneeze</label></div>
+                    <div class="option"><input type="radio" name="q17" value="d" id="q17d"><label for="q17d">D) to fall</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Throw up" is informal for vomit"></div>
+            </div>
+            <div class="question" data-question="q18">
+                <div class="question-number">Question 18</div>
+                <div class="question-text">Could you recommend a good dentist? I need a _______.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q18" value="a" id="q18a"><label for="q18a">A) X-ray</label></div>
+                    <div class="option"><input type="radio" name="q18" value="b" id="q18b"><label for="q18b">B) filling</label></div>
+                    <div class="option"><input type="radio" name="q18" value="c" id="q18c"><label for="q18c">C) injection</label></div>
+                    <div class="option"><input type="radio" name="q18" value="d" id="q18d"><label for="q18d">D) EKG</label></div>
+                </div>
+                <div class="explanation" data-explanation="A "filling" repairs a cavity in a tooth"></div>
+            </div>
+            <div class="question" data-question="q19">
+                <div class="question-number">Question 19</div>
+                <div class="question-text">She _______ have the flu; she has all the symptoms.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q19" value="a" id="q19a"><label for="q19a">A) can't</label></div>
+                    <div class="option"><input type="radio" name="q19" value="b" id="q19b"><label for="q19b">B) might not</label></div>
+                    <div class="option"><input type="radio" name="q19" value="c" id="q19c"><label for="q19c">C) must</label></div>
+                    <div class="option"><input type="radio" name="q19" value="d" id="q19d"><label for="q19d">D) won't</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Must" for strong deduction based on evidence (all symptoms)"></div>
+            </div>
+            <div class="question" data-question="q20">
+                <div class="question-number">Question 20</div>
+                <div class="question-text">If you _______ more water, you would feel better.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q20" value="a" id="q20a"><label for="q20a">A) drink</label></div>
+                    <div class="option"><input type="radio" name="q20" value="b" id="q20b"><label for="q20b">B) drank</label></div>
+                    <div class="option"><input type="radio" name="q20" value="c" id="q20c"><label for="q20c">C) will drink</label></div>
+                    <div class="option"><input type="radio" name="q20" value="d" id="q20d"><label for="q20d">D) have drunk</label></div>
+                </div>
+                <div class="explanation" data-explanation="Unreal conditional uses past tense in if-clause: "drank""></div>
+            </div>
+            <div class="question" data-question="q21">
+                <div class="question-number">Question 21</div>
+                <div class="question-text">What is an EKG?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q21" value="a" id="q21a"><label for="q21a">A) A blood test</label></div>
+                    <div class="option"><input type="radio" name="q21" value="b" id="q21b"><label for="q21b">B) A heart test</label></div>
+                    <div class="option"><input type="radio" name="q21" value="c" id="q21c"><label for="q21c">C) An X-ray</label></div>
+                    <div class="option"><input type="radio" name="q21" value="d" id="q21d"><label for="q21d">D) A dental filling</label></div>
+                </div>
+                <div class="explanation" data-explanation="EKG (electrocardiogram) tests heart electrical activity"></div>
+            </div>
+            <div class="question" data-question="q22">
+                <div class="question-number">Question 22</div>
+                <div class="question-text">I _______ go to the gym if I had more time.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q22" value="a" id="q22a"><label for="q22a">A) will</label></div>
+                    <div class="option"><input type="radio" name="q22" value="b" id="q22b"><label for="q22b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q22" value="c" id="q22c"><label for="q22c">C) can</label></div>
+                    <div class="option"><input type="radio" name="q22" value="d" id="q22d"><label for="q22d">D) must</label></div>
+                </div>
+                <div class="explanation" data-explanation="Unreal conditional uses "would" in main clause"></div>
+            </div>
+            <div class="question" data-question="q23">
+                <div class="question-number">Question 23</div>
+                <div class="question-text">She's coughing and sneezing. She _______ have a cold.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q23" value="a" id="q23a"><label for="q23a">A) can't</label></div>
+                    <div class="option"><input type="radio" name="q23" value="b" id="q23b"><label for="q23b">B) may</label></div>
+                    <div class="option"><input type="radio" name="q23" value="c" id="q23c"><label for="q23c">C) won't</label></div>
+                    <div class="option"><input type="radio" name="q23" value="d" id="q23d"><label for="q23d">D) shouldn't</label></div>
+                </div>
+                <div class="explanation" data-explanation=""May" expresses possibility based on symptoms"></div>
+            </div>
+            <div class="question" data-question="q24">
+                <div class="question-number">Question 24</div>
+                <div class="question-text">What does "wheezing" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q24" value="a" id="q24a"><label for="q24a">A) Having a fever</label></div>
+                    <div class="option"><input type="radio" name="q24" value="b" id="q24b"><label for="q24b">B) Making a whistling sound when breathing</label></div>
+                    <div class="option"><input type="radio" name="q24" value="c" id="q24c"><label for="q24c">C) Feeling dizzy</label></div>
+                    <div class="option"><input type="radio" name="q24" value="d" id="q24d"><label for="q24d">D) Vomiting</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Wheezing" = whistling/rattling sound when breathing"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(2)">Submit Unit 2 📝</button>
+            <div class="unit-result" id="result2"></div>
+        </div>
+
+        <div class="unit-section" id="unit3">
+            <h2 class="unit-title">Unit 3 — Getting Things Done</h2>
+            <div class="question" data-question="q25">
+                <div class="question-number">Question 25</div>
+                <div class="question-text">I need to _______ my suit dry-cleaned before the wedding.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q25" value="a" id="q25a"><label for="q25a">A) get</label></div>
+                    <div class="option"><input type="radio" name="q25" value="b" id="q25b"><label for="q25b">B) make</label></div>
+                    <div class="option"><input type="radio" name="q25" value="c" id="q25c"><label for="q25c">C) do</label></div>
+                    <div class="option"><input type="radio" name="q25" value="d" id="q25d"><label for="q25d">D) take</label></div>
+                </div>
+                <div class="explanation" data-explanation="Causative: "get + object + past participle""></div>
+            </div>
+            <div class="question" data-question="q26">
+                <div class="question-number">Question 26</div>
+                <div class="question-text">I was wondering if you _______ help me move this weekend.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q26" value="a" id="q26a"><label for="q26a">A) can</label></div>
+                    <div class="option"><input type="radio" name="q26" value="b" id="q26b"><label for="q26b">B) could</label></div>
+                    <div class="option"><input type="radio" name="q26" value="c" id="q26c"><label for="q26c">C) will</label></div>
+                    <div class="option"><input type="radio" name="q26" value="d" id="q26d"><label for="q26d">D) must</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Could" is more polite than "can" for requests"></div>
+            </div>
+            <div class="question" data-question="q27">
+                <div class="question-number">Question 27</div>
+                <div class="question-text">What does "ASAP" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q27" value="a" id="q27a"><label for="q27a">A) As soon as possible</label></div>
+                    <div class="option"><input type="radio" name="q27" value="b" id="q27b"><label for="q27b">B) Always stay and participate</label></div>
+                    <div class="option"><input type="radio" name="q27" value="c" id="q27c"><label for="q27c">C) After some afternoon practice</label></div>
+                    <div class="option"><input type="radio" name="q27" value="d" id="q27d"><label for="q27d">D) At seven after practice</label></div>
+                </div>
+                <div class="explanation" data-explanation="ASAP = As Soon As Possible (urgently)"></div>
+            </div>
+            <div class="question" data-question="q28">
+                <div class="question-number">Question 28</div>
+                <div class="question-text">She had her computer _______ by a technician.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q28" value="a" id="q28a"><label for="q28a">A) repair</label></div>
+                    <div class="option"><input type="radio" name="q28" value="b" id="q28b"><label for="q28b">B) repaired</label></div>
+                    <div class="option"><input type="radio" name="q28" value="c" id="q28c"><label for="q28c">C) repairing</label></div>
+                    <div class="option"><input type="radio" name="q28" value="d" id="q28d"><label for="q28d">D) repairs</label></div>
+                </div>
+                <div class="explanation" data-explanation="Causative: "have + object + past participle""></div>
+            </div>
+            <div class="question" data-question="q29">
+                <div class="question-number">Question 29</div>
+                <div class="question-text">What does "You're a lifesaver" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q29" value="a" id="q29a"><label for="q29a">A) You're very helpful</label></div>
+                    <div class="option"><input type="radio" name="q29" value="b" id="q29b"><label for="q29b">B) You work in medicine</label></div>
+                    <div class="option"><input type="radio" name="q29" value="c" id="q29c"><label for="q29c">C) You're very busy</label></div>
+                    <div class="option"><input type="radio" name="q29" value="d" id="q29d"><label for="q29d">D) You're very organized</label></div>
+                </div>
+                <div class="explanation" data-explanation="Means you helped me a lot, saved me from difficulty"></div>
+            </div>
+            <div class="question" data-question="q30">
+                <div class="question-number">Question 30</div>
+                <div class="question-text">I need to get my pants _______. They're too long.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q30" value="a" id="q30a"><label for="q30a">A) lengthened</label></div>
+                    <div class="option"><input type="radio" name="q30" value="b" id="q30b"><label for="q30b">B) shortened</label></div>
+                    <div class="option"><input type="radio" name="q30" value="c" id="q30c"><label for="q30c">C) framed</label></div>
+                    <div class="option"><input type="radio" name="q30" value="d" id="q30d"><label for="q30d">D) copied</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Shortened" = made shorter"></div>
+            </div>
+            <div class="question" data-question="q31">
+                <div class="question-number">Question 31</div>
+                <div class="question-text">Any chance I could _______ your car tomorrow?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q31" value="a" id="q31a"><label for="q31a">A) borrow</label></div>
+                    <div class="option"><input type="radio" name="q31" value="b" id="q31b"><label for="q31b">B) lend</label></div>
+                    <div class="option"><input type="radio" name="q31" value="c" id="q31c"><label for="q31c">C) take</label></div>
+                    <div class="option"><input type="radio" name="q31" value="d" id="q31d"><label for="q31d">D) give</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Borrow" = use something that belongs to someone else temporarily"></div>
+            </div>
+            <div class="question" data-question="q32">
+                <div class="question-number">Question 32</div>
+                <div class="question-text">What does "I owe you one" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q32" value="a" id="q32a"><label for="q32a">A) I need to pay you money</label></div>
+                    <div class="option"><input type="radio" name="q32" value="b" id="q32b"><label for="q32b">B) I'll help you in return for your help</label></div>
+                    <div class="option"><input type="radio" name="q32" value="c" id="q32c"><label for="q32c">C) I'm sorry</label></div>
+                    <div class="option"><input type="radio" name="q32" value="d" id="q32d"><label for="q32d">D) I can't help you</label></div>
+                </div>
+                <div class="explanation" data-explanation="Means I'll return the favor later"></div>
+            </div>
+            <div class="question" data-question="q33">
+                <div class="question-number">Question 33</div>
+                <div class="question-text">Can you get someone _______ this package?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q33" value="a" id="q33a"><label for="q33a">A) deliver</label></div>
+                    <div class="option"><input type="radio" name="q33" value="b" id="q33b"><label for="q33b">B) to deliver</label></div>
+                    <div class="option"><input type="radio" name="q33" value="c" id="q33c"><label for="q33c">C) delivered</label></div>
+                    <div class="option"><input type="radio" name="q33" value="d" id="q33d"><label for="q33d">D) delivering</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Get someone to + verb": get + person + to + infinitive"></div>
+            </div>
+            <div class="question" data-question="q34">
+                <div class="question-number">Question 34</div>
+                <div class="question-text">A _______ is someone who delays tasks.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q34" value="a" id="q34a"><label for="q34a">A) self-motivated person</label></div>
+                    <div class="option"><input type="radio" name="q34" value="b" id="q34b"><label for="q34b">B) procrastinator</label></div>
+                    <div class="option"><input type="radio" name="q34" value="c" id="q34c"><label for="q34c">C) organized person</label></div>
+                    <div class="option"><input type="radio" name="q34" value="d" id="q34d"><label for="q34d">D) technician</label></div>
+                </div>
+                <div class="explanation" data-explanation="Procrastinator = person who delays/postpones tasks"></div>
+            </div>
+            <div class="question" data-question="q35">
+                <div class="question-number">Question 35</div>
+                <div class="question-text">I'll _______ what I can do to help you.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q35" value="a" id="q35a"><label for="q35a">A) look</label></div>
+                    <div class="option"><input type="radio" name="q35" value="b" id="q35b"><label for="q35b">B) see</label></div>
+                    <div class="option"><input type="radio" name="q35" value="c" id="q35c"><label for="q35c">C) watch</label></div>
+                    <div class="option"><input type="radio" name="q35" value="d" id="q35d"><label for="q35d">D) make</label></div>
+                </div>
+                <div class="explanation" data-explanation=""I'll see what I can do" = common expression for "I'll try to help""></div>
+            </div>
+            <div class="question" data-question="q36">
+                <div class="question-number">Question 36</div>
+                <div class="question-text">What does "No sweat" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q36" value="a" id="q36a"><label for="q36a">A) It's very hot</label></div>
+                    <div class="option"><input type="radio" name="q36" value="b" id="q36b"><label for="q36b">B) No problem, it's easy</label></div>
+                    <div class="option"><input type="radio" name="q36" value="c" id="q36c"><label for="q36c">C) I'm not exercising</label></div>
+                    <div class="option"><input type="radio" name="q36" value="d" id="q36d"><label for="q36d">D) I'm very busy</label></div>
+                </div>
+                <div class="explanation" data-explanation=""No sweat" = no problem, it's easy"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(3)">Submit Unit 3 📝</button>
+            <div class="unit-result" id="result3"></div>
+        </div>
+
+        <div class="unit-section" id="unit4">
+            <h2 class="unit-title">Unit 4 — Reading for Pleasure</h2>
+            <div class="question" data-question="q37">
+                <div class="question-number">Question 37</div>
+                <div class="question-text">I think _______ this book is fascinating.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q37" value="a" id="q37a"><label for="q37a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q37" value="b" id="q37b"><label for="q37b">B) what</label></div>
+                    <div class="option"><input type="radio" name="q37" value="c" id="q37c"><label for="q37c">C) which</label></div>
+                    <div class="option"><input type="radio" name="q37" value="d" id="q37d"><label for="q37d">D) who</label></div>
+                </div>
+                <div class="explanation" data-explanation="Noun clause with "think" uses "that""></div>
+            </div>
+            <div class="question" data-question="q38">
+                <div class="question-number">Question 38</div>
+                <div class="question-text">Could you tell me _______ the library closes?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q38" value="a" id="q38a"><label for="q38a">A) what time does</label></div>
+                    <div class="option"><input type="radio" name="q38" value="b" id="q38b"><label for="q38b">B) what time</label></div>
+                    <div class="option"><input type="radio" name="q38" value="c" id="q38c"><label for="q38c">C) when does</label></div>
+                    <div class="option"><input type="radio" name="q38" value="d" id="q38d"><label for="q38d">D) does what time</label></div>
+                </div>
+                <div class="explanation" data-explanation="Embedded question: no inversion, just "what time""></div>
+            </div>
+            <div class="question" data-question="q39">
+                <div class="question-number">Question 39</div>
+                <div class="question-text">What does "page-turner" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q39" value="a" id="q39a"><label for="q39a">A) A boring book</label></div>
+                    <div class="option"><input type="radio" name="q39" value="b" id="q39b"><label for="q39b">B) A very exciting book</label></div>
+                    <div class="option"><input type="radio" name="q39" value="c" id="q39c"><label for="q39c">C) A short book</label></div>
+                    <div class="option"><input type="radio" name="q39" value="d" id="q39d"><label for="q39d">D) A textbook</label></div>
+                </div>
+                <div class="explanation" data-explanation="Page-turner = very exciting book you can't stop reading"></div>
+            </div>
+            <div class="question" data-question="q40">
+                <div class="question-number">Question 40</div>
+                <div class="question-text">Do you know _______ this author has written other books?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q40" value="a" id="q40a"><label for="q40a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q40" value="b" id="q40b"><label for="q40b">B) if</label></div>
+                    <div class="option"><input type="radio" name="q40" value="c" id="q40c"><label for="q40c">C) what</label></div>
+                    <div class="option"><input type="radio" name="q40" value="d" id="q40d"><label for="q40d">D) which</label></div>
+                </div>
+                <div class="explanation" data-explanation="Embedded yes/no question uses "if" or "whether""></div>
+            </div>
+            <div class="question" data-question="q41">
+                <div class="question-number">Question 41</div>
+                <div class="question-text">What is a "cliff-hanger"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q41" value="a" id="q41a"><label for="q41a">A) A book about mountains</label></div>
+                    <div class="option"><input type="radio" name="q41" value="b" id="q41b"><label for="q41b">B) An ending that leaves you in suspense</label></div>
+                    <div class="option"><input type="radio" name="q41" value="c" id="q41c"><label for="q41c">C) A fast read</label></div>
+                    <div class="option"><input type="radio" name="q41" value="d" id="q41d"><label for="q41d">D) A bestseller</label></div>
+                </div>
+                <div class="explanation" data-explanation="Cliff-hanger = ending that leaves you in suspense"></div>
+            </div>
+            <div class="question" data-question="q42">
+                <div class="question-number">Question 42</div>
+                <div class="question-text">She hopes _______ the series will continue.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q42" value="a" id="q42a"><label for="q42a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q42" value="b" id="q42b"><label for="q42b">B) if</label></div>
+                    <div class="option"><input type="radio" name="q42" value="c" id="q42c"><label for="q42c">C) whether</label></div>
+                    <div class="option"><input type="radio" name="q42" value="d" id="q42d"><label for="q42d">D) what</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Hopes" takes "that" clause"></div>
+            </div>
+            <div class="question" data-question="q43">
+                <div class="question-number">Question 43</div>
+                <div class="question-text">What type of book tells a life story written by that person?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q43" value="a" id="q43a"><label for="q43a">A) Biography</label></div>
+                    <div class="option"><input type="radio" name="q43" value="b" id="q43b"><label for="q43b">B) Autobiography</label></div>
+                    <div class="option"><input type="radio" name="q43" value="c" id="q43c"><label for="q43c">C) Fiction</label></div>
+                    <div class="option"><input type="radio" name="q43" value="d" id="q43d"><label for="q43d">D) Mystery</label></div>
+                </div>
+                <div class="explanation" data-explanation="Autobiography = life story written by the person (auto = self)"></div>
+            </div>
+            <div class="question" data-question="q44">
+                <div class="question-number">Question 44</div>
+                <div class="question-text">I'm not sure _______ I'll finish this book. It's not my thing.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q44" value="a" id="q44a"><label for="q44a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q44" value="b" id="q44b"><label for="q44b">B) whether</label></div>
+                    <div class="option"><input type="radio" name="q44" value="c" id="q44c"><label for="q44c">C) what</label></div>
+                    <div class="option"><input type="radio" name="q44" value="d" id="q44d"><label for="q44d">D) which</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Whether" or "if" for embedded yes/no questions with uncertainty"></div>
+            </div>
+            <div class="question" data-question="q45">
+                <div class="question-number">Question 45</div>
+                <div class="question-text">What does "I can't put it down" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q45" value="a" id="q45a"><label for="q45a">A) The book is too heavy</label></div>
+                    <div class="option"><input type="radio" name="q45" value="b" id="q45b"><label for="q45b">B) The book is so interesting I keep reading</label></div>
+                    <div class="option"><input type="radio" name="q45" value="c" id="q45c"><label for="q45c">C) I don't like the book</label></div>
+                    <div class="option"><input type="radio" name="q45" value="d" id="q45d"><label for="q45d">D) The book is confusing</label></div>
+                </div>
+                <div class="explanation" data-explanation="So interesting you keep reading, can't stop"></div>
+            </div>
+            <div class="question" data-question="q46">
+                <div class="question-number">Question 46</div>
+                <div class="question-text">I wonder _______ wrote this novel.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q46" value="a" id="q46a"><label for="q46a">A) who</label></div>
+                    <div class="option"><input type="radio" name="q46" value="b" id="q46b"><label for="q46b">B) that</label></div>
+                    <div class="option"><input type="radio" name="q46" value="c" id="q46c"><label for="q46c">C) if</label></div>
+                    <div class="option"><input type="radio" name="q46" value="d" id="q46d"><label for="q46d">D) whether</label></div>
+                </div>
+                <div class="explanation" data-explanation="Embedded wh-question: "who wrote" (no inversion)"></div>
+            </div>
+            <div class="question" data-question="q47">
+                <div class="question-number">Question 47</div>
+                <div class="question-text">A _______ is a book that has sold many copies.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q47" value="a" id="q47a"><label for="q47a">A) page-turner</label></div>
+                    <div class="option"><input type="radio" name="q47" value="b" id="q47b"><label for="q47b">B) bestseller</label></div>
+                    <div class="option"><input type="radio" name="q47" value="c" id="q47c"><label for="q47c">C) thriller</label></div>
+                    <div class="option"><input type="radio" name="q47" value="d" id="q47d"><label for="q47d">D) mystery</label></div>
+                </div>
+                <div class="explanation" data-explanation="Bestseller = book that sold many copies"></div>
+            </div>
+            <div class="question" data-question="q48">
+                <div class="question-number">Question 48</div>
+                <div class="question-text">She believes _______ reading is important for learning.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q48" value="a" id="q48a"><label for="q48a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q48" value="b" id="q48b"><label for="q48b">B) if</label></div>
+                    <div class="option"><input type="radio" name="q48" value="c" id="q48c"><label for="q48c">C) whether</label></div>
+                    <div class="option"><input type="radio" name="q48" value="d" id="q48d"><label for="q48d">D) what</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Believes" takes "that" clause"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(4)">Submit Unit 4 📝</button>
+            <div class="unit-result" id="result4"></div>
+        </div>
+
+        <div class="unit-section" id="unit5">
+            <h2 class="unit-title">Unit 5 — Natural Disasters</h2>
+            <div class="question" data-question="q49">
+                <div class="question-number">Question 49</div>
+                <div class="question-text">The mayor _______ people to evacuate immediately.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q49" value="a" id="q49a"><label for="q49a">A) said</label></div>
+                    <div class="option"><input type="radio" name="q49" value="b" id="q49b"><label for="q49b">B) told</label></div>
+                    <div class="option"><input type="radio" name="q49" value="c" id="q49c"><label for="q49c">C) said to</label></div>
+                    <div class="option"><input type="radio" name="q49" value="d" id="q49d"><label for="q49d">D) told to</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Tell" takes object: told + people + to evacuate"></div>
+            </div>
+            <div class="question" data-question="q50">
+                <div class="question-number">Question 50</div>
+                <div class="question-text">She said that she _______ seen the news about the earthquake.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q50" value="a" id="q50a"><label for="q50a">A) has</label></div>
+                    <div class="option"><input type="radio" name="q50" value="b" id="q50b"><label for="q50b">B) had</label></div>
+                    <div class="option"><input type="radio" name="q50" value="c" id="q50c"><label for="q50c">C) have</label></div>
+                    <div class="option"><input type="radio" name="q50" value="d" id="q50d"><label for="q50d">D) having</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reported speech: "has seen" → "had seen" (tense backshift)"></div>
+            </div>
+            <div class="question" data-question="q51">
+                <div class="question-number">Question 51</div>
+                <div class="question-text">What is a "drought"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q51" value="a" id="q51a"><label for="q51a">A) Too much rain</label></div>
+                    <div class="option"><input type="radio" name="q51" value="b" id="q51b"><label for="q51b">B) A long period without rain</label></div>
+                    <div class="option"><input type="radio" name="q51" value="c" id="q51c"><label for="q51c">C) A strong wind</label></div>
+                    <div class="option"><input type="radio" name="q51" value="d" id="q51d"><label for="q51d">D) An earthquake</label></div>
+                </div>
+                <div class="explanation" data-explanation="Drought = long period with little/no rain"></div>
+            </div>
+            <div class="question" data-question="q52">
+                <div class="question-number">Question 52</div>
+                <div class="question-text">The reporter said that the hurricane _______ causing severe damage.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q52" value="a" id="q52a"><label for="q52a">A) is</label></div>
+                    <div class="option"><input type="radio" name="q52" value="b" id="q52b"><label for="q52b">B) was</label></div>
+                    <div class="option"><input type="radio" name="q52" value="c" id="q52c"><label for="q52c">C) will be</label></div>
+                    <div class="option"><input type="radio" name="q52" value="d" id="q52d"><label for="q52d">D) has been</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reported speech: "is causing" → "was causing" (tense backshift)"></div>
+            </div>
+            <div class="question" data-question="q53">
+                <div class="question-number">Question 53</div>
+                <div class="question-text">What does "devastating" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q53" value="a" id="q53a"><label for="q53a">A) Causing great damage or destruction</label></div>
+                    <div class="option"><input type="radio" name="q53" value="b" id="q53b"><label for="q53b">B) Small and unimportant</label></div>
+                    <div class="option"><input type="radio" name="q53" value="c" id="q53c"><label for="q53c">C) Very beautiful</label></div>
+                    <div class="option"><input type="radio" name="q53" value="d" id="q53d"><label for="q53d">D) Quick and easy</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Devastating" = causing great damage/destruction"></div>
+            </div>
+            <div class="question" data-question="q54">
+                <div class="question-number">Question 54</div>
+                <div class="question-text">He told me _______ stay indoors during the storm.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q54" value="a" id="q54a"><label for="q54a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q54" value="b" id="q54b"><label for="q54b">B) to</label></div>
+                    <div class="option"><input type="radio" name="q54" value="c" id="q54c"><label for="q54c">C) for</label></div>
+                    <div class="option"><input type="radio" name="q54" value="d" id="q54d"><label for="q54d">D) if</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reported imperative: told + object + to + verb"></div>
+            </div>
+            <div class="question" data-question="q55">
+                <div class="question-number">Question 55</div>
+                <div class="question-text">A _______ is a violent storm with very strong winds that spin.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q55" value="a" id="q55a"><label for="q55a">A) blizzard</label></div>
+                    <div class="option"><input type="radio" name="q55" value="b" id="q55b"><label for="q55b">B) tornado</label></div>
+                    <div class="option"><input type="radio" name="q55" value="c" id="q55c"><label for="q55c">C) flood</label></div>
+                    <div class="option"><input type="radio" name="q55" value="d" id="q55d"><label for="q55d">D) famine</label></div>
+                </div>
+                <div class="explanation" data-explanation="Tornado = violent rotating column of air"></div>
+            </div>
+            <div class="question" data-question="q56">
+                <div class="question-number">Question 56</div>
+                <div class="question-text">She said she _______ help the victims.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q56" value="a" id="q56a"><label for="q56a">A) will</label></div>
+                    <div class="option"><input type="radio" name="q56" value="b" id="q56b"><label for="q56b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q56" value="c" id="q56c"><label for="q56c">C) can</label></div>
+                    <div class="option"><input type="radio" name="q56" value="d" id="q56d"><label for="q56d">D) may</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reported speech: "will help" → "would help" (tense backshift)"></div>
+            </div>
+            <div class="question" data-question="q57">
+                <div class="question-number">Question 57</div>
+                <div class="question-text">What is "breaking news"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q57" value="a" id="q57a"><label for="q57a">A) Old news</label></div>
+                    <div class="option"><input type="radio" name="q57" value="b" id="q57b"><label for="q57b">B) News that just happened</label></div>
+                    <div class="option"><input type="radio" name="q57" value="c" id="q57c"><label for="q57c">C) Fake news</label></div>
+                    <div class="option"><input type="radio" name="q57" value="d" id="q57d"><label for="q57d">D) Sports news</label></div>
+                </div>
+                <div class="explanation" data-explanation="Breaking news = news about event that just happened"></div>
+            </div>
+            <div class="question" data-question="q58">
+                <div class="question-number">Question 58</div>
+                <div class="question-text">The official told residents _______ prepare emergency kits.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q58" value="a" id="q58a"><label for="q58a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q58" value="b" id="q58b"><label for="q58b">B) to</label></div>
+                    <div class="option"><input type="radio" name="q58" value="c" id="q58c"><label for="q58c">C) for</label></div>
+                    <div class="option"><input type="radio" name="q58" value="d" id="q58d"><label for="q58d">D) if</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reported imperative: told + object + to + verb"></div>
+            </div>
+            <div class="question" data-question="q59">
+                <div class="question-number">Question 59</div>
+                <div class="question-text">What is a "landslide"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q59" value="a" id="q59a"><label for="q59a">A) When earth and rocks fall down a slope</label></div>
+                    <div class="option"><input type="radio" name="q59" value="b" id="q59b"><label for="q59b">B) A type of earthquake</label></div>
+                    <div class="option"><input type="radio" name="q59" value="c" id="q59c"><label for="q59c">C) A snowstorm</label></div>
+                    <div class="option"><input type="radio" name="q59" value="d" id="q59d"><label for="q59d">D) A political victory</label></div>
+                </div>
+                <div class="explanation" data-explanation="Landslide = earth/rocks falling down slope"></div>
+            </div>
+            <div class="question" data-question="q60">
+                <div class="question-number">Question 60</div>
+                <div class="question-text">They said they _______ never seen such destruction before.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q60" value="a" id="q60a"><label for="q60a">A) have</label></div>
+                    <div class="option"><input type="radio" name="q60" value="b" id="q60b"><label for="q60b">B) had</label></div>
+                    <div class="option"><input type="radio" name="q60" value="c" id="q60c"><label for="q60c">C) has</label></div>
+                    <div class="option"><input type="radio" name="q60" value="d" id="q60d"><label for="q60d">D) having</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reported speech: "have never seen" → "had never seen""></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(5)">Submit Unit 5 📝</button>
+            <div class="unit-result" id="result5"></div>
+        </div>
+
+        <div class="unit-section" id="unit6">
+            <h2 class="unit-title">Unit 6 — Life Plans</h2>
+            <div class="question" data-question="q61">
+                <div class="question-number">Question 61</div>
+                <div class="question-text">I _______ going to study medicine, but I changed my mind.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q61" value="a" id="q61a"><label for="q61a">A) am</label></div>
+                    <div class="option"><input type="radio" name="q61" value="b" id="q61b"><label for="q61b">B) was</label></div>
+                    <div class="option"><input type="radio" name="q61" value="c" id="q61c"><label for="q61c">C) will be</label></div>
+                    <div class="option"><input type="radio" name="q61" value="d" id="q61d"><label for="q61d">D) have been</label></div>
+                </div>
+                <div class="explanation" data-explanation="Future in past: "was going to" for past intention that didn't happen"></div>
+            </div>
+            <div class="question" data-question="q62">
+                <div class="question-number">Question 62</div>
+                <div class="question-text">You _______ have told me earlier! I could have helped.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q62" value="a" id="q62a"><label for="q62a">A) must</label></div>
+                    <div class="option"><input type="radio" name="q62" value="b" id="q62b"><label for="q62b">B) should</label></div>
+                    <div class="option"><input type="radio" name="q62" value="c" id="q62c"><label for="q62c">C) would</label></div>
+                    <div class="option"><input type="radio" name="q62" value="d" id="q62d"><label for="q62d">D) can</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Should have + past participle" for regret"></div>
+            </div>
+            <div class="question" data-question="q63">
+                <div class="question-number">Question 63</div>
+                <div class="question-text">What does "make a living" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q63" value="a" id="q63a"><label for="q63a">A) To create life</label></div>
+                    <div class="option"><input type="radio" name="q63" value="b" id="q63b"><label for="q63b">B) To earn money to support yourself</label></div>
+                    <div class="option"><input type="radio" name="q63" value="c" id="q63c"><label for="q63c">C) To be very busy</label></div>
+                    <div class="option"><input type="radio" name="q63" value="d" id="q63d"><label for="q63d">D) To move to a new place</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Make a living" = earn money to support yourself"></div>
+            </div>
+            <div class="question" data-question="q64">
+                <div class="question-number">Question 64</div>
+                <div class="question-text">She _______ have been a great architect if she had studied harder.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q64" value="a" id="q64a"><label for="q64a">A) should</label></div>
+                    <div class="option"><input type="radio" name="q64" value="b" id="q64b"><label for="q64b">B) must</label></div>
+                    <div class="option"><input type="radio" name="q64" value="c" id="q64c"><label for="q64c">C) could</label></div>
+                    <div class="option"><input type="radio" name="q64" value="d" id="q64d"><label for="q64d">D) can</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Could have + past participle" for past possibility that didn't happen"></div>
+            </div>
+            <div class="question" data-question="q65">
+                <div class="question-number">Question 65</div>
+                <div class="question-text">I _______ become a scientist when I was younger.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q65" value="a" id="q65a"><label for="q65a">A) will</label></div>
+                    <div class="option"><input type="radio" name="q65" value="b" id="q65b"><label for="q65b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q65" value="c" id="q65c"><label for="q65c">C) can</label></div>
+                    <div class="option"><input type="radio" name="q65" value="d" id="q65d"><label for="q65d">D) may</label></div>
+                </div>
+                <div class="explanation" data-explanation="Future in past: "would become" for past intention"></div>
+            </div>
+            <div class="question" data-question="q66">
+                <div class="question-number">Question 66</div>
+                <div class="question-text">What does "change your mind" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q66" value="a" id="q66a"><label for="q66a">A) To think differently</label></div>
+                    <div class="option"><input type="radio" name="q66" value="b" id="q66b"><label for="q66b">B) To decide something different than before</label></div>
+                    <div class="option"><input type="radio" name="q66" value="c" id="q66c"><label for="q66c">C) To forget something</label></div>
+                    <div class="option"><input type="radio" name="q66" value="d" id="q66d"><label for="q66d">D) To study psychology</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Change your mind" = make different decision than before"></div>
+            </div>
+            <div class="question" data-question="q67">
+                <div class="question-number">Question 67</div>
+                <div class="question-text">He _______ have passed the exam if he had studied.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q67" value="a" id="q67a"><label for="q67a">A) must</label></div>
+                    <div class="option"><input type="radio" name="q67" value="b" id="q67b"><label for="q67b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q67" value="c" id="q67c"><label for="q67c">C) should</label></div>
+                    <div class="option"><input type="radio" name="q67" value="d" id="q67d"><label for="q67d">D) can</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past unreal conditional: "would have + past participle""></div>
+            </div>
+            <div class="question" data-question="q68">
+                <div class="question-number">Question 68</div>
+                <div class="question-text">A _______ helps people with mental or physical problems.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q68" value="a" id="q68a"><label for="q68a">A) manager</label></div>
+                    <div class="option"><input type="radio" name="q68" value="b" id="q68b"><label for="q68b">B) therapist</label></div>
+                    <div class="option"><input type="radio" name="q68" value="c" id="q68c"><label for="q68c">C) designer</label></div>
+                    <div class="option"><input type="radio" name="q68" value="d" id="q68d"><label for="q68d">D) technician</label></div>
+                </div>
+                <div class="explanation" data-explanation="Therapist helps with mental/emotional/physical problems"></div>
+            </div>
+            <div class="question" data-question="q69">
+                <div class="question-number">Question 69</div>
+                <div class="question-text">They _______ travel to Europe last summer, but the trip was canceled.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q69" value="a" id="q69a"><label for="q69a">A) are going to</label></div>
+                    <div class="option"><input type="radio" name="q69" value="b" id="q69b"><label for="q69b">B) were going to</label></div>
+                    <div class="option"><input type="radio" name="q69" value="c" id="q69c"><label for="q69c">C) will</label></div>
+                    <div class="option"><input type="radio" name="q69" value="d" id="q69d"><label for="q69d">D) would</label></div>
+                </div>
+                <div class="explanation" data-explanation="Future in past: "were going to" for past plan that didn't happen"></div>
+            </div>
+            <div class="question" data-question="q70">
+                <div class="question-number">Question 70</div>
+                <div class="question-text">I _______ have called you, but I lost your number.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q70" value="a" id="q70a"><label for="q70a">A) must</label></div>
+                    <div class="option"><input type="radio" name="q70" value="b" id="q70b"><label for="q70b">B) should</label></div>
+                    <div class="option"><input type="radio" name="q70" value="c" id="q70c"><label for="q70c">C) would</label></div>
+                    <div class="option"><input type="radio" name="q70" value="d" id="q70d"><label for="q70d">D) can</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Should have called" for obligation/regret"></div>
+            </div>
+            <div class="question" data-question="q71">
+                <div class="question-number">Question 71</div>
+                <div class="question-text">What does "talk someone out of" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q71" value="a" id="q71a"><label for="q71a">A) To encourage someone to do something</label></div>
+                    <div class="option"><input type="radio" name="q71" value="b" id="q71b"><label for="q71b">B) To persuade someone not to do something</label></div>
+                    <div class="option"><input type="radio" name="q71" value="c" id="q71c"><label for="q71c">C) To ignore someone</label></div>
+                    <div class="option"><input type="radio" name="q71" value="d" id="q71d"><label for="q71d">D) To speak loudly</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Talk someone out of" = persuade NOT to do something"></div>
+            </div>
+            <div class="question" data-question="q72">
+                <div class="question-number">Question 72</div>
+                <div class="question-text">She _______ have known about the surprise party.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q72" value="a" id="q72a"><label for="q72a">A) must</label></div>
+                    <div class="option"><input type="radio" name="q72" value="b" id="q72b"><label for="q72b">B) should</label></div>
+                    <div class="option"><input type="radio" name="q72" value="c" id="q72c"><label for="q72c">C) would</label></div>
+                    <div class="option"><input type="radio" name="q72" value="d" id="q72d"><label for="q72d">D) can</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Must have + past participle" for strong deduction about past"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(6)">Submit Unit 6 📝</button>
+            <div class="unit-result" id="result6"></div>
+        </div>
+
+        <div class="unit-section" id="unit7">
+            <h2 class="unit-title">Unit 7 — Tales of the Unexpected</h2>
+            <div class="question" data-question="q73">
+                <div class="question-number">Question 73</div>
+                <div class="question-text">_______ opening the door, she realized something was wrong.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q73" value="a" id="q73a"><label for="q73a">A) After</label></div>
+                    <div class="option"><input type="radio" name="q73" value="b" id="q73b"><label for="q73b">B) Before</label></div>
+                    <div class="option"><input type="radio" name="q73" value="c" id="q73c"><label for="q73c">C) While</label></div>
+                    <div class="option"><input type="radio" name="q73" value="d" id="q73d"><label for="q73d">D) When</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reduced adverbial clause: "After opening" = after she opened"></div>
+            </div>
+            <div class="question" data-question="q74">
+                <div class="question-number">Question 74</div>
+                <div class="question-text">I was walking home when, suddenly, it started to rain.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q74" value="a" id="q74a"><label for="q74a">A) This sentence is correct</label></div>
+                    <div class="option"><input type="radio" name="q74" value="b" id="q74b"><label for="q74b">B) This sentence is incorrect</label></div>
+                    <div class="option"><input type="radio" name="q74" value="c" id="q74c"><label for="q74c">C) "Suddenly" should be at the end</label></div>
+                    <div class="option"><input type="radio" name="q74" value="d" id="q74d"><label for="q74d">D) "Walking" should be "walked"</label></div>
+                </div>
+                <div class="explanation" data-explanation="Correct: past continuous "was walking" + simple past "started""></div>
+            </div>
+            <div class="question" data-question="q75">
+                <div class="question-number">Question 75</div>
+                <div class="question-text">What does "out of the blue" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q75" value="a" id="q75a"><label for="q75a">A) From the sky</label></div>
+                    <div class="option"><input type="radio" name="q75" value="b" id="q75b"><label for="q75b">B) Unexpectedly, without warning</label></div>
+                    <div class="option"><input type="radio" name="q75" value="c" id="q75c"><label for="q75c">C) Feeling sad</label></div>
+                    <div class="option"><input type="radio" name="q75" value="d" id="q75d"><label for="q75d">D) In the ocean</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Out of the blue" = unexpectedly, without warning"></div>
+            </div>
+            <div class="question" data-question="q76">
+                <div class="question-number">Question 76</div>
+                <div class="question-text">The story was _______ by a famous author.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q76" value="a" id="q76a"><label for="q76a">A) writing</label></div>
+                    <div class="option"><input type="radio" name="q76" value="b" id="q76b"><label for="q76b">B) wrote</label></div>
+                    <div class="option"><input type="radio" name="q76" value="c" id="q76c"><label for="q76c">C) written</label></div>
+                    <div class="option"><input type="radio" name="q76" value="d" id="q76d"><label for="q76d">D) writes</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past participle "written" as adjective in passive voice"></div>
+            </div>
+            <div class="question" data-question="q77">
+                <div class="question-number">Question 77</div>
+                <div class="question-text">What does "coincidence" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q77" value="a" id="q77a"><label for="q77a">A) Something planned carefully</label></div>
+                    <div class="option"><input type="radio" name="q77" value="b" id="q77b"><label for="q77b">B) When things happen by chance at the same time</label></div>
+                    <div class="option"><input type="radio" name="q77" value="c" id="q77c"><label for="q77c">C) A type of mystery</label></div>
+                    <div class="option"><input type="radio" name="q77" value="d" id="q77d"><label for="q77d">D) A surprising ending</label></div>
+                </div>
+                <div class="explanation" data-explanation="Coincidence = things happening by chance at same time"></div>
+            </div>
+            <div class="question" data-question="q78">
+                <div class="question-number">Question 78</div>
+                <div class="question-text">_______ driving to work, I saw an accident.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q78" value="a" id="q78a"><label for="q78a">A) While</label></div>
+                    <div class="option"><input type="radio" name="q78" value="b" id="q78b"><label for="q78b">B) During</label></div>
+                    <div class="option"><input type="radio" name="q78" value="c" id="q78c"><label for="q78c">C) Since</label></div>
+                    <div class="option"><input type="radio" name="q78" value="d" id="q78d"><label for="q78d">D) Until</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reduced clause: "While driving" = while I was driving"></div>
+            </div>
+            <div class="question" data-question="q79">
+                <div class="question-number">Question 79</div>
+                <div class="question-text">The man _______ in the corner looked suspicious.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q79" value="a" id="q79a"><label for="q79a">A) stand</label></div>
+                    <div class="option"><input type="radio" name="q79" value="b" id="q79b"><label for="q79b">B) stood</label></div>
+                    <div class="option"><input type="radio" name="q79" value="c" id="q79c"><label for="q79c">C) standing</label></div>
+                    <div class="option"><input type="radio" name="q79" value="d" id="q79d"><label for="q79d">D) stands</label></div>
+                </div>
+                <div class="explanation" data-explanation="Present participle "standing" as adjective"></div>
+            </div>
+            <div class="question" data-question="q80">
+                <div class="question-number">Question 80</div>
+                <div class="question-text">She felt _______ when she heard the strange noise.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q80" value="a" id="q80a"><label for="q80a">A) relieved</label></div>
+                    <div class="option"><input type="radio" name="q80" value="b" id="q80b"><label for="q80b">B) terrified</label></div>
+                    <div class="option"><input type="radio" name="q80" value="c" id="q80c"><label for="q80c">C) amazed</label></div>
+                    <div class="option"><input type="radio" name="q80" value="d" id="q80d"><label for="q80d">D) puzzled</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Terrified" = extremely frightened (appropriate for strange noise)"></div>
+            </div>
+            <div class="question" data-question="q81">
+                <div class="question-number">Question 81</div>
+                <div class="question-text">What is a "twist" in a story?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q81" value="a" id="q81a"><label for="q81a">A) The beginning</label></div>
+                    <div class="option"><input type="radio" name="q81" value="b" id="q81b"><label for="q81b">B) An unexpected change in the plot</label></div>
+                    <div class="option"><input type="radio" name="q81" value="c" id="q81c"><label for="q81c">C) The main character</label></div>
+                    <div class="option"><input type="radio" name="q81" value="d" id="q81d"><label for="q81d">D) The setting</label></div>
+                </div>
+                <div class="explanation" data-explanation="Twist = unexpected change/surprise in plot"></div>
+            </div>
+            <div class="question" data-question="q82">
+                <div class="question-number">Question 82</div>
+                <div class="question-text">_______ finishing dinner, we watched a movie.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q82" value="a" id="q82a"><label for="q82a">A) After</label></div>
+                    <div class="option"><input type="radio" name="q82" value="b" id="q82b"><label for="q82b">B) Before</label></div>
+                    <div class="option"><input type="radio" name="q82" value="c" id="q82c"><label for="q82c">C) While</label></div>
+                    <div class="option"><input type="radio" name="q82" value="d" id="q82d"><label for="q82d">D) During</label></div>
+                </div>
+                <div class="explanation" data-explanation="Reduced clause: "After finishing" = after we finished"></div>
+            </div>
+            <div class="question" data-question="q83">
+                <div class="question-number">Question 83</div>
+                <div class="question-text">What does "miraculous" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q83" value="a" id="q83a"><label for="q83a">A) Very scary</label></div>
+                    <div class="option"><input type="radio" name="q83" value="b" id="q83b"><label for="q83b">B) Surprisingly wonderful, like a miracle</label></div>
+                    <div class="option"><input type="radio" name="q83" value="c" id="q83c"><label for="q83c">C) Very confusing</label></div>
+                    <div class="option"><input type="radio" name="q83" value="d" id="q83d"><label for="q83d">D) Very common</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Miraculous" = surprisingly wonderful, like a miracle"></div>
+            </div>
+            <div class="question" data-question="q84">
+                <div class="question-number">Question 84</div>
+                <div class="question-text">The letter _______ yesterday contained shocking news.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q84" value="a" id="q84a"><label for="q84a">A) receive</label></div>
+                    <div class="option"><input type="radio" name="q84" value="b" id="q84b"><label for="q84b">B) receiving</label></div>
+                    <div class="option"><input type="radio" name="q84" value="c" id="q84c"><label for="q84c">C) received</label></div>
+                    <div class="option"><input type="radio" name="q84" value="d" id="q84d"><label for="q84d">D) receives</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past participle "received" as adjective"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(7)">Submit Unit 7 📝</button>
+            <div class="unit-result" id="result7"></div>
+        </div>
+
+        <div class="unit-section" id="unit8">
+            <h2 class="unit-title">Unit 8 — Inventions and Discoveries</h2>
+            <div class="question" data-question="q85">
+                <div class="question-number">Question 85</div>
+                <div class="question-text">If I had enough money, I _______ buy that state-of-the-art computer.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q85" value="a" id="q85a"><label for="q85a">A) will</label></div>
+                    <div class="option"><input type="radio" name="q85" value="b" id="q85b"><label for="q85b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q85" value="c" id="q85c"><label for="q85c">C) can</label></div>
+                    <div class="option"><input type="radio" name="q85" value="d" id="q85d"><label for="q85d">D) must</label></div>
+                </div>
+                <div class="explanation" data-explanation="Unreal conditional (present): "would" in main clause"></div>
+            </div>
+            <div class="question" data-question="q86">
+                <div class="question-number">Question 86</div>
+                <div class="question-text">If they _______ invented the wheel, transportation would be very different.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q86" value="a" id="q86a"><label for="q86a">A) haven't</label></div>
+                    <div class="option"><input type="radio" name="q86" value="b" id="q86b"><label for="q86b">B) didn't</label></div>
+                    <div class="option"><input type="radio" name="q86" value="c" id="q86c"><label for="q86c">C) hadn't</label></div>
+                    <div class="option"><input type="radio" name="q86" value="d" id="q86d"><label for="q86d">D) don't</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past unreal conditional: "hadn't" (past perfect) in if-clause"></div>
+            </div>
+            <div class="question" data-question="q87">
+                <div class="question-number">Question 87</div>
+                <div class="question-text">What does "cutting-edge" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q87" value="a" id="q87a"><label for="q87a">A) Very sharp</label></div>
+                    <div class="option"><input type="radio" name="q87" value="b" id="q87b"><label for="q87b">B) Most advanced and modern</label></div>
+                    <div class="option"><input type="radio" name="q87" value="c" id="q87c"><label for="q87c">C) Very old</label></div>
+                    <div class="option"><input type="radio" name="q87" value="d" id="q87d"><label for="q87d">D) Very expensive</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Cutting-edge" = most advanced/modern technology"></div>
+            </div>
+            <div class="question" data-question="q88">
+                <div class="question-number">Question 88</div>
+                <div class="question-text">If she had studied harder, she _______ have become a scientist.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q88" value="a" id="q88a"><label for="q88a">A) will</label></div>
+                    <div class="option"><input type="radio" name="q88" value="b" id="q88b"><label for="q88b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q88" value="c" id="q88c"><label for="q88c">C) can</label></div>
+                    <div class="option"><input type="radio" name="q88" value="d" id="q88d"><label for="q88d">D) must</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past unreal conditional: "would have" in main clause"></div>
+            </div>
+            <div class="question" data-question="q89">
+                <div class="question-number">Question 89</div>
+                <div class="question-text">What does "innovative" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q89" value="a" id="q89a"><label for="q89a">A) Traditional</label></div>
+                    <div class="option"><input type="radio" name="q89" value="b" id="q89b"><label for="q89b">B) Introducing new ideas or methods</label></div>
+                    <div class="option"><input type="radio" name="q89" value="c" id="q89c"><label for="q89c">C) Very expensive</label></div>
+                    <div class="option"><input type="radio" name="q89" value="d" id="q89d"><label for="q89d">D) Very simple</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Innovative" = introducing new ideas/methods"></div>
+            </div>
+            <div class="question" data-question="q90">
+                <div class="question-number">Question 90</div>
+                <div class="question-text">If I _______ afford it, I'd get the top-of-the-line model.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q90" value="a" id="q90a"><label for="q90a">A) can</label></div>
+                    <div class="option"><input type="radio" name="q90" value="b" id="q90b"><label for="q90b">B) could</label></div>
+                    <div class="option"><input type="radio" name="q90" value="c" id="q90c"><label for="q90c">C) will</label></div>
+                    <div class="option"><input type="radio" name="q90" value="d" id="q90d"><label for="q90d">D) must</label></div>
+                </div>
+                <div class="explanation" data-explanation="Unreal conditional (present): "could" in if-clause"></div>
+            </div>
+            <div class="question" data-question="q91">
+                <div class="question-number">Question 91</div>
+                <div class="question-text">What is "penicillin"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q91" value="a" id="q91a"><label for="q91a">A) A type of computer</label></div>
+                    <div class="option"><input type="radio" name="q91" value="b" id="q91b"><label for="q91b">B) An antibiotic medicine</label></div>
+                    <div class="option"><input type="radio" name="q91" value="c" id="q91c"><label for="q91c">C) A 3-D printer</label></div>
+                    <div class="option"><input type="radio" name="q91" value="d" id="q91d"><label for="q91d">D) A type of X-ray</label></div>
+                </div>
+                <div class="explanation" data-explanation="Penicillin = antibiotic medicine discovered by Fleming"></div>
+            </div>
+            <div class="question" data-question="q92">
+                <div class="question-number">Question 92</div>
+                <div class="question-text">If he _______ invented that device, someone else would have.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q92" value="a" id="q92a"><label for="q92a">A) hasn't</label></div>
+                    <div class="option"><input type="radio" name="q92" value="b" id="q92b"><label for="q92b">B) didn't</label></div>
+                    <div class="option"><input type="radio" name="q92" value="c" id="q92c"><label for="q92c">C) hadn't</label></div>
+                    <div class="option"><input type="radio" name="q92" value="d" id="q92d"><label for="q92d">D) don't</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past unreal conditional: "hadn't" (past perfect) in if-clause"></div>
+            </div>
+            <div class="question" data-question="q93">
+                <div class="question-number">Question 93</div>
+                <div class="question-text">What does "first-rate" mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q93" value="a" id="q93a"><label for="q93a">A) The first to be made</label></div>
+                    <div class="option"><input type="radio" name="q93" value="b" id="q93b"><label for="q93b">B) Of the highest quality</label></div>
+                    <div class="option"><input type="radio" name="q93" value="c" id="q93c"><label for="q93c">C) Very cheap</label></div>
+                    <div class="option"><input type="radio" name="q93" value="d" id="q93d"><label for="q93d">D) Very old</label></div>
+                </div>
+                <div class="explanation" data-explanation=""First-rate" = highest quality/excellence"></div>
+            </div>
+            <div class="question" data-question="q94">
+                <div class="question-number">Question 94</div>
+                <div class="question-text">If I _______ more time, I would learn to use this application.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q94" value="a" id="q94a"><label for="q94a">A) have</label></div>
+                    <div class="option"><input type="radio" name="q94" value="b" id="q94b"><label for="q94b">B) had</label></div>
+                    <div class="option"><input type="radio" name="q94" value="c" id="q94c"><label for="q94c">C) will have</label></div>
+                    <div class="option"><input type="radio" name="q94" value="d" id="q94d"><label for="q94d">D) having</label></div>
+                </div>
+                <div class="explanation" data-explanation="Unreal conditional (present): past tense "had" for present hypothetical"></div>
+            </div>
+            <div class="question" data-question="q95">
+                <div class="question-number">Question 95</div>
+                <div class="question-text">What is a "circuit board"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q95" value="a" id="q95a"><label for="q95a">A) A type of screen</label></div>
+                    <div class="option"><input type="radio" name="q95" value="b" id="q95b"><label for="q95b">B) An electronic component with circuits</label></div>
+                    <div class="option"><input type="radio" name="q95" value="c" id="q95c"><label for="q95c">C) A wooden board</label></div>
+                    <div class="option"><input type="radio" name="q95" value="d" id="q95d"><label for="q95d">D) A type of game</label></div>
+                </div>
+                <div class="explanation" data-explanation="Circuit board = electronic component with electrical circuits"></div>
+            </div>
+            <div class="question" data-question="q96">
+                <div class="question-number">Question 96</div>
+                <div class="question-text">We _______ have succeeded if we had worked together.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q96" value="a" id="q96a"><label for="q96a">A) will</label></div>
+                    <div class="option"><input type="radio" name="q96" value="b" id="q96b"><label for="q96b">B) would</label></div>
+                    <div class="option"><input type="radio" name="q96" value="c" id="q96c"><label for="q96c">C) can</label></div>
+                    <div class="option"><input type="radio" name="q96" value="d" id="q96d"><label for="q96d">D) must</label></div>
+                </div>
+                <div class="explanation" data-explanation="Past unreal conditional: "would have" in main clause"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(8)">Submit Unit 8 📝</button>
+            <div class="unit-result" id="result8"></div>
+        </div>
+
+        <div class="unit-section" id="unit9">
+            <h2 class="unit-title">Unit 9 — Controversial Issues</h2>
+            <div class="question" data-question="q97">
+                <div class="question-number">Question 97</div>
+                <div class="question-text">_______ is an important value in society.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q97" value="a" id="q97a"><label for="q97a">A) Freedom</label></div>
+                    <div class="option"><input type="radio" name="q97" value="b" id="q97b"><label for="q97b">B) Freedoms</label></div>
+                    <div class="option"><input type="radio" name="q97" value="c" id="q97c"><label for="q97c">C) A freedom</label></div>
+                    <div class="option"><input type="radio" name="q97" value="d" id="q97d"><label for="q97d">D) The freedoms</label></div>
+                </div>
+                <div class="explanation" data-explanation="Abstract noun "freedom" is non-count, no article needed"></div>
+            </div>
+            <div class="question" data-question="q98">
+                <div class="question-number">Question 98</div>
+                <div class="question-text">She reminded me _______ to forget my passport.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q98" value="a" id="q98a"><label for="q98a">A) to not</label></div>
+                    <div class="option"><input type="radio" name="q98" value="b" id="q98b"><label for="q98b">B) not to</label></div>
+                    <div class="option"><input type="radio" name="q98" value="c" id="q98c"><label for="q98c">C) don't</label></div>
+                    <div class="option"><input type="radio" name="q98" value="d" id="q98d"><label for="q98d">D) not</label></div>
+                </div>
+                <div class="explanation" data-explanation="Negative infinitive: "not" before "to""></div>
+            </div>
+            <div class="question" data-question="q99">
+                <div class="question-number">Question 99</div>
+                <div class="question-text">What is a "democracy"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q99" value="a" id="q99a"><label for="q99a">A) Government by a king or queen</label></div>
+                    <div class="option"><input type="radio" name="q99" value="b" id="q99b"><label for="q99b">B) Government by the people</label></div>
+                    <div class="option"><input type="radio" name="q99" value="c" id="q99c"><label for="q99c">C) Government by a dictator</label></div>
+                    <div class="option"><input type="radio" name="q99" value="d" id="q99d"><label for="q99d">D) Government by military</label></div>
+                </div>
+                <div class="explanation" data-explanation="Democracy = government by the people through voting"></div>
+            </div>
+            <div class="question" data-question="q100">
+                <div class="question-number">Question 100</div>
+                <div class="question-text">He wants _______ become a politician.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q100" value="a" id="q100a"><label for="q100a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q100" value="b" id="q100b"><label for="q100b">B) to</label></div>
+                    <div class="option"><input type="radio" name="q100" value="c" id="q100c"><label for="q100c">C) for</label></div>
+                    <div class="option"><input type="radio" name="q100" value="d" id="q100d"><label for="q100d">D) if</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Wants" + infinitive: "wants to become""></div>
+            </div>
+            <div class="question" data-question="q101">
+                <div class="question-number">Question 101</div>
+                <div class="question-text">What is "censorship"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q101" value="a" id="q101a"><label for="q101a">A) Free speech</label></div>
+                    <div class="option"><input type="radio" name="q101" value="b" id="q101b"><label for="q101b">B) Controlling or limiting information</label></div>
+                    <div class="option"><input type="radio" name="q101" value="c" id="q101c"><label for="q101c">C) Voting rights</label></div>
+                    <div class="option"><input type="radio" name="q101" value="d" id="q101d"><label for="q101d">D) Freedom of religion</label></div>
+                </div>
+                <div class="explanation" data-explanation="Censorship = controlling/limiting information or ideas"></div>
+            </div>
+            <div class="question" data-question="q102">
+                <div class="question-number">Question 102</div>
+                <div class="question-text">How do you feel _______ capital punishment?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q102" value="a" id="q102a"><label for="q102a">A) in</label></div>
+                    <div class="option"><input type="radio" name="q102" value="b" id="q102b"><label for="q102b">B) about</label></div>
+                    <div class="option"><input type="radio" name="q102" value="c" id="q102c"><label for="q102c">C) on</label></div>
+                    <div class="option"><input type="radio" name="q102" value="d" id="q102d"><label for="q102d">D) with</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Feel about" is correct preposition combination"></div>
+            </div>
+            <div class="question" data-question="q103">
+                <div class="question-number">Question 103</div>
+                <div class="question-text">Someone who resists change is called _______.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q103" value="a" id="q103a"><label for="q103a">A) liberal</label></div>
+                    <div class="option"><input type="radio" name="q103" value="b" id="q103b"><label for="q103b">B) radical</label></div>
+                    <div class="option"><input type="radio" name="q103" value="c" id="q103c"><label for="q103c">C) conservative</label></div>
+                    <div class="option"><input type="radio" name="q103" value="d" id="q103d"><label for="q103d">D) moderate</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Conservative" = resists change, prefers traditional values"></div>
+            </div>
+            <div class="question" data-question="q104">
+                <div class="question-number">Question 104</div>
+                <div class="question-text">They encouraged us _______ vote in the election.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q104" value="a" id="q104a"><label for="q104a">A) that</label></div>
+                    <div class="option"><input type="radio" name="q104" value="b" id="q104b"><label for="q104b">B) to</label></div>
+                    <div class="option"><input type="radio" name="q104" value="c" id="q104c"><label for="q104c">C) for</label></div>
+                    <div class="option"><input type="radio" name="q104" value="d" id="q104d"><label for="q104d">D) if</label></div>
+                </div>
+                <div class="explanation" data-explanation=""Encourage + object + to": encouraged us to vote"></div>
+            </div>
+            <div class="question" data-question="q105">
+                <div class="question-number">Question 105</div>
+                <div class="question-text">What is a "monarchy"?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q105" value="a" id="q105a"><label for="q105a">A) Government by elected officials</label></div>
+                    <div class="option"><input type="radio" name="q105" value="b" id="q105b"><label for="q105b">B) Government by a king or queen</label></div>
+                    <div class="option"><input type="radio" name="q105" value="c" id="q105c"><label for="q105c">C) Government by the people</label></div>
+                    <div class="option"><input type="radio" name="q105" value="d" id="q105d"><label for="q105d">D) Government by dictator</label></div>
+                </div>
+                <div class="explanation" data-explanation="Monarchy = government ruled by king/queen"></div>
+            </div>
+            <div class="question" data-question="q106">
+                <div class="question-number">Question 106</div>
+                <div class="question-text">_______ is necessary for a healthy society.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q106" value="a" id="q106a"><label for="q106a">A) Educations</label></div>
+                    <div class="option"><input type="radio" name="q106" value="b" id="q106b"><label for="q106b">B) Education</label></div>
+                    <div class="option"><input type="radio" name="q106" value="c" id="q106c"><label for="q106c">C) An education</label></div>
+                    <div class="option"><input type="radio" name="q106" value="d" id="q106d"><label for="q106d">D) The educations</label></div>
+                </div>
+                <div class="explanation" data-explanation="Abstract noun "education" is non-count, no article needed"></div>
+            </div>
+            <div class="question" data-question="q107">
+                <div class="question-number">Question 107</div>
+                <div class="question-text">He pretended _______ notice the problem.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q107" value="a" id="q107a"><label for="q107a">A) to not</label></div>
+                    <div class="option"><input type="radio" name="q107" value="b" id="q107b"><label for="q107b">B) not to</label></div>
+                    <div class="option"><input type="radio" name="q107" value="c" id="q107c"><label for="q107c">C) don't</label></div>
+                    <div class="option"><input type="radio" name="q107" value="d" id="q107d"><label for="q107d">D) not</label></div>
+                </div>
+                <div class="explanation" data-explanation="Negative infinitive: "not" before "to""></div>
+            </div>
+            <div class="question" data-question="q108">
+                <div class="question-number">Question 108</div>
+                <div class="question-text">What does "No offense, but..." mean?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q108" value="a" id="q108a"><label for="q108a">A) I want to offend you</label></div>
+                    <div class="option"><input type="radio" name="q108" value="b" id="q108b"><label for="q108b">B) I don't mean to upset you, but...</label></div>
+                    <div class="option"><input type="radio" name="q108" value="c" id="q108c"><label for="q108c">C) I completely agree</label></div>
+                    <div class="option"><input type="radio" name="q108" value="d" id="q108d"><label for="q108d">D) I don't want to talk</label></div>
+                </div>
+                <div class="explanation" data-explanation=""No offense, but..." = I don't mean to upset you before disagreeing"></div>
+            </div>
+            <button type="button" class="submit-btn" onclick="gradeUnit(9)">Submit Unit 9 📝</button>
+            <div class="unit-result" id="result9"></div>
+        </div>
+    </div>
+
+<script>
+const answers = {
+    q1: 'b',
+    q2: 'b',
+    q3: 'b',
+    q4: 'b',
+    q5: 'b',
+    q6: 'b',
+    q7: 'b',
+    q8: 'b',
+    q9: 'c',
+    q10: 'b',
+    q11: 'b',
+    q12: 'c',
+    q13: 'a',
+    q14: 'c',
+    q15: 'b',
+    q16: 'b',
+    q17: 'b',
+    q18: 'b',
+    q19: 'c',
+    q20: 'b',
+    q21: 'b',
+    q22: 'b',
+    q23: 'b',
+    q24: 'b',
+    q25: 'a',
+    q26: 'b',
+    q27: 'a',
+    q28: 'b',
+    q29: 'a',
+    q30: 'b',
+    q31: 'a',
+    q32: 'b',
+    q33: 'b',
+    q34: 'b',
+    q35: 'b',
+    q36: 'b',
+    q37: 'a',
+    q38: 'b',
+    q39: 'b',
+    q40: 'b',
+    q41: 'b',
+    q42: 'a',
+    q43: 'b',
+    q44: 'b',
+    q45: 'b',
+    q46: 'a',
+    q47: 'b',
+    q48: 'a',
+    q49: 'b',
+    q50: 'b',
+    q51: 'b',
+    q52: 'b',
+    q53: 'a',
+    q54: 'b',
+    q55: 'b',
+    q56: 'b',
+    q57: 'b',
+    q58: 'b',
+    q59: 'a',
+    q60: 'b',
+    q61: 'b',
+    q62: 'b',
+    q63: 'b',
+    q64: 'c',
+    q65: 'b',
+    q66: 'b',
+    q67: 'b',
+    q68: 'b',
+    q69: 'b',
+    q70: 'b',
+    q71: 'b',
+    q72: 'a',
+    q73: 'a',
+    q74: 'a',
+    q75: 'b',
+    q76: 'c',
+    q77: 'b',
+    q78: 'a',
+    q79: 'c',
+    q80: 'b',
+    q81: 'b',
+    q82: 'a',
+    q83: 'b',
+    q84: 'c',
+    q85: 'b',
+    q86: 'c',
+    q87: 'b',
+    q88: 'b',
+    q89: 'b',
+    q90: 'b',
+    q91: 'b',
+    q92: 'c',
+    q93: 'b',
+    q94: 'b',
+    q95: 'b',
+    q96: 'b',
+    q97: 'a',
+    q98: 'b',
+    q99: 'b',
+    q100: 'b',
+    q101: 'b',
+    q102: 'b',
+    q103: 'c',
+    q104: 'b',
+    q105: 'b',
+    q106: 'b',
+    q107: 'b',
+    q108: 'b'
+};
+
+const unitScores = {};
+let completedUnits = 0;
+
+function gradeUnit(unitNum) {
+    const unitSection = document.getElementById('unit' + unitNum);
+    const questions = unitSection.querySelectorAll('.question');
+    const submitBtn = unitSection.querySelector('.submit-btn');
+
+    let correct = 0;
+    let total = 12;
+    let allAnswered = true;
+
+    questions.forEach(question => {
+        const questionName = question.getAttribute('data-question');
+        const selectedRadio = question.querySelector('input[type="radio"]:checked');
+
+        if (!selectedRadio) {
+            allAnswered = false;
+            return;
+        }
+
+        const userAnswer = selectedRadio.value;
+        const correctAnswer = answers[questionName];
+        const explanationDiv = question.querySelector('.explanation');
+        const explanationText = explanationDiv.getAttribute('data-explanation');
+
+        // Deshabilitar todos los radios
+        question.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.disabled = true;
+        });
+
+        if (userAnswer === correctAnswer) {
+            question.classList.add('correct');
+            explanationDiv.className = 'explanation correct';
+            explanationDiv.innerHTML = '<strong>✓ Correct!</strong> ' + explanationText;
+            correct++;
+            selectedRadio.closest('.option').classList.add('selected-correct');
+        } else {
+            question.classList.add('incorrect');
+            explanationDiv.className = 'explanation incorrect';
+            explanationDiv.innerHTML = '<strong>✗ Incorrect.</strong> The correct answer is <strong>' + correctAnswer.toUpperCase() + '</strong>. ' + explanationText;
+            selectedRadio.closest('.option').classList.add('selected-incorrect');
+
+            // Mostrar respuesta correcta
+            const correctOption = question.querySelector('input[value="' + correctAnswer + '"]').closest('.option');
+            correctOption.classList.add('show-correct');
+        }
+    });
+
+    if (!allAnswered) {
+        alert('Please answer all 12 questions before submitting Unit ' + unitNum + '!');
+        return;
+    }
+
+    // Guardar puntuación
+    unitScores[unitNum] = { correct: correct, total: total };
+
+    // Mostrar resultado
+    const percentage = Math.round((correct / total) * 100);
+    const resultDiv = document.getElementById('result' + unitNum);
+    resultDiv.innerHTML = 'Unit ' + unitNum + ' Score: ' + correct + '/' + total + ' (' + percentage + '%) ' +
+        (percentage >= 80 ? '🌟 Excellent!' : percentage >= 60 ? '👍 Good!' : '📚 Keep studying!');
+    resultDiv.classList.add('show');
+
+    // Actualizar badge
+    const badge = document.getElementById('badge' + unitNum);
+    badge.textContent = 'Unit ' + unitNum + ': ' + correct + '/12';
+    badge.classList.add('completed');
+
+    // Deshabilitar botón
+    submitBtn.disabled = true;
+    submitBtn.textContent = '✓ Unit ' + unitNum + ' Completed';
+
+    // Marcar sección como calificada
+    unitSection.classList.add('graded');
+
+    // Actualizar contador
+    if (!unitScores[unitNum + '_counted']) {
+        completedUnits++;
+        unitScores[unitNum + '_counted'] = true;
+    }
+    updateProgress();
+
+    // Scroll suave al resultado
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function updateProgress() {
+    const progressText = document.querySelector('.progress-text');
+    progressText.textContent = 'Units Completed: ' + completedUnits + '/9';
+
+    if (completedUnits === 9) {
+        // Calcular puntuación total
+        let totalCorrect = 0;
+        let totalQuestions = 0;
+        for (let i = 1; i <= 9; i++) {
+            if (unitScores[i]) {
+                totalCorrect += unitScores[i].correct;
+                totalQuestions += unitScores[i].total;
+            }
+        }
+        const finalPercentage = Math.round((totalCorrect / totalQuestions) * 100);
+        progressText.innerHTML = '🎉 All Units Completed! Final Score: ' + totalCorrect + '/' + totalQuestions + ' (' + finalPercentage + '%)';
+        document.querySelector('.progress-bar').style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+        document.querySelector('.progress-bar').style.color = 'white';
+    }
+}
+</script>
+
+</body>
+</html>
