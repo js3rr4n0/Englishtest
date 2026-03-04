@@ -1,1401 +1,890 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📚 Examen de Filosofía</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eef2f7; color: #333; }
-  .container { max-width: 920px; margin: 0 auto; padding: 24px 16px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Psicología Educativa - Quiz por Temas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      padding: 24px 32px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+    }
+    header h1 { font-size: 1.8rem; color: #fff; }
+    header p  { color: #c7d2fe; margin-top: 6px; font-size: 0.95rem; }
 
-  header { text-align: center; background: linear-gradient(135deg, #1a2a4a, #2c3e70); color: white; padding: 32px 20px; border-radius: 14px; margin-bottom: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-  header h1 { font-size: 2em; letter-spacing: 1px; }
-  header .subtitulo { opacity: 0.85; margin-top: 8px; font-size: 1em; }
-  header .info-nota { margin-top: 14px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 18px; font-size: 0.92em; display: inline-block; }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px 16px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+    nav button {
+      padding: 10px 18px;
+      border: 2px solid #6366f1;
+      background: transparent;
+      color: #a5b4fc;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+    nav button:hover, nav button.active {
+      background: #6366f1;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(99,102,241,0.5);
+    }
 
-  .seccion { background: white; border-radius: 14px; padding: 28px; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-top: 5px solid #3a7bd5; }
-  .seccion:nth-child(2) { border-top-color: #e74c3c; }
-  .seccion:nth-child(3) { border-top-color: #27ae60; }
-  .seccion:nth-child(4) { border-top-color: #f39c12; }
-  .seccion-titulo { font-size: 1.2em; font-weight: 700; color: #1a2a4a; border-bottom: 2px solid #eee; padding-bottom: 12px; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .seccion-num { background: #3a7bd5; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.78em; font-weight: 600; white-space: nowrap; }
-  .seccion:nth-child(2) .seccion-num { background: #e74c3c; }
-  .seccion:nth-child(3) .seccion-num { background: #27ae60; }
-  .seccion:nth-child(4) .seccion-num { background: #f39c12; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 16px 60px; }
 
-  .pregunta { margin-bottom: 20px; padding: 16px; border: 1.5px solid #e8ecf0; border-radius: 10px; transition: all 0.25s; }
-  .pregunta:hover { background: #f7faff; border-color: #c5d5f0; }
-  .pregunta-num { font-weight: 700; color: #3a7bd5; margin-bottom: 6px; font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.5px; }
-  .pregunta-texto { font-size: 1em; margin-bottom: 14px; line-height: 1.5; font-weight: 500; }
-  .opciones { display: flex; flex-direction: column; gap: 7px; }
-  .opcion label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 9px 12px; border-radius: 7px; border: 1.5px solid #dce3ee; transition: all 0.2s; font-size: 0.95em; line-height: 1.4; }
-  .opcion label:hover { background: #eef4ff; border-color: #aac3f0; }
-  .opcion input[type="radio"] { margin-top: 2px; flex-shrink: 0; accent-color: #3a7bd5; width: 16px; height: 16px; }
+    .tema-section { display: none; }
+    .tema-section.active { display: block; }
 
-  .correcto { border-color: #27ae60 !important; background: #eafaf1 !important; }
-  .incorrecto { border-color: #e74c3c !important; background: #fdf0ee !important; }
-  .opcion.correcta-highlight label { background: #eafaf1; border-color: #27ae60; font-weight: 600; }
-  .opcion.incorrecta-marcada label { background: #fdf0ee; border-color: #e74c3c; text-decoration: line-through; opacity: 0.8; }
-  .respuesta-correcta-msg { color: #27ae60; font-size: 0.82em; font-weight: 600; margin-top: 8px; padding: 5px 10px; background: #eafaf1; border-radius: 5px; display: inline-block; }
+    .tema-header {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border-left: 5px solid #6366f1;
+      padding: 20px 24px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+    }
+    .tema-header h2 { font-size: 1.4rem; color: #a5b4fc; }
+    .tema-header p  { color: #94a3b8; margin-top: 6px; font-size: 0.9rem; }
 
-  /* ---- Botón por sección ---- */
-  .btn-submit-seccion { display: block; width: 100%; padding: 13px; background: linear-gradient(135deg, #3a7bd5, #5a9ff0); color: white; border: none; border-radius: 10px; font-size: 1em; font-weight: 700; cursor: pointer; margin-top: 18px; letter-spacing: 0.5px; box-shadow: 0 3px 12px rgba(58,123,213,0.3); transition: all 0.3s; }
-  .btn-submit-seccion:hover { transform: translateY(-2px); box-shadow: 0 5px 18px rgba(58,123,213,0.4); }
-  .seccion:nth-child(2) .btn-submit-seccion { background: linear-gradient(135deg, #e74c3c, #f08070); box-shadow: 0 3px 12px rgba(231,76,60,0.3); }
-  .seccion:nth-child(2) .btn-submit-seccion:hover { box-shadow: 0 5px 18px rgba(231,76,60,0.4); }
-  .seccion:nth-child(3) .btn-submit-seccion { background: linear-gradient(135deg, #27ae60, #48c77a); box-shadow: 0 3px 12px rgba(39,174,96,0.3); }
-  .seccion:nth-child(3) .btn-submit-seccion:hover { box-shadow: 0 5px 18px rgba(39,174,96,0.4); }
-  .seccion:nth-child(4) .btn-submit-seccion { background: linear-gradient(135deg, #f39c12, #f7c04a); box-shadow: 0 3px 12px rgba(243,156,18,0.3); }
-  .seccion:nth-child(4) .btn-submit-seccion:hover { box-shadow: 0 5px 18px rgba(243,156,18,0.4); }
+    .question-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-bottom: 22px;
+      border: 1px solid #334155;
+      transition: border-color 0.2s;
+    }
+    .question-card.correct-card  { border-color: #22c55e; }
+    .question-card.incorrect-card{ border-color: #ef4444; }
 
-  /* Resultado inline por sección */
-  .sec-resultado-inline { border-radius: 10px; padding: 14px 18px; margin-top: 14px; font-weight: 600; font-size: 0.95em; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-  .sec-resultado-inline.bien { background: #eafaf1; border: 1.5px solid #27ae60; color: #1e8449; }
-  .sec-resultado-inline.regular { background: #fef9e7; border: 1.5px solid #f39c12; color: #b7770d; }
-  .sec-resultado-inline.mal { background: #fdf0ee; border: 1.5px solid #e74c3c; color: #cb4335; }
-  .sec-resultado-inline .sec-score { font-size: 1.6em; font-weight: 800; }
+    .question-text {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .question-num {
+      display: inline-block;
+      background: #6366f1;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
 
-  /* ---- Botón submit final ---- */
-  .btn-submit { display: block; width: 100%; padding: 18px; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border: none; border-radius: 12px; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(39,174,96,0.35); transition: all 0.3s; }
-  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(39,174,96,0.45); }
+    .options label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #0f172a;
+      border: 1px solid #334155;
+      transition: all 0.2s;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .options label:hover { background: #1e3a5f; border-color: #6366f1; }
+    .options input[type=radio] { margin-top: 3px; accent-color: #6366f1; flex-shrink:0; }
 
-  /* Resultado final */
-  #resultado { display: none; background: white; border-radius: 14px; padding: 36px; margin-top: 28px; box-shadow: 0 6px 30px rgba(0,0,0,0.12); }
-  .resultado-titulo { text-align: center; font-size: 1.6em; font-weight: 700; color: #1a2a4a; margin-bottom: 24px; }
-  .nota-final-wrap { text-align: center; margin: 20px 0 28px; }
-  .nota-final { font-size: 5em; font-weight: 800; line-height: 1; }
-  .nota-final.bien { color: #27ae60; }
-  .nota-final.regular { color: #f39c12; }
-  .nota-final.mal { color: #e74c3c; }
-  .nota-label { font-size: 1em; color: #7f8c8d; margin-top: 6px; }
-  .total-correctas { font-size: 1.1em; color: #555; margin-top: 4px; }
+    .options label.correct  { background: #14532d; border-color: #22c55e; color: #86efac; }
+    .options label.incorrect{ background: #450a0a; border-color: #ef4444; color: #fca5a5; }
 
-  .barra-wrap { margin: 16px 0 28px; }
-  .barra { width: 100%; height: 22px; background: #ecf0f1; border-radius: 11px; overflow: hidden; }
-  .barra-fill { height: 100%; border-radius: 11px; transition: width 0.8s ease; }
-  .barra-fill.bien { background: linear-gradient(90deg, #27ae60, #2ecc71); }
-  .barra-fill.regular { background: linear-gradient(90deg, #f39c12, #f1c40f); }
-  .barra-fill.mal { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+    .feedback {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.ok  { background: #14532d; color: #86efac; }
+    .feedback.err { background: #450a0a; color: #fca5a5; }
 
-  .secciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-  @media (max-width: 600px) { .secciones-grid { grid-template-columns: 1fr; } }
-  .sec-card { border-radius: 10px; padding: 16px; border-left: 5px solid #3a7bd5; background: #f8fbff; }
-  .sec-card:nth-child(2) { border-left-color: #e74c3c; background: #fff8f8; }
-  .sec-card:nth-child(3) { border-left-color: #27ae60; background: #f8fff9; }
-  .sec-card:nth-child(4) { border-left-color: #f39c12; background: #fffbf4; }
-  .sec-card-titulo { font-size: 0.82em; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-  .sec-card-puntos { font-size: 1.8em; font-weight: 800; color: #1a2a4a; }
-  .sec-card-de { font-size: 0.85em; color: #888; }
-  .sec-card-barra { height: 6px; background: #e0e0e0; border-radius: 3px; margin-top: 8px; overflow: hidden; }
-  .sec-card-barra-fill { height: 100%; border-radius: 3px; }
-  .sec-card:nth-child(1) .sec-card-barra-fill { background: #3a7bd5; }
-  .sec-card:nth-child(2) .sec-card-barra-fill { background: #e74c3c; }
-  .sec-card:nth-child(3) .sec-card-barra-fill { background: #27ae60; }
-  .sec-card:nth-child(4) .sec-card-barra-fill { background: #f39c12; }
+    .btn-check {
+      margin-top: 28px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      width: 100%;
+    }
+    .btn-check:hover { opacity: 0.88; }
 
-  .mensaje-resultado { text-align: center; font-size: 1.05em; padding: 14px; border-radius: 10px; margin-top: 10px; font-weight: 600; }
-  .mensaje-bien { background: #eafaf1; color: #27ae60; }
-  .mensaje-regular { background: #fef9e7; color: #f39c12; }
-  .mensaje-mal { background: #fdf0ee; color: #e74c3c; }
+    .score-box {
+      display: none;
+      background: #1e293b;
+      border: 2px solid #6366f1;
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 28px;
+    }
+    .score-box.show { display: block; }
+    .score-box h3 { color: #a5b4fc; font-size: 1.3rem; }
+    .score-box .score-num { font-size: 2.5rem; font-weight: 800; color: #6366f1; margin: 10px 0; }
+    .score-box p { color: #94a3b8; }
 
-  .advertencia { background: #fef9e7; border: 1px solid #f9e79f; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; color: #7d6608; font-size: 0.9em; display: none; }
-  .advertencia.visible { display: block; }
-</style>
+    .btn-reset {
+      margin-top: 14px;
+      padding: 10px 22px;
+      background: #334155;
+      color: #e2e8f0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .btn-reset:hover { background: #475569; }
+  </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <h1>📚 Examen de Filosofía</h1>
-    <div class="subtitulo">100 Preguntas · Filosofía Medieval y Moderna</div>
-    <div class="info-nota">🎯 Nota final = (Respuestas correctas ÷ 100) × 100%</div>
-  </header>
 
-  <div class="advertencia" id="advertencia"></div>
+<header>
+  <h1>🧠 Psicología Educativa</h1>
+  <p>Cuestionario interactivo por temas — Máster Gloria Marina Vanegas</p>
+</header>
 
-  <form id="examen">
-    <div class="seccion">
-      <div class="seccion-titulo"><span class="seccion-num">📘 Sección 1</span> Filosofía Medieval — Introducción y Escolástica</div>
-      <div class="pregunta" id="p1">
-        <div class="pregunta-num">Pregunta 1</div>
-        <div class="pregunta-texto">¿Qué periodo comprende la Filosofía Medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q1" value="a"> a) Siglos I al V</label></div>
-          <div class="opcion"><label><input type="radio" name="q1" value="b"> b) Siglos V al XV</label></div>
-          <div class="opcion"><label><input type="radio" name="q1" value="c"> c) Siglos XV al XX</label></div>
-          <div class="opcion"><label><input type="radio" name="q1" value="d"> d) Siglos X al XV</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p2">
-        <div class="pregunta-num">Pregunta 2</div>
-        <div class="pregunta-texto">¿En qué se inspiró principalmente el pensamiento medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q2" value="a"> a) En la ciencia experimental</label></div>
-          <div class="opcion"><label><input type="radio" name="q2" value="b"> b) En la Fe Cristiana</label></div>
-          <div class="opcion"><label><input type="radio" name="q2" value="c"> c) En la matemática</label></div>
-          <div class="opcion"><label><input type="radio" name="q2" value="d"> d) En el materialismo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p3">
-        <div class="pregunta-num">Pregunta 3</div>
-        <div class="pregunta-texto">¿Qué es la Escolástica Cristiana?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q3" value="a"> a) Un movimiento artístico</label></div>
-          <div class="opcion"><label><input type="radio" name="q3" value="b"> b) Un movimiento filosófico y teológico que usa la razón para comprender la revelación cristiana</label></div>
-          <div class="opcion"><label><input type="radio" name="q3" value="c"> c) Una corriente política</label></div>
-          <div class="opcion"><label><input type="radio" name="q3" value="d"> d) Una orden religiosa</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p4">
-        <div class="pregunta-num">Pregunta 4</div>
-        <div class="pregunta-texto">¿En qué siglos predominó especialmente la Escolástica como método pedagógico?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q4" value="a"> a) Siglos V al X</label></div>
-          <div class="opcion"><label><input type="radio" name="q4" value="b"> b) Siglos XI al XV</label></div>
-          <div class="opcion"><label><input type="radio" name="q4" value="c"> c) Siglos XVI al XVIII</label></div>
-          <div class="opcion"><label><input type="radio" name="q4" value="d"> d) Siglos I al V</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p5">
-        <div class="pregunta-num">Pregunta 5</div>
-        <div class="pregunta-texto">¿Cuántos tipos de escuelas había en la Edad Media?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q5" value="a"> a) Dos</label></div>
-          <div class="opcion"><label><input type="radio" name="q5" value="b"> b) Tres</label></div>
-          <div class="opcion"><label><input type="radio" name="q5" value="c"> c) Cuatro</label></div>
-          <div class="opcion"><label><input type="radio" name="q5" value="d"> d) Cinco</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p6">
-        <div class="pregunta-num">Pregunta 6</div>
-        <div class="pregunta-texto">¿Cuáles eran los tres tipos de escuelas medievales?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q6" value="a"> a) Públicas, privadas y militares</label></div>
-          <div class="opcion"><label><input type="radio" name="q6" value="b"> b) Monásticas, Episcopales y Palatinas</label></div>
-          <div class="opcion"><label><input type="radio" name="q6" value="c"> c) Primarias, secundarias y universitarias</label></div>
-          <div class="opcion"><label><input type="radio" name="q6" value="d"> d) Teológicas, filosóficas y científicas</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p7">
-        <div class="pregunta-num">Pregunta 7</div>
-        <div class="pregunta-texto">¿Qué Papa ordenó las escuelas episcopales en 1079?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q7" value="a"> a) Papa Juan Pablo II</label></div>
-          <div class="opcion"><label><input type="radio" name="q7" value="b"> b) Papa Gregorio VII</label></div>
-          <div class="opcion"><label><input type="radio" name="q7" value="c"> c) Papa Benedicto XVI</label></div>
-          <div class="opcion"><label><input type="radio" name="q7" value="d"> d) Papa León X</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p8">
-        <div class="pregunta-num">Pregunta 8</div>
-        <div class="pregunta-texto">¿Qué materias componían el Trivium?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q8" value="a"> a) Aritmética, Música y Geometría</label></div>
-          <div class="opcion"><label><input type="radio" name="q8" value="b"> b) Retórica, Gramática y Dialéctica</label></div>
-          <div class="opcion"><label><input type="radio" name="q8" value="c"> c) Filosofía, Teología y Medicina</label></div>
-          <div class="opcion"><label><input type="radio" name="q8" value="d"> d) Historia, Geografía y Literatura</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p9">
-        <div class="pregunta-num">Pregunta 9</div>
-        <div class="pregunta-texto">¿Qué materias componían el Quadrivium?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q9" value="a"> a) Retórica, Gramática, Dialéctica y Lógica</label></div>
-          <div class="opcion"><label><input type="radio" name="q9" value="b"> b) Aritmética, Música, Geometría y Astronomía</label></div>
-          <div class="opcion"><label><input type="radio" name="q9" value="c"> c) Física, Química, Biología y Matemática</label></div>
-          <div class="opcion"><label><input type="radio" name="q9" value="d"> d) Teología, Filosofía, Derecho y Medicina</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p10">
-        <div class="pregunta-num">Pregunta 10</div>
-        <div class="pregunta-texto">¿Cuáles fueron las cuatro fuentes principales de la filosofía medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q10" value="a"> a) Filosofía clásica, Cristianismo, Judaísmo e Islamismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q10" value="b"> b) Ciencia, religión, arte y política</label></div>
-          <div class="opcion"><label><input type="radio" name="q10" value="c"> c) Roma, Grecia, Egipto y Persia</label></div>
-          <div class="opcion"><label><input type="radio" name="q10" value="d"> d) Filosofía, teología, ciencia y arte</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p11">
-        <div class="pregunta-num">Pregunta 11</div>
-        <div class="pregunta-texto">¿Qué significa la palabra "Cristo"?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q11" value="a"> a) El salvador</label></div>
-          <div class="opcion"><label><input type="radio" name="q11" value="b"> b) El ungido</label></div>
-          <div class="opcion"><label><input type="radio" name="q11" value="c"> c) El maestro</label></div>
-          <div class="opcion"><label><input type="radio" name="q11" value="d"> d) El profeta</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p12">
-        <div class="pregunta-num">Pregunta 12</div>
-        <div class="pregunta-texto">¿Qué libro sagrado contiene las enseñanzas del Islam?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q12" value="a"> a) La Biblia</label></div>
-          <div class="opcion"><label><input type="radio" name="q12" value="b"> b) La Torá</label></div>
-          <div class="opcion"><label><input type="radio" name="q12" value="c"> c) El Corán</label></div>
-          <div class="opcion"><label><input type="radio" name="q12" value="d"> d) El Talmud</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p13">
-        <div class="pregunta-num">Pregunta 13</div>
-        <div class="pregunta-texto">¿Quién es el profeta del Islam?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q13" value="a"> a) Jesús</label></div>
-          <div class="opcion"><label><input type="radio" name="q13" value="b"> b) Moisés</label></div>
-          <div class="opcion"><label><input type="radio" name="q13" value="c"> c) Mahoma</label></div>
-          <div class="opcion"><label><input type="radio" name="q13" value="d"> d) Abraham</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p14">
-        <div class="pregunta-num">Pregunta 14</div>
-        <div class="pregunta-texto">¿Qué significa "musulmán"?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q14" value="a"> a) El que cree en un solo Dios</label></div>
-          <div class="opcion"><label><input type="radio" name="q14" value="b"> b) El que se somete a Dios</label></div>
-          <div class="opcion"><label><input type="radio" name="q14" value="c"> c) El que reza cinco veces al día</label></div>
-          <div class="opcion"><label><input type="radio" name="q14" value="d"> d) El seguidor de Mahoma</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p15">
-        <div class="pregunta-num">Pregunta 15</div>
-        <div class="pregunta-texto">¿Qué libro sagrado es la base del Judaísmo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q15" value="a"> a) El Corán</label></div>
-          <div class="opcion"><label><input type="radio" name="q15" value="b"> b) La Torá</label></div>
-          <div class="opcion"><label><input type="radio" name="q15" value="c"> c) Los Evangelios</label></div>
-          <div class="opcion"><label><input type="radio" name="q15" value="d"> d) El Bhagavad Gita</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p16">
-        <div class="pregunta-num">Pregunta 16</div>
-        <div class="pregunta-texto">¿Cuál es el día sagrado del Judaísmo dedicado al descanso?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q16" value="a"> a) Domingo</label></div>
-          <div class="opcion"><label><input type="radio" name="q16" value="b"> b) Viernes</label></div>
-          <div class="opcion"><label><input type="radio" name="q16" value="c"> c) Shabbat (Sábado)</label></div>
-          <div class="opcion"><label><input type="radio" name="q16" value="d"> d) Lunes</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p17">
-        <div class="pregunta-num">Pregunta 17</div>
-        <div class="pregunta-texto">Menciona tres filósofos árabes medievales importantes:</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q17" value="a"> a) Platón, Sócrates y Aristóteles</label></div>
-          <div class="opcion"><label><input type="radio" name="q17" value="b"> b) Avicena, Alfarabi y Averroes</label></div>
-          <div class="opcion"><label><input type="radio" name="q17" value="c"> c) Descartes, Kant y Hegel</label></div>
-          <div class="opcion"><label><input type="radio" name="q17" value="d"> d) San Agustín, Santo Tomás y San Anselmo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p18">
-        <div class="pregunta-num">Pregunta 18</div>
-        <div class="pregunta-texto">¿Cuál era la visión o base de la filosofía medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q18" value="a"> a) Científica</label></div>
-          <div class="opcion"><label><input type="radio" name="q18" value="b"> b) Religiosa</label></div>
-          <div class="opcion"><label><input type="radio" name="q18" value="c"> c) Materialista</label></div>
-          <div class="opcion"><label><input type="radio" name="q18" value="d"> d) Humanista</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p19">
-        <div class="pregunta-num">Pregunta 19</div>
-        <div class="pregunta-texto">¿Quién tradujo obras de Aristóteles para los escolares?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q19" value="a"> a) Santo Tomás de Aquino</label></div>
-          <div class="opcion"><label><input type="radio" name="q19" value="b"> b) San Agustín</label></div>
-          <div class="opcion"><label><input type="radio" name="q19" value="c"> c) Boecio</label></div>
-          <div class="opcion"><label><input type="radio" name="q19" value="d"> d) San Anselmo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p20">
-        <div class="pregunta-num">Pregunta 20</div>
-        <div class="pregunta-texto">¿Cuál era el ideal último de la Escolástica?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q20" value="a"> a) Separar la fe de la razón</label></div>
-          <div class="opcion"><label><input type="radio" name="q20" value="b"> b) Integrar el saber natural de Grecia y Roma con el saber religioso del cristianismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q20" value="c"> c) Rechazar la filosofía griega</label></div>
-          <div class="opcion"><label><input type="radio" name="q20" value="d"> d) Promover el ateísmo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p21">
-        <div class="pregunta-num">Pregunta 21</div>
-        <div class="pregunta-texto">¿En qué año se fundó la universidad Al-Azhar en El Cairo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q21" value="a"> a) Siglo VIII</label></div>
-          <div class="opcion"><label><input type="radio" name="q21" value="b"> b) Siglo X</label></div>
-          <div class="opcion"><label><input type="radio" name="q21" value="c"> c) Siglo XII</label></div>
-          <div class="opcion"><label><input type="radio" name="q21" value="d"> d) Siglo XV</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p22">
-        <div class="pregunta-num">Pregunta 22</div>
-        <div class="pregunta-texto">¿Cuántas cruzadas hubo durante la Edad Media?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q22" value="a"> a) 5</label></div>
-          <div class="opcion"><label><input type="radio" name="q22" value="b"> b) 8</label></div>
-          <div class="opcion"><label><input type="radio" name="q22" value="c"> c) 10</label></div>
-          <div class="opcion"><label><input type="radio" name="q22" value="d"> d) 12</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p23">
-        <div class="pregunta-num">Pregunta 23</div>
-        <div class="pregunta-texto">¿Qué famosa catedral fue construida en París durante la época medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q23" value="a"> a) Catedral de Santiago de Compostela</label></div>
-          <div class="opcion"><label><input type="radio" name="q23" value="b"> b) Catedral de Notre Dame</label></div>
-          <div class="opcion"><label><input type="radio" name="q23" value="c"> c) Basílica de San Pedro</label></div>
-          <div class="opcion"><label><input type="radio" name="q23" value="d"> d) Catedral de Canterbury</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p24">
-        <div class="pregunta-num">Pregunta 24</div>
-        <div class="pregunta-texto">¿Qué filósofo afirmó que las verdades filosóficas son universales y no relativas a espacios geográficos?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q24" value="a"> a) Averroes</label></div>
-          <div class="opcion"><label><input type="radio" name="q24" value="b"> b) Alfarabi</label></div>
-          <div class="opcion"><label><input type="radio" name="q24" value="c"> c) Avicena</label></div>
-          <div class="opcion"><label><input type="radio" name="q24" value="d"> d) Maimónides</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p25">
-        <div class="pregunta-num">Pregunta 25</div>
-        <div class="pregunta-texto">¿Quién escribió el "Canon de Medicina" en la época medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q25" value="a"> a) Averroes</label></div>
-          <div class="opcion"><label><input type="radio" name="q25" value="b"> b) Avicena</label></div>
-          <div class="opcion"><label><input type="radio" name="q25" value="c"> c) Maimónides</label></div>
-          <div class="opcion"><label><input type="radio" name="q25" value="d"> d) Alfarabi</label></div>
-        </div>
-      </div>
-      <!-- Resultado inline de sección -->
-      <div class="sec-resultado-inline" id="res-sec1" style="display:none;"></div>
-      <!-- Botón verificar sección -->
-      <button type="button" class="btn-submit-seccion" id="btn-sec1" onclick="calcularSeccion(1)">
-        ✅ Verificar Respuestas — Sección 1
-      </button>
-    </div>
-    <div class="seccion">
-      <div class="seccion-titulo"><span class="seccion-num">📗 Sección 2</span> Filosofía Medieval — Principales Filósofos</div>
-      <div class="pregunta" id="p26">
-        <div class="pregunta-num">Pregunta 26</div>
-        <div class="pregunta-texto">¿Cuándo vivió Santo Tomás de Aquino?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q26" value="a"> a) 1125-1174</label></div>
-          <div class="opcion"><label><input type="radio" name="q26" value="b"> b) 1225-1274</label></div>
-          <div class="opcion"><label><input type="radio" name="q26" value="c"> c) 1325-1374</label></div>
-          <div class="opcion"><label><input type="radio" name="q26" value="d"> d) 1425-1474</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p27">
-        <div class="pregunta-num">Pregunta 27</div>
-        <div class="pregunta-texto">¿Qué famosa frase de Santo Tomás de Aquino resume su pensamiento sobre causa y efecto?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q27" value="a"> a) "Pienso, luego existo"</label></div>
-          <div class="opcion"><label><input type="radio" name="q27" value="b"> b) "Al eliminar la causa, se elimina el efecto"</label></div>
-          <div class="opcion"><label><input type="radio" name="q27" value="c"> c) "El conocimiento es poder"</label></div>
-          <div class="opcion"><label><input type="radio" name="q27" value="d"> d) "Conócete a ti mismo"</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p28">
-        <div class="pregunta-num">Pregunta 28</div>
-        <div class="pregunta-texto">¿A qué orden religiosa perteneció Santo Tomás de Aquino?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q28" value="a"> a) Benedictinos</label></div>
-          <div class="opcion"><label><input type="radio" name="q28" value="b"> b) Franciscanos</label></div>
-          <div class="opcion"><label><input type="radio" name="q28" value="c"> c) Dominicos</label></div>
-          <div class="opcion"><label><input type="radio" name="q28" value="d"> d) Jesuitas</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p29">
-        <div class="pregunta-num">Pregunta 29</div>
-        <div class="pregunta-texto">¿Cuántas vías o pruebas propuso Santo Tomás de Aquino para demostrar la existencia de Dios?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q29" value="a"> a) Tres vías</label></div>
-          <div class="opcion"><label><input type="radio" name="q29" value="b"> b) Cinco vías</label></div>
-          <div class="opcion"><label><input type="radio" name="q29" value="c"> c) Siete vías</label></div>
-          <div class="opcion"><label><input type="radio" name="q29" value="d"> d) Diez vías</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p30">
-        <div class="pregunta-num">Pregunta 30</div>
-        <div class="pregunta-texto">¿En qué año fue canonizado Santo Tomás de Aquino?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q30" value="a"> a) 1223</label></div>
-          <div class="opcion"><label><input type="radio" name="q30" value="b"> b) 1323</label></div>
-          <div class="opcion"><label><input type="radio" name="q30" value="c"> c) 1423</label></div>
-          <div class="opcion"><label><input type="radio" name="q30" value="d"> d) 1523</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p31">
-        <div class="pregunta-num">Pregunta 31</div>
-        <div class="pregunta-texto">¿Cuál es el nombre de la obra principal de Santo Tomás de Aquino?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q31" value="a"> a) Confesiones</label></div>
-          <div class="opcion"><label><input type="radio" name="q31" value="b"> b) Suma Teológica</label></div>
-          <div class="opcion"><label><input type="radio" name="q31" value="c"> c) La Ciudad de Dios</label></div>
-          <div class="opcion"><label><input type="radio" name="q31" value="d"> d) Meditaciones Metafísicas</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p32">
-        <div class="pregunta-num">Pregunta 32</div>
-        <div class="pregunta-texto">¿Cuándo vivió San Agustín?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q32" value="a"> a) 254-330</label></div>
-          <div class="opcion"><label><input type="radio" name="q32" value="b"> b) 354-430</label></div>
-          <div class="opcion"><label><input type="radio" name="q32" value="c"> c) 454-530</label></div>
-          <div class="opcion"><label><input type="radio" name="q32" value="d"> d) 554-630</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p33">
-        <div class="pregunta-num">Pregunta 33</div>
-        <div class="pregunta-texto">¿Dónde nació San Agustín?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q33" value="a"> a) Roma</label></div>
-          <div class="opcion"><label><input type="radio" name="q33" value="b"> b) Grecia</label></div>
-          <div class="opcion"><label><input type="radio" name="q33" value="c"> c) Norte de África</label></div>
-          <div class="opcion"><label><input type="radio" name="q33" value="d"> d) España</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p34">
-        <div class="pregunta-num">Pregunta 34</div>
-        <div class="pregunta-texto">¿Qué filósofo griego influyó principalmente en San Agustín?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q34" value="a"> a) Aristóteles</label></div>
-          <div class="opcion"><label><input type="radio" name="q34" value="b"> b) Platón</label></div>
-          <div class="opcion"><label><input type="radio" name="q34" value="c"> c) Sócrates</label></div>
-          <div class="opcion"><label><input type="radio" name="q34" value="d"> d) Tales de Mileto</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p35">
-        <div class="pregunta-num">Pregunta 35</div>
-        <div class="pregunta-texto">Según San Agustín, ¿qué es lo único que existe realmente?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q35" value="a"> a) El futuro</label></div>
-          <div class="opcion"><label><input type="radio" name="q35" value="b"> b) El pasado</label></div>
-          <div class="opcion"><label><input type="radio" name="q35" value="c"> c) El "ahora" o presente</label></div>
-          <div class="opcion"><label><input type="radio" name="q35" value="d"> d) La eternidad</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p36">
-        <div class="pregunta-num">Pregunta 36</div>
-        <div class="pregunta-texto">Según San Agustín, ¿dónde vive Dios en relación al tiempo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q36" value="a"> a) En el pasado</label></div>
-          <div class="opcion"><label><input type="radio" name="q36" value="b"> b) En el futuro</label></div>
-          <div class="opcion"><label><input type="radio" name="q36" value="c"> c) En un presente eterno, fuera del tiempo terrestre</label></div>
-          <div class="opcion"><label><input type="radio" name="q36" value="d"> d) En todas las épocas simultáneamente</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p37">
-        <div class="pregunta-num">Pregunta 37</div>
-        <div class="pregunta-texto">¿Cuándo vivió San Anselmo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q37" value="a"> a) 933-1009</label></div>
-          <div class="opcion"><label><input type="radio" name="q37" value="b"> b) 1033-1109</label></div>
-          <div class="opcion"><label><input type="radio" name="q37" value="c"> c) 1133-1209</label></div>
-          <div class="opcion"><label><input type="radio" name="q37" value="d"> d) 1233-1309</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p38">
-        <div class="pregunta-num">Pregunta 38</div>
-        <div class="pregunta-texto">¿Qué cargo eclesiástico ocupó San Anselmo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q38" value="a"> a) Papa</label></div>
-          <div class="opcion"><label><input type="radio" name="q38" value="b"> b) Cardenal</label></div>
-          <div class="opcion"><label><input type="radio" name="q38" value="c"> c) Arzobispo de Canterbury</label></div>
-          <div class="opcion"><label><input type="radio" name="q38" value="d"> d) Obispo de Roma</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p39">
-        <div class="pregunta-num">Pregunta 39</div>
-        <div class="pregunta-texto">¿Cómo se llama el famoso argumento de San Anselmo para probar la existencia de Dios?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q39" value="a"> a) Argumento cosmológico</label></div>
-          <div class="opcion"><label><input type="radio" name="q39" value="b"> b) Argumento ontológico</label></div>
-          <div class="opcion"><label><input type="radio" name="q39" value="c"> c) Argumento teleológico</label></div>
-          <div class="opcion"><label><input type="radio" name="q39" value="d"> d) Argumento moral</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p40">
-        <div class="pregunta-num">Pregunta 40</div>
-        <div class="pregunta-texto">¿Qué sostiene el argumento ontológico de San Anselmo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q40" value="a"> a) Dios debe existir porque es el mayor objeto posible de pensamiento</label></div>
-          <div class="opcion"><label><input type="radio" name="q40" value="b"> b) Dios existe porque creó el universo</label></div>
-          <div class="opcion"><label><input type="radio" name="q40" value="c"> c) Dios existe porque la Biblia lo dice</label></div>
-          <div class="opcion"><label><input type="radio" name="q40" value="d"> d) Dios existe por la fe</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p41">
-        <div class="pregunta-num">Pregunta 41</div>
-        <div class="pregunta-texto">¿Quién rechazó el argumento ontológico de San Anselmo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q41" value="a"> a) San Agustín</label></div>
-          <div class="opcion"><label><input type="radio" name="q41" value="b"> b) Santo Tomás de Aquino</label></div>
-          <div class="opcion"><label><input type="radio" name="q41" value="c"> c) Descartes</label></div>
-          <div class="opcion"><label><input type="radio" name="q41" value="d"> d) Platón</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p42">
-        <div class="pregunta-num">Pregunta 42</div>
-        <div class="pregunta-texto">¿Cuál es la primera vía de Santo Tomás para probar la existencia de Dios?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q42" value="a"> a) La perfección</label></div>
-          <div class="opcion"><label><input type="radio" name="q42" value="b"> b) El cambio (motor inmóvil)</label></div>
-          <div class="opcion"><label><input type="radio" name="q42" value="c"> c) La contingencia</label></div>
-          <div class="opcion"><label><input type="radio" name="q42" value="d"> d) La causa eficiente</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p43">
-        <div class="pregunta-num">Pregunta 43</div>
-        <div class="pregunta-texto">¿Quién fue Averroes?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q43" value="a"> a) Un filósofo árabe que veneraba a Aristóteles</label></div>
-          <div class="opcion"><label><input type="radio" name="q43" value="b"> b) Un filósofo cristiano</label></div>
-          <div class="opcion"><label><input type="radio" name="q43" value="c"> c) Un filósofo griego</label></div>
-          <div class="opcion"><label><input type="radio" name="q43" value="d"> d) Un emperador romano</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p44">
-        <div class="pregunta-num">Pregunta 44</div>
-        <div class="pregunta-texto">¿Qué orden religiosa fue fundada por Santo Domingo de Guzmán en 1206?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q44" value="a"> a) Franciscanos</label></div>
-          <div class="opcion"><label><input type="radio" name="q44" value="b"> b) Dominicos</label></div>
-          <div class="opcion"><label><input type="radio" name="q44" value="c"> c) Jesuitas</label></div>
-          <div class="opcion"><label><input type="radio" name="q44" value="d"> d) Benedictinos</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p45">
-        <div class="pregunta-num">Pregunta 45</div>
-        <div class="pregunta-texto">¿Qué dijo Santo Tomás después de sus visiones místicas sobre sus escritos?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q45" value="a"> a) "Son obra divina"</label></div>
-          <div class="opcion"><label><input type="radio" name="q45" value="b"> b) "Son mera paja"</label></div>
-          <div class="opcion"><label><input type="radio" name="q45" value="c"> c) "Son perfectos"</label></div>
-          <div class="opcion"><label><input type="radio" name="q45" value="d"> d) "Son incompletos"</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p46">
-        <div class="pregunta-num">Pregunta 46</div>
-        <div class="pregunta-texto">¿Quién es considerado el primer racionalista porque pensaba que el mundo solo podía comprenderse por la razón?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q46" value="a"> a) Platón</label></div>
-          <div class="opcion"><label><input type="radio" name="q46" value="b"> b) Parménides</label></div>
-          <div class="opcion"><label><input type="radio" name="q46" value="c"> c) Aristóteles</label></div>
-          <div class="opcion"><label><input type="radio" name="q46" value="d"> d) Heráclito</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p47">
-        <div class="pregunta-num">Pregunta 47</div>
-        <div class="pregunta-texto">¿Quién fue Maimónides?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q47" value="a"> a) Un filósofo cristiano</label></div>
-          <div class="opcion"><label><input type="radio" name="q47" value="b"> b) Un filósofo judío</label></div>
-          <div class="opcion"><label><input type="radio" name="q47" value="c"> c) Un filósofo musulmán</label></div>
-          <div class="opcion"><label><input type="radio" name="q47" value="d"> d) Un filósofo griego</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p48">
-        <div class="pregunta-num">Pregunta 48</div>
-        <div class="pregunta-texto">¿Qué representan los filósofos Platón y Aristóteles en la filosofía antigua?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q48" value="a"> a) El inicio</label></div>
-          <div class="opcion"><label><input type="radio" name="q48" value="b"> b) El punto culminante</label></div>
-          <div class="opcion"><label><input type="radio" name="q48" value="c"> c) El final</label></div>
-          <div class="opcion"><label><input type="radio" name="q48" value="d"> d) La transición</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p49">
-        <div class="pregunta-num">Pregunta 49</div>
-        <div class="pregunta-texto">Según la Escolástica, ¿la revelación judeo-cristiana fue obstáculo para la razón?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q49" value="a"> a) Sí, fue un gran obstáculo</label></div>
-          <div class="opcion"><label><input type="radio" name="q49" value="b"> b) No, fue un estímulo</label></div>
-          <div class="opcion"><label><input type="radio" name="q49" value="c"> c) Fue neutral</label></div>
-          <div class="opcion"><label><input type="radio" name="q49" value="d"> d) La eliminó completamente</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p50">
-        <div class="pregunta-num">Pregunta 50</div>
-        <div class="pregunta-texto">¿Cuál es el punto culminante de la filosofía medieval?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q50" value="a"> a) Las cruzadas</label></div>
-          <div class="opcion"><label><input type="radio" name="q50" value="b"> b) La doctrina de Santo Tomás de Aquino</label></div>
-          <div class="opcion"><label><input type="radio" name="q50" value="c"> c) La construcción de catedrales</label></div>
-          <div class="opcion"><label><input type="radio" name="q50" value="d"> d) La fundación de universidades</label></div>
-        </div>
-      </div>
-      <!-- Resultado inline de sección -->
-      <div class="sec-resultado-inline" id="res-sec2" style="display:none;"></div>
-      <!-- Botón verificar sección -->
-      <button type="button" class="btn-submit-seccion" id="btn-sec2" onclick="calcularSeccion(2)">
-        ✅ Verificar Respuestas — Sección 2
-      </button>
-    </div>
-    <div class="seccion">
-      <div class="seccion-titulo"><span class="seccion-num">📙 Sección 3</span> Filosofía Moderna — Introducción y Características</div>
-      <div class="pregunta" id="p51">
-        <div class="pregunta-num">Pregunta 51</div>
-        <div class="pregunta-texto">¿Qué periodo comprende la Filosofía Moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q51" value="a"> a) Siglo V al XV</label></div>
-          <div class="opcion"><label><input type="radio" name="q51" value="b"> b) Siglo XV al inicio del XX</label></div>
-          <div class="opcion"><label><input type="radio" name="q51" value="c"> c) Siglo XX al XXI</label></div>
-          <div class="opcion"><label><input type="radio" name="q51" value="d"> d) Siglo I al V</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p52">
-        <div class="pregunta-num">Pregunta 52</div>
-        <div class="pregunta-texto">¿Cuál era la visión del mundo en la Filosofía Moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q52" value="a"> a) Religiosa</label></div>
-          <div class="opcion"><label><input type="radio" name="q52" value="b"> b) Mecanicista</label></div>
-          <div class="opcion"><label><input type="radio" name="q52" value="c"> c) Espiritual</label></div>
-          <div class="opcion"><label><input type="radio" name="q52" value="d"> d) Mística</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p53">
-        <div class="pregunta-num">Pregunta 53</div>
-        <div class="pregunta-texto">¿Cuál era el objetivo de la vida humana según la Filosofía Moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q53" value="a"> a) Preparación para la salvación en el otro mundo</label></div>
-          <div class="opcion"><label><input type="radio" name="q53" value="b"> b) La satisfacción de los deseos naturales del individuo</label></div>
-          <div class="opcion"><label><input type="radio" name="q53" value="c"> c) Servir a Dios</label></div>
-          <div class="opcion"><label><input type="radio" name="q53" value="d"> d) La penitencia y el sacrificio</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p54">
-        <div class="pregunta-num">Pregunta 54</div>
-        <div class="pregunta-texto">¿Cuál fue la base de la Filosofía Moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q54" value="a"> a) Religiosa</label></div>
-          <div class="opcion"><label><input type="radio" name="q54" value="b"> b) Racional</label></div>
-          <div class="opcion"><label><input type="radio" name="q54" value="c"> c) Mística</label></div>
-          <div class="opcion"><label><input type="radio" name="q54" value="d"> d) Empírica exclusivamente</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p55">
-        <div class="pregunta-num">Pregunta 55</div>
-        <div class="pregunta-texto">¿Quién es considerado el padre de la Filosofía Moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q55" value="a"> a) Aristóteles</label></div>
-          <div class="opcion"><label><input type="radio" name="q55" value="b"> b) Santo Tomás de Aquino</label></div>
-          <div class="opcion"><label><input type="radio" name="q55" value="c"> c) René Descartes</label></div>
-          <div class="opcion"><label><input type="radio" name="q55" value="d"> d) Platón</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p56">
-        <div class="pregunta-num">Pregunta 56</div>
-        <div class="pregunta-texto">Si la filosofía antigua tomaba la realidad objetiva como punto de partida, y la medieval a Dios, ¿en qué se asentó la filosofía moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q56" value="a"> a) En la naturaleza</label></div>
-          <div class="opcion"><label><input type="radio" name="q56" value="b"> b) En la subjetividad</label></div>
-          <div class="opcion"><label><input type="radio" name="q56" value="c"> c) En la sociedad</label></div>
-          <div class="opcion"><label><input type="radio" name="q56" value="d"> d) En el cosmos</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p57">
-        <div class="pregunta-num">Pregunta 57</div>
-        <div class="pregunta-texto">¿Qué problema se convirtió en el punto de partida de la reflexión filosófica moderna?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q57" value="a"> a) El problema de Dios</label></div>
-          <div class="opcion"><label><input type="radio" name="q57" value="b"> b) El problema del conocimiento</label></div>
-          <div class="opcion"><label><input type="radio" name="q57" value="c"> c) El problema de la moral</label></div>
-          <div class="opcion"><label><input type="radio" name="q57" value="d"> d) El problema del ser</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p58">
-        <div class="pregunta-num">Pregunta 58</div>
-        <div class="pregunta-texto">¿Qué enfoque adoptó la política a partir del Renacimiento?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q58" value="a"> a) Teocéntrico</label></div>
-          <div class="opcion"><label><input type="radio" name="q58" value="b"> b) Antropocéntrico</label></div>
-          <div class="opcion"><label><input type="radio" name="q58" value="c"> c) Cosmocéntrico</label></div>
-          <div class="opcion"><label><input type="radio" name="q58" value="d"> d) Naturalista</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p59">
-        <div class="pregunta-num">Pregunta 59</div>
-        <div class="pregunta-texto">¿Quién fue Francisco Suárez?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q59" value="a"> a) Un filósofo francés</label></div>
-          <div class="opcion"><label><input type="radio" name="q59" value="b"> b) Un filósofo jesuita español</label></div>
-          <div class="opcion"><label><input type="radio" name="q59" value="c"> c) Un filósofo alemán</label></div>
-          <div class="opcion"><label><input type="radio" name="q59" value="d"> d) Un filósofo inglés</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p60">
-        <div class="pregunta-num">Pregunta 60</div>
-        <div class="pregunta-texto">Según Francisco Suárez, ¿de dónde deriva su poder la autoridad real?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q60" value="a"> a) De Dios directamente</label></div>
-          <div class="opcion"><label><input type="radio" name="q60" value="b"> b) Del consentimiento del pueblo</label></div>
-          <div class="opcion"><label><input type="radio" name="q60" value="c"> c) De la fuerza militar</label></div>
-          <div class="opcion"><label><input type="radio" name="q60" value="d"> d) De la tradición</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p61">
-        <div class="pregunta-num">Pregunta 61</div>
-        <div class="pregunta-texto">¿Quién fue el primer representante del nuevo método científico basado en la observación y experimentación?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q61" value="a"> a) Descartes</label></div>
-          <div class="opcion"><label><input type="radio" name="q61" value="b"> b) Francis Bacon</label></div>
-          <div class="opcion"><label><input type="radio" name="q61" value="c"> c) Galileo</label></div>
-          <div class="opcion"><label><input type="radio" name="q61" value="d"> d) Newton</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p62">
-        <div class="pregunta-num">Pregunta 62</div>
-        <div class="pregunta-texto">¿Quién creó la ciencia de la mecánica aplicando principios geométricos a los movimientos de los cuerpos?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q62" value="a"> a) Newton</label></div>
-          <div class="opcion"><label><input type="radio" name="q62" value="b"> b) Galileo Galilei</label></div>
-          <div class="opcion"><label><input type="radio" name="q62" value="c"> c) Copérnico</label></div>
-          <div class="opcion"><label><input type="radio" name="q62" value="d"> d) Kepler</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p63">
-        <div class="pregunta-num">Pregunta 63</div>
-        <div class="pregunta-texto">¿Qué corriente filosófica sostenía que el único conocimiento válido es el científico?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q63" value="a"> a) Racionalismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q63" value="b"> b) Empirismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q63" value="c"> c) Positivismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q63" value="d"> d) Idealismo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p64">
-        <div class="pregunta-num">Pregunta 64</div>
-        <div class="pregunta-texto">¿Cómo se conoce también al siglo XVIII?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q64" value="a"> a) Siglo de las tinieblas</label></div>
-          <div class="opcion"><label><input type="radio" name="q64" value="b"> b) Siglo de las luces o Ilustración</label></div>
-          <div class="opcion"><label><input type="radio" name="q64" value="c"> c) Siglo de la fe</label></div>
-          <div class="opcion"><label><input type="radio" name="q64" value="d"> d) Siglo barroco</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p65">
-        <div class="pregunta-num">Pregunta 65</div>
-        <div class="pregunta-texto">¿Qué caracterizaba a la Ilustración?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q65" value="a"> a) El predominio de la fe sobre la razón</label></div>
-          <div class="opcion"><label><input type="radio" name="q65" value="b"> b) La emergencia de la razón, la ciencia y el respeto a la humanidad</label></div>
-          <div class="opcion"><label><input type="radio" name="q65" value="c"> c) El retorno a las tradiciones medievales</label></div>
-          <div class="opcion"><label><input type="radio" name="q65" value="d"> d) El misticismo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p66">
-        <div class="pregunta-num">Pregunta 66</div>
-        <div class="pregunta-texto">Menciona tres representantes del Racionalismo:</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q66" value="a"> a) Locke, Hume, Berkeley</label></div>
-          <div class="opcion"><label><input type="radio" name="q66" value="b"> b) Descartes, Spinoza, Leibniz</label></div>
-          <div class="opcion"><label><input type="radio" name="q66" value="c"> c) Voltaire, Rousseau, Diderot</label></div>
-          <div class="opcion"><label><input type="radio" name="q66" value="d"> d) Kant, Hegel, Nietzsche</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p67">
-        <div class="pregunta-num">Pregunta 67</div>
-        <div class="pregunta-texto">Menciona tres representantes del Empirismo:</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q67" value="a"> a) Descartes, Spinoza, Malebranche</label></div>
-          <div class="opcion"><label><input type="radio" name="q67" value="b"> b) Locke, Hume, Berkeley</label></div>
-          <div class="opcion"><label><input type="radio" name="q67" value="c"> c) Kant, Fichte, Schelling</label></div>
-          <div class="opcion"><label><input type="radio" name="q67" value="d"> d) Marx, Engels, Lenin</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p68">
-        <div class="pregunta-num">Pregunta 68</div>
-        <div class="pregunta-texto">Menciona tres representantes de la Ilustración:</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q68" value="a"> a) Descartes, Leibniz, Spinoza</label></div>
-          <div class="opcion"><label><input type="radio" name="q68" value="b"> b) Locke, Berkeley, Hume</label></div>
-          <div class="opcion"><label><input type="radio" name="q68" value="c"> c) Voltaire, Diderot, Rousseau</label></div>
-          <div class="opcion"><label><input type="radio" name="q68" value="d"> d) Kant, Hegel, Marx</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p69">
-        <div class="pregunta-num">Pregunta 69</div>
-        <div class="pregunta-texto">¿Qué acontecimiento importante ocurrió con la biblia durante el Renacimiento?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q69" value="a"> a) Fue traducida al griego</label></div>
-          <div class="opcion"><label><input type="radio" name="q69" value="b"> b) Fue impresa por Gutenberg</label></div>
-          <div class="opcion"><label><input type="radio" name="q69" value="c"> c) Fue prohibida</label></div>
-          <div class="opcion"><label><input type="radio" name="q69" value="d"> d) Fue destruida</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p70">
-        <div class="pregunta-num">Pregunta 70</div>
-        <div class="pregunta-texto">¿Quién descubrió el océano Pacífico?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q70" value="a"> a) Cristóbal Colón</label></div>
-          <div class="opcion"><label><input type="radio" name="q70" value="b"> b) Vasco Núñez de Balboa</label></div>
-          <div class="opcion"><label><input type="radio" name="q70" value="c"> c) Fernando de Magallanes</label></div>
-          <div class="opcion"><label><input type="radio" name="q70" value="d"> d) Américo Vespucio</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p71">
-        <div class="pregunta-num">Pregunta 71</div>
-        <div class="pregunta-texto">¿Quién fundó el protestantismo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q71" value="a"> a) Juan Calvino</label></div>
-          <div class="opcion"><label><input type="radio" name="q71" value="b"> b) Martín Lutero</label></div>
-          <div class="opcion"><label><input type="radio" name="q71" value="c"> c) Enrique VIII</label></div>
-          <div class="opcion"><label><input type="radio" name="q71" value="d"> d) Ulrico Zuinglio</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p72">
-        <div class="pregunta-num">Pregunta 72</div>
-        <div class="pregunta-texto">¿Quién formuló las leyes de la gravitación y el movimiento?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q72" value="a"> a) Galileo Galilei</label></div>
-          <div class="opcion"><label><input type="radio" name="q72" value="b"> b) Isaac Newton</label></div>
-          <div class="opcion"><label><input type="radio" name="q72" value="c"> c) Johannes Kepler</label></div>
-          <div class="opcion"><label><input type="radio" name="q72" value="d"> d) Copérnico</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p73">
-        <div class="pregunta-num">Pregunta 73</div>
-        <div class="pregunta-texto">¿Quién realizó experimentos sobre electricidad con una cometa?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q73" value="a"> a) Thomas Edison</label></div>
-          <div class="opcion"><label><input type="radio" name="q73" value="b"> b) Benjamin Franklin</label></div>
-          <div class="opcion"><label><input type="radio" name="q73" value="c"> c) Nikola Tesla</label></div>
-          <div class="opcion"><label><input type="radio" name="q73" value="d"> d) Alessandro Volta</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p74">
-        <div class="pregunta-num">Pregunta 74</div>
-        <div class="pregunta-texto">¿En qué año se declaró la Independencia de Estados Unidos?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q74" value="a"> a) 1776</label></div>
-          <div class="opcion"><label><input type="radio" name="q74" value="b"> b) 1789</label></div>
-          <div class="opcion"><label><input type="radio" name="q74" value="c"> c) 1800</label></div>
-          <div class="opcion"><label><input type="radio" name="q74" value="d"> d) 1812</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p75">
-        <div class="pregunta-num">Pregunta 75</div>
-        <div class="pregunta-texto">¿Qué revolución marcó el inicio de la industrialización?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q75" value="a"> a) Revolución Francesa</label></div>
-          <div class="opcion"><label><input type="radio" name="q75" value="b"> b) Revolución Industrial</label></div>
-          <div class="opcion"><label><input type="radio" name="q75" value="c"> c) Revolución Americana</label></div>
-          <div class="opcion"><label><input type="radio" name="q75" value="d"> d) Revolución Rusa</label></div>
-        </div>
-      </div>
-      <!-- Resultado inline de sección -->
-      <div class="sec-resultado-inline" id="res-sec3" style="display:none;"></div>
-      <!-- Botón verificar sección -->
-      <button type="button" class="btn-submit-seccion" id="btn-sec3" onclick="calcularSeccion(3)">
-        ✅ Verificar Respuestas — Sección 3
-      </button>
-    </div>
-    <div class="seccion">
-      <div class="seccion-titulo"><span class="seccion-num">📕 Sección 4</span> Filosofía Moderna — Principales Filósofos</div>
-      <div class="pregunta" id="p76">
-        <div class="pregunta-num">Pregunta 76</div>
-        <div class="pregunta-texto">¿Cuándo vivió René Descartes?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q76" value="a"> a) 1496-1550</label></div>
-          <div class="opcion"><label><input type="radio" name="q76" value="b"> b) 1596-1650</label></div>
-          <div class="opcion"><label><input type="radio" name="q76" value="c"> c) 1696-1750</label></div>
-          <div class="opcion"><label><input type="radio" name="q76" value="d"> d) 1796-1850</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p77">
-        <div class="pregunta-num">Pregunta 77</div>
-        <div class="pregunta-texto">¿Cuál es la famosa frase de Descartes?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q77" value="a"> a) "Ser o no ser"</label></div>
-          <div class="opcion"><label><input type="radio" name="q77" value="b"> b) "Pienso, luego existo"</label></div>
-          <div class="opcion"><label><input type="radio" name="q77" value="c"> c) "Sólo sé que no sé nada"</label></div>
-          <div class="opcion"><label><input type="radio" name="q77" value="d"> d) "El hombre es la medida de todas las cosas"</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p78">
-        <div class="pregunta-num">Pregunta 78</div>
-        <div class="pregunta-texto">¿Qué rama de las matemáticas creó Descartes?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q78" value="a"> a) Cálculo diferencial</label></div>
-          <div class="opcion"><label><input type="radio" name="q78" value="b"> b) Geometría analítica</label></div>
-          <div class="opcion"><label><input type="radio" name="q78" value="c"> c) Álgebra abstracta</label></div>
-          <div class="opcion"><label><input type="radio" name="q78" value="d"> d) Trigonometría</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p79">
-        <div class="pregunta-num">Pregunta 79</div>
-        <div class="pregunta-texto">Según Descartes, ¿de cuántas sustancias se compone la realidad?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q79" value="a"> a) Una</label></div>
-          <div class="opcion"><label><input type="radio" name="q79" value="b"> b) Dos (mente y materia)</label></div>
-          <div class="opcion"><label><input type="radio" name="q79" value="c"> c) Tres</label></div>
-          <div class="opcion"><label><input type="radio" name="q79" value="d"> d) Infinitas</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p80">
-        <div class="pregunta-num">Pregunta 80</div>
-        <div class="pregunta-texto">¿Cómo se llama la teoría de Descartes sobre mente y cuerpo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q80" value="a"> a) Monismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q80" value="b"> b) Dualismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q80" value="c"> c) Pluralismo</label></div>
-          <div class="opcion"><label><input type="radio" name="q80" value="d"> d) Materialismo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p81">
-        <div class="pregunta-num">Pregunta 81</div>
-        <div class="pregunta-texto">¿Dónde murió Descartes?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q81" value="a"> a) Francia</label></div>
-          <div class="opcion"><label><input type="radio" name="q81" value="b"> b) Holanda</label></div>
-          <div class="opcion"><label><input type="radio" name="q81" value="c"> c) Suecia</label></div>
-          <div class="opcion"><label><input type="radio" name="q81" value="d"> d) Italia</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p82">
-        <div class="pregunta-num">Pregunta 82</div>
-        <div class="pregunta-texto">¿Cuándo vivió Baruch Spinoza?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q82" value="a"> a) 1532-1577</label></div>
-          <div class="opcion"><label><input type="radio" name="q82" value="b"> b) 1632-1677</label></div>
-          <div class="opcion"><label><input type="radio" name="q82" value="c"> c) 1732-1777</label></div>
-          <div class="opcion"><label><input type="radio" name="q82" value="d"> d) 1832-1877</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p83">
-        <div class="pregunta-num">Pregunta 83</div>
-        <div class="pregunta-texto">¿A qué se dedicaba Spinoza para ganarse la vida?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q83" value="a"> a) Profesor universitario</label></div>
-          <div class="opcion"><label><input type="radio" name="q83" value="b"> b) Pulidor de lentes</label></div>
-          <div class="opcion"><label><input type="radio" name="q83" value="c"> c) Médico</label></div>
-          <div class="opcion"><label><input type="radio" name="q83" value="d"> d) Escritor</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p84">
-        <div class="pregunta-num">Pregunta 84</div>
-        <div class="pregunta-texto">Según Spinoza, ¿cuántas sustancias hay en el universo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q84" value="a"> a) Dos (mente y materia)</label></div>
-          <div class="opcion"><label><input type="radio" name="q84" value="b"> b) Una sola (Dios)</label></div>
-          <div class="opcion"><label><input type="radio" name="q84" value="c"> c) Tres</label></div>
-          <div class="opcion"><label><input type="radio" name="q84" value="d"> d) Infinitas</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p85">
-        <div class="pregunta-num">Pregunta 85</div>
-        <div class="pregunta-texto">¿Qué le sucedió a Spinoza por sus creencias?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q85" value="a"> a) Fue canonizado</label></div>
-          <div class="opcion"><label><input type="radio" name="q85" value="b"> b) Fue expulsado de la comunidad judía</label></div>
-          <div class="opcion"><label><input type="radio" name="q85" value="c"> c) Fue nombrado rabino</label></div>
-          <div class="opcion"><label><input type="radio" name="q85" value="d"> d) Fue elegido líder religioso</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p86">
-        <div class="pregunta-num">Pregunta 86</div>
-        <div class="pregunta-texto">¿Cuándo vivió John Locke?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q86" value="a"> a) 1532-1604</label></div>
-          <div class="opcion"><label><input type="radio" name="q86" value="b"> b) 1632-1704</label></div>
-          <div class="opcion"><label><input type="radio" name="q86" value="c"> c) 1732-1804</label></div>
-          <div class="opcion"><label><input type="radio" name="q86" value="d"> d) 1832-1904</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p87">
-        <div class="pregunta-num">Pregunta 87</div>
-        <div class="pregunta-texto">Según John Locke, ¿cómo es la mente al nacer?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q87" value="a"> a) Llena de ideas innatas</label></div>
-          <div class="opcion"><label><input type="radio" name="q87" value="b"> b) Una hoja de papel en blanco</label></div>
-          <div class="opcion"><label><input type="radio" name="q87" value="c"> c) Corrupta por naturaleza</label></div>
-          <div class="opcion"><label><input type="radio" name="q87" value="d"> d) Perfecta y completa</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p88">
-        <div class="pregunta-num">Pregunta 88</div>
-        <div class="pregunta-texto">¿Cuáles son los derechos básicos según Locke?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q88" value="a"> a) Fe, esperanza y caridad</label></div>
-          <div class="opcion"><label><input type="radio" name="q88" value="b"> b) Vida, libertad y propiedad</label></div>
-          <div class="opcion"><label><input type="radio" name="q88" value="c"> c) Igualdad, fraternidad y libertad</label></div>
-          <div class="opcion"><label><input type="radio" name="q88" value="d"> d) Trabajo, educación y salud</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p89">
-        <div class="pregunta-num">Pregunta 89</div>
-        <div class="pregunta-texto">¿Qué documento político refleja las ideas de Locke?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q89" value="a"> a) La Declaración de Derechos del Hombre</label></div>
-          <div class="opcion"><label><input type="radio" name="q89" value="b"> b) La Constitución Americana</label></div>
-          <div class="opcion"><label><input type="radio" name="q89" value="c"> c) La Carta Magna</label></div>
-          <div class="opcion"><label><input type="radio" name="q89" value="d"> d) El Manifiesto Comunista</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p90">
-        <div class="pregunta-num">Pregunta 90</div>
-        <div class="pregunta-texto">¿Cuándo vivió David Hume?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q90" value="a"> a) 1611-1676</label></div>
-          <div class="opcion"><label><input type="radio" name="q90" value="b"> b) 1711-1776</label></div>
-          <div class="opcion"><label><input type="radio" name="q90" value="c"> c) 1811-1876</label></div>
-          <div class="opcion"><label><input type="radio" name="q90" value="d"> d) 1911-1976</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p91">
-        <div class="pregunta-num">Pregunta 91</div>
-        <div class="pregunta-texto">Según Hume, ¿cuáles son las dos fuentes del conocimiento?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q91" value="a"> a) Fe y razón</label></div>
-          <div class="opcion"><label><input type="radio" name="q91" value="b"> b) Impresiones e ideas</label></div>
-          <div class="opcion"><label><input type="radio" name="q91" value="c"> c) Ciencia y religión</label></div>
-          <div class="opcion"><label><input type="radio" name="q91" value="d"> d) Mente y cuerpo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p92">
-        <div class="pregunta-num">Pregunta 92</div>
-        <div class="pregunta-texto">¿Qué obra histórica escribió Hume que fue un éxito?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q92" value="a"> a) Historia de Roma</label></div>
-          <div class="opcion"><label><input type="radio" name="q92" value="b"> b) Historia de Inglaterra</label></div>
-          <div class="opcion"><label><input type="radio" name="q92" value="c"> c) Historia de Francia</label></div>
-          <div class="opcion"><label><input type="radio" name="q92" value="d"> d) Historia de Escocia</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p93">
-        <div class="pregunta-num">Pregunta 93</div>
-        <div class="pregunta-texto">¿Cuándo vivió Immanuel Kant?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q93" value="a"> a) 1624-1704</label></div>
-          <div class="opcion"><label><input type="radio" name="q93" value="b"> b) 1724-1804</label></div>
-          <div class="opcion"><label><input type="radio" name="q93" value="c"> c) 1824-1904</label></div>
-          <div class="opcion"><label><input type="radio" name="q93" value="d"> d) 1924-2004</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p94">
-        <div class="pregunta-num">Pregunta 94</div>
-        <div class="pregunta-texto">¿De dónde era Kant?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q94" value="a"> a) Berlín</label></div>
-          <div class="opcion"><label><input type="radio" name="q94" value="b"> b) Múnich</label></div>
-          <div class="opcion"><label><input type="radio" name="q94" value="c"> c) Königsberg</label></div>
-          <div class="opcion"><label><input type="radio" name="q94" value="d"> d) Viena</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p95">
-        <div class="pregunta-num">Pregunta 95</div>
-        <div class="pregunta-texto">¿Qué llamaba Kant "gafas fijas"?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q95" value="a"> a) Los sentidos</label></div>
-          <div class="opcion"><label><input type="radio" name="q95" value="b"> b) El espacio y el tiempo</label></div>
-          <div class="opcion"><label><input type="radio" name="q95" value="c"> c) Las ideas</label></div>
-          <div class="opcion"><label><input type="radio" name="q95" value="d"> d) La razón</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p96">
-        <div class="pregunta-num">Pregunta 96</div>
-        <div class="pregunta-texto">¿Cuándo vivió Georg Wilhelm Friedrich Hegel?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q96" value="a"> a) 1670-1731</label></div>
-          <div class="opcion"><label><input type="radio" name="q96" value="b"> b) 1770-1831</label></div>
-          <div class="opcion"><label><input type="radio" name="q96" value="c"> c) 1870-1931</label></div>
-          <div class="opcion"><label><input type="radio" name="q96" value="d"> d) 1970-2031</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p97">
-        <div class="pregunta-num">Pregunta 97</div>
-        <div class="pregunta-texto">¿Dónde nació Hegel?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q97" value="a"> a) Berlín</label></div>
-          <div class="opcion"><label><input type="radio" name="q97" value="b"> b) Stuttgart</label></div>
-          <div class="opcion"><label><input type="radio" name="q97" value="c"> c) Múnich</label></div>
-          <div class="opcion"><label><input type="radio" name="q97" value="d"> d) Hamburgo</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p98">
-        <div class="pregunta-num">Pregunta 98</div>
-        <div class="pregunta-texto">¿Quién adoptó algunas ideas de Hegel como base del marxismo?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q98" value="a"> a) Friedrich Engels</label></div>
-          <div class="opcion"><label><input type="radio" name="q98" value="b"> b) Karl Marx</label></div>
-          <div class="opcion"><label><input type="radio" name="q98" value="c"> c) Lenin</label></div>
-          <div class="opcion"><label><input type="radio" name="q98" value="d"> d) Stalin</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p99">
-        <div class="pregunta-num">Pregunta 99</div>
-        <div class="pregunta-texto">¿Cuándo vivió Friedrich Nietzsche?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q99" value="a"> a) 1744-1800</label></div>
-          <div class="opcion"><label><input type="radio" name="q99" value="b"> b) 1844-1900</label></div>
-          <div class="opcion"><label><input type="radio" name="q99" value="c"> c) 1944-2000</label></div>
-          <div class="opcion"><label><input type="radio" name="q99" value="d"> d) 2044-2100</label></div>
-        </div>
-      </div>
-      <div class="pregunta" id="p100">
-        <div class="pregunta-num">Pregunta 100</div>
-        <div class="pregunta-texto">¿Cuál es la famosa frase de Nietzsche sobre Dios?</div>
-        <div class="opciones">
-          <div class="opcion"><label><input type="radio" name="q100" value="a"> a) "Dios es amor"</label></div>
-          <div class="opcion"><label><input type="radio" name="q100" value="b"> b) "Dios ha muerto"</label></div>
-          <div class="opcion"><label><input type="radio" name="q100" value="c"> c) "Dios es eterno"</label></div>
-          <div class="opcion"><label><input type="radio" name="q100" value="d"> d) "Dios es todo"</label></div>
-        </div>
-      </div>
-      <!-- Resultado inline de sección -->
-      <div class="sec-resultado-inline" id="res-sec4" style="display:none;"></div>
-      <!-- Botón verificar sección -->
-      <button type="button" class="btn-submit-seccion" id="btn-sec4" onclick="calcularSeccion(4)">
-        ✅ Verificar Respuestas — Sección 4
-      </button>
-    </div>
+<nav id="mainNav">
+  <button class="active" onclick="showTema('t1',this)">Tema 1: Historia de la Psicología</button>
+  <button onclick="showTema('t2',this)">Tema 2: Objetivos y Ramas</button>
+  <button onclick="showTema('t3',this)">Tema 3: Psicología Educativa</button>
+  <button onclick="showTema('t4',this)">Tema 4: Pensamiento y Lenguaje</button>
+  <button onclick="showTema('t5',this)">Tema 5: Atención y Memoria</button>
+  <button onclick="showTema('t6',this)">Tema 6: Sensación y Percepción</button>
+</nav>
 
-    <button type="button" class="btn-submit" onclick="calcularNota()">🏁 Enviar Examen Completo y Ver Nota Final</button>
-  </form>
+<main>
 
-  <div id="resultado">
-    <div class="resultado-titulo">📊 Resultados del Examen</div>
-    <div class="nota-final-wrap">
-      <div class="nota-final" id="notaFinalNum">0%</div>
-      <div class="nota-label">Nota Final</div>
-      <div class="total-correctas" id="totalCorrectas"></div>
-    </div>
-    <div class="barra-wrap">
-      <div class="barra"><div class="barra-fill" id="barraFill" style="width:0%"></div></div>
-    </div>
-    <div class="secciones-grid" id="seccionesGrid"></div>
-    <div class="mensaje-resultado" id="mensajeResultado"></div>
+<!-- ==================== TEMA 1 ==================== -->
+<section id="t1" class="tema-section active">
+  <div class="tema-header">
+    <h2>📖 Tema 1: Historia de la Psicología</h2>
+    <p>Orígenes, períodos históricos, escuelas y figuras clave de la psicología.</p>
   </div>
-</div>
+
+  <div id="quiz-t1">
+
+    <div class="question-card" id="t1q1">
+      <span class="question-num">Pregunta 1</span>
+      <p class="question-text">¿De qué idioma proviene la palabra "Psicología" y qué significa?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q1" value="a"> Latín; "mente y ciencia"</label>
+        <label><input type="radio" name="t1q1" value="b"> Griego; "psyche" (mente/espíritu) y "logos" (conocimiento/estudio)</label>
+        <label><input type="radio" name="t1q1" value="c"> Alemán; "conducta y análisis"</label>
+        <label><input type="radio" name="t1q1" value="d"> Árabe; "alma y observación"</label>
+      </div>
+      <div class="feedback" id="fb-t1q1"></div>
+    </div>
+
+    <div class="question-card" id="t1q2">
+      <span class="question-num">Pregunta 2</span>
+      <p class="question-text">¿Cuáles son los tres períodos por los que pasó la psicología antes de consolidarse como ciencia?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q2" value="a"> Clásico, Medieval y Moderno</label>
+        <label><input type="radio" name="t1q2" value="b"> Filosófico, Pre-científico y Científico</label>
+        <label><input type="radio" name="t1q2" value="c"> Empírico, Racional y Experimental</label>
+        <label><input type="radio" name="t1q2" value="d"> Antiguo, Renacentista y Contemporáneo</label>
+      </div>
+      <div class="feedback" id="fb-t1q2"></div>
+    </div>
+
+    <div class="question-card" id="t1q3">
+      <span class="question-num">Pregunta 3</span>
+      <p class="question-text">¿Quién fundó el primer laboratorio de psicología experimental en el mundo y en qué año?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q3" value="a"> Sigmund Freud, 1895</label>
+        <label><input type="radio" name="t1q3" value="b"> William James, 1875</label>
+        <label><input type="radio" name="t1q3" value="c"> Wilhelm Wundt, 1879</label>
+        <label><input type="radio" name="t1q3" value="d"> John Watson, 1913</label>
+      </div>
+      <div class="feedback" id="fb-t1q3"></div>
+    </div>
+
+    <div class="question-card" id="t1q4">
+      <span class="question-num">Pregunta 4</span>
+      <p class="question-text">En el período filosófico, ¿cuál era el objeto de estudio de la psicología y qué método se utilizaba?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q4" value="a"> La conducta; observación</label>
+        <label><input type="radio" name="t1q4" value="b"> El alma; especulación</label>
+        <label><input type="radio" name="t1q4" value="c"> La psique; introspección</label>
+        <label><input type="radio" name="t1q4" value="d"> La memoria; experimentación</label>
+      </div>
+      <div class="feedback" id="fb-t1q4"></div>
+    </div>
+
+    <div class="question-card" id="t1q5">
+      <span class="question-num">Pregunta 5</span>
+      <p class="question-text">¿En qué año fue fundada la American Psychological Association (APA) y por quién?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q5" value="a"> 1900, por William James</label>
+        <label><input type="radio" name="t1q5" value="b"> 1892, por G. Stanley Hall</label>
+        <label><input type="radio" name="t1q5" value="c"> 1888, por Wilhelm Wundt</label>
+        <label><input type="radio" name="t1q5" value="d"> 1910, por Sigmund Freud</label>
+      </div>
+      <div class="feedback" id="fb-t1q5"></div>
+    </div>
+
+    <div class="question-card" id="t1q6">
+      <span class="question-num">Pregunta 6</span>
+      <p class="question-text">¿Cuál es la diferencia entre la Psicología Pura y la Psicología Aplicada?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q6" value="a"> La pura estudia animales; la aplicada estudia humanos</label>
+        <label><input type="radio" name="t1q6" value="b"> La pura desarrolla teoría psicológica; la aplicada usa ese conocimiento en esferas de la acción humana</label>
+        <label><input type="radio" name="t1q6" value="c"> La pura es clínica; la aplicada es educativa</label>
+        <label><input type="radio" name="t1q6" value="d"> No hay diferencia, son lo mismo</label>
+      </div>
+      <div class="feedback" id="fb-t1q6"></div>
+    </div>
+
+    <div class="question-card" id="t1q7">
+      <span class="question-num">Pregunta 7</span>
+      <p class="question-text">¿Cuál de las siguientes NO es una escuela o corriente de la historia de la psicología?</p>
+      <div class="options">
+        <label><input type="radio" name="t1q7" value="a"> Conductismo</label>
+        <label><input type="radio" name="t1q7" value="b"> Gestalt</label>
+        <label><input type="radio" name="t1q7" value="c"> Positivismo Lógico</label>
+        <label><input type="radio" name="t1q7" value="d"> Psicoanálisis</label>
+      </div>
+      <div class="feedback" id="fb-t1q7"></div>
+    </div>
+
+  </div>
+
+  <button class="btn-check" onclick="checkQuiz('t1',answers_t1)">✔ Verificar Respuestas</button>
+  <div class="score-box" id="score-t1">
+    <h3>Resultado del Tema 1</h3>
+    <div class="score-num" id="snum-t1"></div>
+    <p id="smsg-t1"></p>
+    <button class="btn-reset" onclick="resetQuiz('t1')">🔄 Reintentar</button>
+  </div>
+</section>
+
+<!-- ==================== TEMA 2 ==================== -->
+<section id="t2" class="tema-section">
+  <div class="tema-header">
+    <h2>🌿 Tema 2: Objetivos y Ramas de la Psicología</h2>
+    <p>Objetivo general, ramas especializadas y áreas de aplicación de la psicología.</p>
+  </div>
+
+  <div id="quiz-t2">
+
+    <div class="question-card" id="t2q1">
+      <span class="question-num">Pregunta 1</span>
+      <p class="question-text">¿Cuál es el objetivo general de la psicología según el tema?</p>
+      <div class="options">
+        <label><input type="radio" name="t2q1" value="a"> Curar enfermedades mentales</label>
+        <label><input type="radio" name="t2q1" value="b"> Ayudar a mejorar el entendimiento del proceso psíquico de cada persona en el ámbito social y cultural</label>
+        <label><input type="radio" name="t2q1" value="c"> Estudiar únicamente el comportamiento animal</label>
+        <label><input type="radio" name="t2q1" value="d"> Diseñar pruebas de inteligencia</label>
+      </div>
+      <div class="feedback" id="fb-t2q1"></div>
+    </div>
+
+    <div class="question-card" id="t2q2">
+      <span class="question-num">Pregunta 2</span>
+      <p class="question-text">La Psicología Forense tiene como objetivo auxiliar al proceso de:</p>
+      <div class="options">
+        <label><input type="radio" name="t2q2" value="a"> Educación de niños con dificultades</label>
+        <label><input type="radio" name="t2q2" value="b"> Administración de justicia en el ámbito tribunalicio</label>
+        <label><input type="radio" name="t2q2" value="c"> Tratamiento de adicciones</label>
+        <label><input type="radio" name="t2q2" value="d"> Mejora del rendimiento deportivo</label>
+      </div>
+      <div class="feedback" id="fb-t2q2"></div>
+    </div>
+
+    <div class="question-card" id="t2q3">
+      <span class="question-num">Pregunta 3</span>
+      <p class="question-text">¿Qué estudia la Neuropsicología?</p>
+      <div class="options">
+        <label><input type="radio" name="t2q3" value="a"> El comportamiento de grupos sociales</label>
+        <label><input type="radio" name="t2q3" value="b"> Los efectos de lesiones o daño en el sistema nervioso central sobre procesos cognitivos y emocionales</label>
+        <label><input type="radio" name="t2q3" value="c"> El desarrollo del niño en la escuela</label>
+        <label><input type="radio" name="t2q3" value="d"> La relación entre consumidores y marcas</label>
+      </div>
+      <div class="feedback" id="fb-t2q3"></div>
+    </div>
+
+    <div class="question-card" id="t2q4">
+      <span class="question-num">Pregunta 4</span>
+      <p class="question-text">¿Qué rama de la psicología estudia el comportamiento humano en el contexto del trabajo?</p>
+      <div class="options">
+        <label><input type="radio" name="t2q4" value="a"> Psicología Clínica</label>
+        <label><input type="radio" name="t2q4" value="b"> Psicología Comunitaria</label>
+        <label><input type="radio" name="t2q4" value="c"> Psicología Organizacional</label>
+        <label><input type="radio" name="t2q4" value="d"> Psicología Evolutiva</label>
+      </div>
+      <div class="feedback" id="fb-t2q4"></div>
+    </div>
+
+    <div class="question-card" id="t2q5">
+      <span class="question-num">Pregunta 5</span>
+      <p class="question-text">¿Cuál es el objetivo de la Psicología Social?</p>
+      <div class="options">
+        <label><input type="radio" name="t2q5" value="a"> Estudiar cómo los pensamientos, comportamientos y sentimientos son influidos por otras personas</label>
+        <label><input type="radio" name="t2q5" value="b"> Tratar desórdenes mentales graves</label>
+        <label><input type="radio" name="t2q5" value="c"> Evaluar la inteligencia individual</label>
+        <label><input type="radio" name="t2q5" value="d"> Analizar el lenguaje corporal</label>
+      </div>
+      <div class="feedback" id="fb-t2q5"></div>
+    </div>
+
+    <div class="question-card" id="t2q6">
+      <span class="question-num">Pregunta 6</span>
+      <p class="question-text">La Psicofisiología (neurociencia cognitiva) estudia:</p>
+      <div class="options">
+        <label><input type="radio" name="t2q6" value="a"> Las diferencias culturales en el aprendizaje</label>
+        <label><input type="radio" name="t2q6" value="b"> La relación entre los procesos biológicos y la conducta</label>
+        <label><input type="radio" name="t2q6" value="c"> Los trastornos del lenguaje</label>
+        <label><input type="radio" name="t2q6" value="d"> El impacto de la publicidad en el consumidor</label>
+      </div>
+      <div class="feedback" id="fb-t2q6"></div>
+    </div>
+
+    <div class="question-card" id="t2q7">
+      <span class="question-num">Pregunta 7</span>
+      <p class="question-text">La Psicología Clínica se enfoca en:</p>
+      <div class="options">
+        <label><input type="radio" name="t2q7" value="a"> Mejorar el rendimiento en el deporte</label>
+        <label><input type="radio" name="t2q7" value="b"> Detectar y tratar los desórdenes y patologías mentales</label>
+        <label><input type="radio" name="t2q7" value="c"> Investigar el desarrollo infantil en la escuela</label>
+        <label><input type="radio" name="t2q7" value="d"> Estudiar el comportamiento de las masas</label>
+      </div>
+      <div class="feedback" id="fb-t2q7"></div>
+    </div>
+
+  </div>
+
+  <button class="btn-check" onclick="checkQuiz('t2',answers_t2)">✔ Verificar Respuestas</button>
+  <div class="score-box" id="score-t2">
+    <h3>Resultado del Tema 2</h3>
+    <div class="score-num" id="snum-t2"></div>
+    <p id="smsg-t2"></p>
+    <button class="btn-reset" onclick="resetQuiz('t2')">🔄 Reintentar</button>
+  </div>
+</section>
+
+<!-- ==================== TEMA 3 ==================== -->
+<section id="t3" class="tema-section">
+  <div class="tema-header">
+    <h2>🏫 Tema 3: Historia y Funciones de la Psicología Educativa</h2>
+    <p>Origen, autores clave y funciones de la psicología en el ámbito educativo.</p>
+  </div>
+
+  <div id="quiz-t3">
+
+    <div class="question-card" id="t3q1">
+      <span class="question-num">Pregunta 1</span>
+      <p class="question-text">¿Qué se entiende por Psicología Educativa?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q1" value="a"> La rama que estudia el comportamiento de los docentes</label>
+        <label><input type="radio" name="t3q1" value="b"> La rama que estudia los procesos de aprendizaje y los problemas asociados a ellos en centros educativos</label>
+        <label><input type="radio" name="t3q1" value="c"> La ciencia que estudia la nutrición y el aprendizaje</label>
+        <label><input type="radio" name="t3q1" value="d"> El estudio del sistema nervioso en niños</label>
+      </div>
+      <div class="feedback" id="fb-t3q1"></div>
+    </div>
+
+    <div class="question-card" id="t3q2">
+      <span class="question-num">Pregunta 2</span>
+      <p class="question-text">¿Quién es considerado el primer psicólogo de la educación y qué libro escribió?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q2" value="a"> William James – "Principios de Psicología" (1890)</label>
+        <label><input type="radio" name="t3q2" value="b"> Alfred Binet – "La inteligencia del niño" (1905)</label>
+        <label><input type="radio" name="t3q2" value="c"> Edward Thorndike – "Psicología de la educación" (1903)</label>
+        <label><input type="radio" name="t3q2" value="d"> Jean Piaget – "El desarrollo cognitivo" (1920)</label>
+      </div>
+      <div class="feedback" id="fb-t3q2"></div>
+    </div>
+
+    <div class="question-card" id="t3q3">
+      <span class="question-num">Pregunta 3</span>
+      <p class="question-text">¿Qué creía Johann Friedrich Herbart sobre el aprendizaje?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q3" value="a"> Que el aprendizaje dependía solo de la memoria</label>
+        <label><input type="radio" name="t3q3" value="b"> Que el aprendizaje se veía influido por la relación con el profesor y el interés del alumno</label>
+        <label><input type="radio" name="t3q3" value="c"> Que aprender era un proceso puramente biológico</label>
+        <label><input type="radio" name="t3q3" value="d"> Que solo los niños con alta inteligencia podían aprender</label>
+      </div>
+      <div class="feedback" id="fb-t3q3"></div>
+    </div>
+
+    <div class="question-card" id="t3q4">
+      <span class="question-num">Pregunta 4</span>
+      <p class="question-text">¿Cuál fue el aporte de Alfred Binet a la Psicología Educativa?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q4" value="a"> Fundó el primer laboratorio de psicología</label>
+        <label><input type="radio" name="t3q4" value="b"> Fue uno de los primeros en aplicar el método experimental en la educación y estudió diferencias en el desarrollo infantil</label>
+        <label><input type="radio" name="t3q4" value="c"> Creó la teoría del inconsciente colectivo</label>
+        <label><input type="radio" name="t3q4" value="d"> Desarrolló las etapas del desarrollo moral</label>
+      </div>
+      <div class="feedback" id="fb-t3q4"></div>
+    </div>
+
+    <div class="question-card" id="t3q5">
+      <span class="question-num">Pregunta 5</span>
+      <p class="question-text">¿Cuál de estas NO es una función de la Psicología Educativa?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q5" value="a"> Prevenir dificultades educativas</label>
+        <label><input type="radio" name="t3q5" value="b"> Proporcionar orientación vocacional</label>
+        <label><input type="radio" name="t3q5" value="c"> Recetar medicamentos a los estudiantes</label>
+        <label><input type="radio" name="t3q5" value="d"> Mejorar el clima escolar y la convivencia</label>
+      </div>
+      <div class="feedback" id="fb-t3q5"></div>
+    </div>
+
+    <div class="question-card" id="t3q6">
+      <span class="question-num">Pregunta 6</span>
+      <p class="question-text">¿Qué estudió Jean Piaget en el ámbito de la psicología educativa?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q6" value="a"> Los trastornos emocionales de los maestros</label>
+        <label><input type="radio" name="t3q6" value="b"> El proceso cognitivo de los alumnos, buscando aplicaciones para la educación y creación de programas adaptados</label>
+        <label><input type="radio" name="t3q6" value="c"> La relación entre padres y escuela</label>
+        <label><input type="radio" name="t3q6" value="d"> Los métodos de evaluación estandarizada</label>
+      </div>
+      <div class="feedback" id="fb-t3q6"></div>
+    </div>
+
+    <div class="question-card" id="t3q7">
+      <span class="question-num">Pregunta 7</span>
+      <p class="question-text">Según el tema, ¿qué desarrolló Hermann Ebbinghaus prácticamente al mismo tiempo que Wundt?</p>
+      <div class="options">
+        <label><input type="radio" name="t3q7" value="a"> Técnicas para el estudio de la memoria y el olvido</label>
+        <label><input type="radio" name="t3q7" value="b"> La teoría de las inteligencias múltiples</label>
+        <label><input type="radio" name="t3q7" value="c"> El primer test de inteligencia</label>
+        <label><input type="radio" name="t3q7" value="d"> El método socrático en educación</label>
+      </div>
+      <div class="feedback" id="fb-t3q7"></div>
+    </div>
+
+  </div>
+
+  <button class="btn-check" onclick="checkQuiz('t3',answers_t3)">✔ Verificar Respuestas</button>
+  <div class="score-box" id="score-t3">
+    <h3>Resultado del Tema 3</h3>
+    <div class="score-num" id="snum-t3"></div>
+    <p id="smsg-t3"></p>
+    <button class="btn-reset" onclick="resetQuiz('t3')">🔄 Reintentar</button>
+  </div>
+</section>
+
+<!-- ==================== TEMA 4 ==================== -->
+<section id="t4" class="tema-section">
+  <div class="tema-header">
+    <h2>💭 Tema 4: Pensamiento y Lenguaje</h2>
+    <p>Tipos de pensamiento, lenguaje, psicolingüística y teorías sobre su relación.</p>
+  </div>
+
+  <div id="quiz-t4">
+
+    <div class="question-card" id="t4q1">
+      <span class="question-num">Pregunta 1</span>
+      <p class="question-text">¿Qué tipo de pensamiento se caracteriza por generar múltiples soluciones explorando diferentes perspectivas?</p>
+      <div class="options">
+        <label><input type="radio" name="t4q1" value="a"> Pensamiento convergente</label>
+        <label><input type="radio" name="t4q1" value="b"> Pensamiento analítico</label>
+        <label><input type="radio" name="t4q1" value="c"> Pensamiento divergente</label>
+        <label><input type="radio" name="t4q1" value="d"> Pensamiento abstracto</label>
+      </div>
+      <div class="feedback" id="fb-t4q1"></div>
+    </div>
+
+    <div class="question-card" id="t4q2">
+      <span class="question-num">Pregunta 2</span>
+      <p class="question-text">¿Qué postura defendía Jean Piaget sobre la relación pensamiento-lenguaje?</p>
+      <div class="options">
+        <label><input type="radio" name="t4q2" value="a"> El lenguaje es primero que el pensamiento</label>
+        <label><input type="radio" name="t4q2" value="b"> El lenguaje y el pensamiento son totalmente independientes</label>
+        <label><input type="radio" name="t4q2" value="c"> El lenguaje es producto del desarrollo de la acción y el pensamiento</label>
+        <label><input type="radio" name="t4q2" value="d"> El pensamiento no influye en el lenguaje</label>
+      </div>
+      <div class="feedback" id="fb-t4q2"></div>
+    </div>
+
+    <div class="question-card" id="t4q3">
+      <span class="question-num">Pregunta 3</span>
+      <p class="question-text">Según Lev Vygotsky, ¿qué plantea la "teoría simultánea"?</p>
+      <div class="options">
+        <label><input type="radio" name="t4q3" value="a"> El pensamiento precede siempre al lenguaje</label>
+        <label><input type="radio" name="t4q3" value="b"> El lenguaje y el pensamiento están ligados entre sí y se desarrollan conjuntamente</label>
+        <label><input type="radio" name="t4q3" value="c"> El lenguaje es innato y no se aprende</label>
+        <label><input type="radio" name="t4q3" value="d"> Solo el lenguaje escrito influye en el pensamiento</label>
+      </div>
+      <div class="feedback" id="fb-t4q3"></div>
+    </div>
+
+    <div class="question-card" id="t4q4">
+      <span class="question-num">Pregunta 4</span>
+      <p class="question-text">¿Cuáles son los tipos de lenguaje mencionados en el tema?</p>
+      <div class="options">
+        <label><input type="radio" name="t4q4" value="a"> Formal, Informal, Técnico y Coloquial</label>
+        <label><input type="radio" name="t4q4" value="b"> Oral, Escrito, Kinésico, Proxémico e Icónico</label>
+        <label><input type="radio" name="t4q4" value="c"> Verbal, No verbal y Simbólico</label>
+        <label><input type="radio" name="t4q4" value="d"> Fonético, Semántico y Gramatical</label>
+      </div>
+      <div class="feedback" id="fb-t4q4"></div>
+    </div>
+
+    <div class="question-card" id="t4q5">
+      <span class="question-num">Pregunta 5</span>
+      <p class="question-text">El área de Broca en el cerebro está relacionada con:</p>
+      <div class="options">
+        <label><input type="radio" name="t4q5" value="a"> La memoria visual</label>
+        <label><input type="radio" name="t4q5" value="b"> El área motriz del lenguaje</label>
+        <label><input type="radio" name="t4q5" value="c"> El procesamiento emocional</label>
+        <label><input type="radio" name="t4q5" value="d"> La percepción del dolor</label>
+      </div>
+      <div class="feedback" id="fb-t4q5"></div>
+    </div>
+
+    <div class="question-card" id="t4q6">
+      <span class="question-num">Pregunta 6</span>
+      <p class="question-text">¿Qué estudia la Psicolingüística según Berko (1999)?</p>
+      <div class="options">
+        <label><input type="radio" name="t4q6" value="a"> Las diferencias gramaticales entre idiomas</label>
+        <label><input type="radio" name="t4q6" value="b"> Los procesos psicológicos mediante los cuales los humanos adquieren y usan el lenguaje</label>
+        <label><input type="radio" name="t4q6" value="c"> El origen histórico de las lenguas</label>
+        <label><input type="radio" name="t4q6" value="d"> El vocabulario de los niños en edad escolar</label>
+      </div>
+      <div class="feedback" id="fb-t4q6"></div>
+    </div>
+
+    <div class="question-card" id="t4q7">
+      <span class="question-num">Pregunta 7</span>
+      <p class="question-text">¿Cuál de los siguientes es un trastorno del lenguaje mencionado en el tema?</p>
+      <div class="options">
+        <label><input type="radio" name="t4q7" value="a"> Sinestesia</label>
+        <label><input type="radio" name="t4q7" value="b"> Disfasia</label>
+        <label><input type="radio" name="t4q7" value="c"> Prosopagnosia</label>
+        <label><input type="radio" name="t4q7" value="d"> Agorafobia</label>
+      </div>
+      <div class="feedback" id="fb-t4q7"></div>
+    </div>
+
+  </div>
+
+  <button class="btn-check" onclick="checkQuiz('t4',answers_t4)">✔ Verificar Respuestas</button>
+  <div class="score-box" id="score-t4">
+    <h3>Resultado del Tema 4</h3>
+    <div class="score-num" id="snum-t4"></div>
+    <p id="smsg-t4"></p>
+    <button class="btn-reset" onclick="resetQuiz('t4')">🔄 Reintentar</button>
+  </div>
+</section>
+
+<!-- ==================== TEMA 5 ==================== -->
+<section id="t5" class="tema-section">
+  <div class="tema-header">
+    <h2>🧩 Tema 5: Atención y Memoria</h2>
+    <p>Tipos de atención, tipos de memoria, procesos y trastornos asociados.</p>
+  </div>
+
+  <div id="quiz-t5">
+
+    <div class="question-card" id="t5q1">
+      <span class="question-num">Pregunta 1</span>
+      <p class="question-text">¿Qué tipo de atención implica centrarse en un único estímulo ignorando los demás?</p>
+      <div class="options">
+        <label><input type="radio" name="t5q1" value="a"> Atención dividida</label>
+        <label><input type="radio" name="t5q1" value="b"> Atención focalizada</label>
+        <label><input type="radio" name="t5q1" value="c"> Atención alterna</label>
+        <label><input type="radio" name="t5q1" value="d"> Atención sostenida</label>
+      </div>
+      <div class="feedback" id="fb-t5q1"></div>
+    </div>
+
+    <div class="question-card" id="t5q2">
+      <span class="question-num">Pregunta 2</span>
+      <p class="question-text">Según Miller, ¿cuántos ítems puede almacenar la memoria a corto plazo aproximadamente?</p>
+      <div class="options">
+        <label><input type="radio" name="t5q2" value="a"> 3 ítems (+/-1)</label>
+        <label><input type="radio" name="t5q2" value="b"> 7 ítems (+/-2)</label>
+        <label><input type="radio" name="t5q2" value="c"> 15 ítems (+/-3)</label>
+        <label><input type="radio" name="t5q2" value="d"> 20 ítems (+/-5)</label>
+      </div>
+      <div class="feedback" id="fb-t5q2"></div>
+    </div>
+
+    <div class="question-card" id="t5q3">
+      <span class="question-num">Pregunta 3</span>
+      <p class="question-text">¿Qué tipo de memoria almacena el conocimiento de habilidades motoras y procedimientos como escribir o peinarse?</p>
+      <div class="options">
+        <label><input type="radio" name="t5q3" value="a"> Memoria episódica</label>
+        <label><input type="radio" name="t5q3" value="b"> Memoria semántica</label>
+        <label><input type="radio" name="t5q3" value="c"> Memoria procedimental</label>
+        <label><input type="radio" name="t5q3" value="d"> Memoria implícita</label>
+      </div>
+      <div class="feedback" id="fb-t5q3"></div>
+    </div>
+
+    <div class="question-card" id="t5q4">
+      <span class="question-num">Pregunta 4</span>
+      <p class="question-text">¿Cuál de los siguientes es un determinante EXTERNO de la atención?</p>
+      <div class="options">
+        <label><input type="radio" name="t5q4" value="a"> Motivación personal</label>
+        <label><input type="radio" name="t5q4" value="b"> Intereses del sujeto</label>
+        <label><input type="radio" name="t5q4" value="c"> Intensidad del estímulo (ruido, luz brillante)</label>
+        <label><input type="radio" name="t5q4" value="d"> Experiencia previa</label>
+      </div>
+      <div class="feedback" id="fb-t5q4"></div>
+    </div>
+
+    <div class="question-card" id="t5q5">
+      <span class="question-num">Pregunta 5</span>
+      <p class="question-text">¿Qué trastorno de memoria se caracteriza por la pérdida progresiva de memoria con el envejecimiento, incluyendo deterioro del lenguaje?</p>
+      <div class="options">
+        <label><input type="radio" name="t5q5" value="a"> Amnesia</label>
+        <label><input type="radio" name="t5q5" value="b"> Hipermnesia</label>
+        <label><input type="radio" name="t5q5" value="c"> Alzheimer</label>
+        <label><input type="radio" name="t5q5" value="d"> Afasia de Wernicke</label>
+      </div>
+      <div class="feedback" id="fb-t5q5"></div>
+    </div>
+
+    <div class="question-card" id="t5q6">
+      <span class="question-num">Pregunta 6</span>
+      <p class="question-text">La memoria sensorial ecoica también se llama:</p>
+      <div class="options">
+        <label><input type="radio" name="t5q6" value="a"> Memoria visual</label>
+        <label><input type="radio" name="t5q6" value="b"> Memoria táctil</label>
+        <label><input type="radio" name="t5q6" value="c"> Memoria auditiva</label>
+        <label><input type="radio" name="t5q6" value="d"> Memoria de trabajo</label>
+      </div>
+      <div class="feedback" id="fb-t5q6"></div>
+    </div>
+
+    <div class="question-card" id="t5q7">
+      <span class="question-num">Pregunta 7</span>
+      <p class="question-text">¿Cuál es el proceso correcto de la memoria según el modelo adaptado por Lecturio (Melton, 1963)?</p>
+      <div class="options">
+        <label><input type="radio" name="t5q7" value="a"> Almacenamiento → Codificación → Recuperación → Input sensorial</label>
+        <label><input type="radio" name="t5q7" value="b"> Input sensorial → Codificación → Memoria operativa → Almacenamiento → Memoria a largo plazo → Recuperación</label>
+        <label><input type="radio" name="t5q7" value="c"> Input sensorial → Recuperación → Almacenamiento → Codificación</label>
+        <label><input type="radio" name="t5q7" value="d"> Percepción → Atención → Memoria → Olvido</label>
+      </div>
+      <div class="feedback" id="fb-t5q7"></div>
+    </div>
+
+  </div>
+
+  <button class="btn-check" onclick="checkQuiz('t5',answers_t5)">✔ Verificar Respuestas</button>
+  <div class="score-box" id="score-t5">
+    <h3>Resultado del Tema 5</h3>
+    <div class="score-num" id="snum-t5"></div>
+    <p id="smsg-t5"></p>
+    <button class="btn-reset" onclick="resetQuiz('t5')">🔄 Reintentar</button>
+  </div>
+</section>
+
+<!-- ==================== TEMA 6 ==================== -->
+<section id="t6" class="tema-section">
+  <div class="tema-header">
+    <h2>👁️ Tema 6: Sensación y Percepción</h2>
+    <p>Procesos sensoriales, percepción, Leyes de la Gestalt e ilusiones ópticas.</p>
+  </div>
+
+  <div id="quiz-t6">
+
+    <div class="question-card" id="t6q1">
+      <span class="question-num">Pregunta 1</span>
+      <p class="question-text">¿Cuál es la diferencia principal entre sensación y percepción?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q1" value="a"> La sensación involucra el cerebro; la percepción involucra los órganos sensoriales</label>
+        <label><input type="radio" name="t6q1" value="b"> En la sensación se captan los estímulos; en la percepción son interpretados con experiencia y aprendizaje previo</label>
+        <label><input type="radio" name="t6q1" value="c"> La sensación es consciente; la percepción es inconsciente</label>
+        <label><input type="radio" name="t6q1" value="d"> No hay diferencia, son sinónimos</label>
+      </div>
+      <div class="feedback" id="fb-t6q1"></div>
+    </div>
+
+    <div class="question-card" id="t6q2">
+      <span class="question-num">Pregunta 2</span>
+      <p class="question-text">¿Cuáles son los tres elementos fundamentales que intervienen en el fenómeno de la sensación?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q2" value="a"> La mente, el cuerpo y el entorno</label>
+        <label><input type="radio" name="t6q2" value="b"> Un estímulo, un receptor y los centros nerviosos específicos</label>
+        <label><input type="radio" name="t6q2" value="c"> La luz, el sonido y el tacto</label>
+        <label><input type="radio" name="t6q2" value="d"> La atención, la memoria y el pensamiento</label>
+      </div>
+      <div class="feedback" id="fb-t6q2"></div>
+    </div>
+
+    <div class="question-card" id="t6q3">
+      <span class="question-num">Pregunta 3</span>
+      <p class="question-text">¿Qué afirma la Ley de la Pregnancia (Gestalt)?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q3" value="a"> Los estímulos cercanos se perciben juntos</label>
+        <label><input type="radio" name="t6q3" value="b"> La organización perceptual tiende a la mayor simplicidad posible</label>
+        <label><input type="radio" name="t6q3" value="c"> Los objetos similares se perciben como distintos</label>
+        <label><input type="radio" name="t6q3" value="d"> La figura siempre predomina sobre el fondo</label>
+      </div>
+      <div class="feedback" id="fb-t6q3"></div>
+    </div>
+
+    <div class="question-card" id="t6q4">
+      <span class="question-num">Pregunta 4</span>
+      <p class="question-text">¿Qué son las alucinaciones según el tema?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q4" value="a"> Percepciones correctas de objetos reales</label>
+        <label><input type="radio" name="t6q4" value="b"> Falsas percepciones cuyo origen está dentro del individuo, sin participación del estímulo externo</label>
+        <label><input type="radio" name="t6q4" value="c"> Una mala interpretación de un estímulo real</label>
+        <label><input type="radio" name="t6q4" value="d"> La disminución en la intensidad de las percepciones</label>
+      </div>
+      <div class="feedback" id="fb-t6q4"></div>
+    </div>
+
+    <div class="question-card" id="t6q5">
+      <span class="question-num">Pregunta 5</span>
+      <p class="question-text">¿Cómo se clasifican los órganos de los sentidos según la localización de los estímulos?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q5" value="a"> Visuales, auditivos y táctiles</label>
+        <label><input type="radio" name="t6q5" value="b"> Interoceptores, Propioceptores y Telerreceptores</label>
+        <label><input type="radio" name="t6q5" value="c"> Primarios, secundarios y terciarios</label>
+        <label><input type="radio" name="t6q5" value="d"> Mecánicos, químicos y eléctricos</label>
+      </div>
+      <div class="feedback" id="fb-t6q5"></div>
+    </div>
+
+    <div class="question-card" id="t6q6">
+      <span class="question-num">Pregunta 6</span>
+      <p class="question-text">¿Cuáles son las tres fases del proceso perceptivo?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q6" value="a"> Atención, interpretación y respuesta</label>
+        <label><input type="radio" name="t6q6" value="b"> Detección, transmisión y procesamiento</label>
+        <label><input type="radio" name="t6q6" value="c"> Estimulación, codificación y almacenamiento</label>
+        <label><input type="radio" name="t6q6" value="d"> Sensación, emoción y reacción</label>
+      </div>
+      <div class="feedback" id="fb-t6q6"></div>
+    </div>
+
+    <div class="question-card" id="t6q7">
+      <span class="question-num">Pregunta 7</span>
+      <p class="question-text">¿Qué son las pareidolias?</p>
+      <div class="options">
+        <label><input type="radio" name="t6q7" value="a"> Un tipo de alucinación auditiva</label>
+        <label><input type="radio" name="t6q7" value="b"> La capacidad de ver cosas ocultas o lejanas en el espacio</label>
+        <label><input type="radio" name="t6q7" value="c"> Figuras que se deforman y cobran aspectos fantásticos; la conciencia reconoce su falsedad. Ej: ver formas en las nubes</label>
+        <label><input type="radio" name="t6q7" value="d"> El aumento de la intensidad de las percepciones en maniacos</label>
+      </div>
+      <div class="feedback" id="fb-t6q7"></div>
+    </div>
+
+  </div>
+
+  <button class="btn-check" onclick="checkQuiz('t6',answers_t6)">✔ Verificar Respuestas</button>
+  <div class="score-box" id="score-t6">
+    <h3>Resultado del Tema 6</h3>
+    <div class="score-num" id="snum-t6"></div>
+    <p id="smsg-t6"></p>
+    <button class="btn-reset" onclick="resetQuiz('t6')">🔄 Reintentar</button>
+  </div>
+</section>
+
+</main>
 
 <script>
-const respuestasCorrectas = {
-  q1: 'b',
-  q2: 'b',
-  q3: 'b',
-  q4: 'b',
-  q5: 'b',
-  q6: 'b',
-  q7: 'b',
-  q8: 'b',
-  q9: 'b',
-  q10: 'a',
-  q11: 'b',
-  q12: 'c',
-  q13: 'c',
-  q14: 'b',
-  q15: 'b',
-  q16: 'c',
-  q17: 'b',
-  q18: 'b',
-  q19: 'c',
-  q20: 'b',
-  q21: 'b',
-  q22: 'b',
-  q23: 'b',
-  q24: 'a',
-  q25: 'b',
-  q26: 'b',
-  q27: 'b',
-  q28: 'c',
-  q29: 'b',
-  q30: 'b',
-  q31: 'b',
-  q32: 'b',
-  q33: 'c',
-  q34: 'b',
-  q35: 'c',
-  q36: 'c',
-  q37: 'b',
-  q38: 'c',
-  q39: 'b',
-  q40: 'a',
-  q41: 'b',
-  q42: 'b',
-  q43: 'a',
-  q44: 'b',
-  q45: 'b',
-  q46: 'b',
-  q47: 'b',
-  q48: 'b',
-  q49: 'b',
-  q50: 'b',
-  q51: 'b',
-  q52: 'b',
-  q53: 'b',
-  q54: 'b',
-  q55: 'c',
-  q56: 'b',
-  q57: 'b',
-  q58: 'b',
-  q59: 'b',
-  q60: 'b',
-  q61: 'b',
-  q62: 'b',
-  q63: 'c',
-  q64: 'b',
-  q65: 'b',
-  q66: 'b',
-  q67: 'b',
-  q68: 'c',
-  q69: 'b',
-  q70: 'b',
-  q71: 'b',
-  q72: 'b',
-  q73: 'b',
-  q74: 'a',
-  q75: 'b',
-  q76: 'b',
-  q77: 'b',
-  q78: 'b',
-  q79: 'b',
-  q80: 'b',
-  q81: 'c',
-  q82: 'b',
-  q83: 'b',
-  q84: 'b',
-  q85: 'b',
-  q86: 'b',
-  q87: 'b',
-  q88: 'b',
-  q89: 'b',
-  q90: 'b',
-  q91: 'b',
-  q92: 'b',
-  q93: 'b',
-  q94: 'c',
-  q95: 'b',
-  q96: 'b',
-  q97: 'b',
-  q98: 'b',
-  q99: 'b',
-  q100: 'b',
-};
+  // ── Answer Keys ──
+  const answers_t1 = { t1q1:'b', t1q2:'b', t1q3:'c', t1q4:'b', t1q5:'b', t1q6:'b', t1q7:'c' };
+  const answers_t2 = { t2q1:'b', t2q2:'b', t2q3:'b', t2q4:'c', t2q5:'a', t2q6:'b', t2q7:'b' };
+  const answers_t3 = { t3q1:'b', t3q2:'c', t3q3:'b', t3q4:'b', t3q5:'c', t3q6:'b', t3q7:'a' };
+  const answers_t4 = { t4q1:'c', t4q2:'c', t4q3:'b', t4q4:'b', t4q5:'b', t4q6:'b', t4q7:'b' };
+  const answers_t5 = { t5q1:'b', t5q2:'b', t5q3:'c', t5q4:'c', t5q5:'c', t5q6:'c', t5q7:'b' };
+  const answers_t6 = { t6q1:'b', t6q2:'b', t6q3:'b', t6q4:'b', t6q5:'b', t6q6:'b', t6q7:'c' };
 
-const seccionNombres = [
-  "Sección 1: Medieval - Introducción",
-  "Sección 2: Medieval - Filósofos",
-  "Sección 3: Moderna - Introducción",
-  "Sección 4: Moderna - Filósofos"
-];
-const seccionEmojis = ["📘","📗","📙","📕"];
+  function showTema(id, btn) {
+    document.querySelectorAll('.tema-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
 
-function corregirRango(inicio, fin) {
-  const letras = ['a','b','c','d'];
-  let correctas = 0;
-  let sinResponder = [];
-  for (let i = inicio; i <= fin; i++) {
-    const respuesta = document.querySelector(`input[name="q${i}"]:checked`);
-    const preguntaDiv = document.getElementById(`p${i}`);
-    preguntaDiv.classList.remove('correcto','incorrecto');
-    preguntaDiv.querySelectorAll('.opcion').forEach(op => op.classList.remove('correcta-highlight','incorrecta-marcada'));
-    const msgPrev = preguntaDiv.querySelector('.respuesta-correcta-msg');
-    if (msgPrev) msgPrev.remove();
-    if (!respuesta) { sinResponder.push(i); continue; }
-    const correcta = respuestasCorrectas[`q${i}`];
-    if (respuesta.value === correcta) {
-      correctas++;
-      preguntaDiv.classList.add('correcto');
-      preguntaDiv.querySelectorAll('.opcion')[letras.indexOf(correcta)].classList.add('correcta-highlight');
-    } else {
-      preguntaDiv.classList.add('incorrecto');
-      preguntaDiv.querySelectorAll('.opcion')[letras.indexOf(respuesta.value)].classList.add('incorrecta-marcada');
-      preguntaDiv.querySelectorAll('.opcion')[letras.indexOf(correcta)].classList.add('correcta-highlight');
-      const msg = document.createElement('div');
-      msg.className = 'respuesta-correcta-msg';
-      msg.textContent = `✓ Correcta: ${correcta.toUpperCase()})`;
-      preguntaDiv.appendChild(msg);
+  function checkQuiz(tema, answers) {
+    let correct = 0;
+    const total = Object.keys(answers).length;
+    for (const [qid, correct_val] of Object.entries(answers)) {
+      const card = document.getElementById(tema + qid.replace(tema,''));
+      const selected = document.querySelector(`input[name="${qid}"]:checked`);
+      const fb = document.getElementById('fb-' + qid);
+      const labels = document.querySelectorAll(`input[name="${qid}"]`);
+
+      // disable
+      labels.forEach(inp => inp.disabled = true);
+
+      // highlight correct answer always
+      labels.forEach(inp => {
+        if(inp.value === correct_val) inp.parentElement.classList.add('correct');
+      });
+
+      if(selected) {
+        if(selected.value === correct_val) {
+          correct++;
+          card.classList.add('correct-card');
+          fb.textContent = '✅ ¡Correcto!';
+          fb.className = 'feedback show ok';
+        } else {
+          selected.parentElement.classList.add('incorrect');
+          card.classList.add('incorrect-card');
+          fb.textContent = '❌ Incorrecto. La respuesta correcta está marcada en verde.';
+          fb.className = 'feedback show err';
+        }
+      } else {
+        card.classList.add('incorrect-card');
+        fb.textContent = '⚠️ No respondiste esta pregunta.';
+        fb.className = 'feedback show err';
+      }
     }
-  }
-  return { correctas, sinResponder };
-}
-
-function calcularSeccion(secNum) {
-  const inicio = (secNum - 1) * 25 + 1;
-  const fin = secNum * 25;
-  const { correctas, sinResponder } = corregirRango(inicio, fin);
-
-  if (sinResponder.length > 0) {
-    alert(`⚠️ Tienes ${sinResponder.length} pregunta(s) sin responder en esta sección.\nPreguntas: ${sinResponder.slice(0,8).join(', ')}${sinResponder.length > 8 ? '...' : ''}`);
-    return;
+    const scoreBox = document.getElementById('score-' + tema);
+    const scoreNum = document.getElementById('snum-' + tema);
+    const scoreMsg = document.getElementById('smsg-' + tema);
+    scoreNum.textContent = correct + ' / ' + total;
+    const pct = Math.round((correct/total)*100);
+    if(pct >= 85) scoreMsg.textContent = '🎉 ¡Excelente! Dominas muy bien este tema.';
+    else if(pct >= 60) scoreMsg.textContent = '👍 Bien, pero repasa algunos conceptos.';
+    else scoreMsg.textContent = '📚 Necesitas repasar más este tema.';
+    scoreBox.classList.add('show');
   }
 
-  const pct = (correctas / 25) * 100;
-  const resDiv = document.getElementById(`res-sec${secNum}`);
-  resDiv.style.display = 'flex';
-  const cls = pct >= 70 ? 'bien' : pct >= 50 ? 'regular' : 'mal';
-  resDiv.className = `sec-resultado-inline ${cls}`;
-  resDiv.innerHTML = `
-    <span>${seccionEmojis[secNum-1]} Sección ${secNum}: ${correctas}/25 correctas</span>
-    <span class="sec-score">${pct.toFixed(0)}%</span>
-  `;
-
-  const btn = document.getElementById(`btn-sec${secNum}`);
-  btn.textContent = `🔄 Re-verificar — Sección ${secNum}`;
-}
-
-function calcularNota() {
-  const { correctas: c1, sinResponder: s1 } = corregirRango(1, 25);
-  const { correctas: c2, sinResponder: s2 } = corregirRango(26, 50);
-  const { correctas: c3, sinResponder: s3 } = corregirRango(51, 75);
-  const { correctas: c4, sinResponder: s4 } = corregirRango(76, 100);
-
-  const sinResponder = [...s1,...s2,...s3,...s4];
-  if (sinResponder.length > 0) {
-    const adv = document.getElementById('advertencia');
-    adv.className = 'advertencia visible';
-    adv.textContent = `⚠️ ${sinResponder.length} pregunta(s) sin responder (ej: ${sinResponder.slice(0,10).join(', ')}${sinResponder.length > 10 ? '...' : ''}). Respóndelas todas antes de enviar.`;
-    adv.scrollIntoView({behavior:'smooth'});
-    return;
+  function resetQuiz(tema) {
+    const section = document.getElementById(tema);
+    section.querySelectorAll('input[type=radio]').forEach(inp => {
+      inp.checked = false;
+      inp.disabled = false;
+      inp.parentElement.classList.remove('correct','incorrect');
+    });
+    section.querySelectorAll('.question-card').forEach(c => {
+      c.classList.remove('correct-card','incorrect-card');
+    });
+    section.querySelectorAll('.feedback').forEach(f => {
+      f.className = 'feedback';
+      f.textContent = '';
+    });
+    document.getElementById('score-' + tema).classList.remove('show');
   }
-  document.getElementById('advertencia').className = 'advertencia';
-
-  const secCorrects = [c1, c2, c3, c4];
-  const totalCorrectas = c1+c2+c3+c4;
-  const nota = totalCorrectas;
-
-  const cls = nota >= 70 ? 'bien' : nota >= 50 ? 'regular' : 'mal';
-  const notaEl = document.getElementById('notaFinalNum');
-  notaEl.textContent = nota.toFixed(1) + '%';
-  notaEl.className = `nota-final ${cls}`;
-
-  document.getElementById('totalCorrectas').textContent = `${totalCorrectas} correctas de 100 preguntas`;
-
-  const barraFill = document.getElementById('barraFill');
-  barraFill.style.width = nota + '%';
-  barraFill.className = `barra-fill ${cls}`;
-
-  const grid = document.getElementById('seccionesGrid');
-  grid.innerHTML = '';
-  secCorrects.forEach((c, idx) => {
-    const pct = (c / 25) * 100;
-    const card = document.createElement('div');
-    card.className = 'sec-card';
-    card.innerHTML = `
-      <div class="sec-card-titulo">${seccionEmojis[idx]} ${seccionNombres[idx]}</div>
-      <div class="sec-card-puntos">${c}<span class="sec-card-de"> / 25</span></div>
-      <div class="sec-card-de">${pct.toFixed(0)}% de acierto</div>
-      <div class="sec-card-barra"><div class="sec-card-barra-fill" style="width:${pct}%"></div></div>
-    `;
-    grid.appendChild(card);
-  });
-
-  const msgEl = document.getElementById('mensajeResultado');
-  if (nota >= 70) {
-    msgEl.className = 'mensaje-resultado mensaje-bien';
-    msgEl.textContent = `🎉 ¡Felicidades! Aprobaste el examen con ${nota.toFixed(1)}%`;
-  } else if (nota >= 50) {
-    msgEl.className = 'mensaje-resultado mensaje-regular';
-    msgEl.textContent = `⚡ Resultado: ${nota.toFixed(1)}%. Estás cerca, ¡sigue repasando!`;
-  } else {
-    msgEl.className = 'mensaje-resultado mensaje-mal';
-    msgEl.textContent = `📚 Nota: ${nota.toFixed(1)}%. Necesitas repasar más el material.`;
-  }
-
-  document.getElementById('resultado').style.display = 'block';
-  document.getElementById('resultado').scrollIntoView({behavior:'smooth'});
-}
 </script>
 </body>
 </html>
