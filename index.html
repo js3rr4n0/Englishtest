@@ -1,1361 +1,1049 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-theme="light">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Summit 1 — Advanced English Proficiency Exam</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<style>
-  :root{
-    --bg:#0c0e14;
-    --surface:#13161f;
-    --surface2:#1a1e2b;
-    --border:#252a3a;
-    --gold:#c9a227;
-    --gold-light:#e8c057;
-    --cream:#ede8dc;
-    --muted:#8a8fa8;
-    --red:#e05252;
-    --green:#4db87a;
-    --blue:#5b8dee;
-    --s1:#7b5ea7;
-    --s2:#2e86ab;
-    --s3:#e07b39;
-    --s4:#3aafa9;
-    --s5:#c94040;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--bg);
-    color:var(--cream);
-    font-family:'Source Serif 4',serif;
-    font-size:16px;
-    line-height:1.7;
-    min-height:100vh;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Educativa Integral</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root, [data-theme="light"] {
+            --color-bg: #f7f6f2;
+            --color-surface: #ffffff;
+            --color-surface-2: #fbfbf9;
+            --color-surface-offset: #f3f0ec;
+            --color-divider: #dcd9d5;
+            --color-border: #d4d1ca;
+            --color-text: #28251d;
+            --color-text-muted: #7a7974;
+            --color-primary: #01696f;
+            --color-primary-hover: #0c4e54;
+            --color-success: #437a22;
+            --color-error: #a12c7b;
 
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before{
-    content:'';
-    position:fixed;inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events:none;z-index:0;opacity:.5;
-  }
+            --font-display: 'Cabinet Grotesk', sans-serif;
+            --font-body: 'Satoshi', sans-serif;
 
-  /* ── HEADER ── */
-  header{
-    position:relative;
-    text-align:center;
-    padding:60px 24px 48px;
-    border-bottom:1px solid var(--border);
-    background:linear-gradient(180deg,#0c0e14 0%,#10131c 100%);
-    overflow:hidden;
-  }
-  header::after{
-    content:'';position:absolute;
-    bottom:0;left:50%;transform:translateX(-50%);
-    width:200px;height:2px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  }
-  .exam-label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;letter-spacing:4px;text-transform:uppercase;
-    color:var(--gold);margin-bottom:20px;
-  }
-  h1{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(2.2rem,5vw,3.8rem);
-    font-weight:300;color:var(--cream);
-    line-height:1.15;letter-spacing:-0.5px;
-  }
-  h1 em{font-style:italic;color:var(--gold-light);}
-  .subtitle{
-    margin-top:14px;
-    font-size:14px;color:var(--muted);
-    letter-spacing:0.5px;
-  }
-  .meta-row{
-    display:flex;gap:32px;justify-content:center;flex-wrap:wrap;
-    margin-top:28px;
-  }
-  .meta-chip{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;letter-spacing:1px;
-    color:var(--muted);
-    border:1px solid var(--border);
-    border-radius:4px;padding:6px 14px;
-  }
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
 
-  /* ── PROGRESS ── */
-  #progress-bar-wrap{
-    position:sticky;top:0;z-index:100;
-    background:var(--bg);border-bottom:1px solid var(--border);
-    padding:10px 24px;display:flex;align-items:center;gap:16px;
-  }
-  #progress-label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;color:var(--muted);white-space:nowrap;min-width:90px;
-  }
-  #progress-track{
-    flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;
-  }
-  #progress-fill{
-    height:100%;width:0%;
-    background:linear-gradient(90deg,var(--gold),var(--gold-light));
-    border-radius:2px;transition:width .4s ease;
-  }
-  #score-display{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;color:var(--gold);white-space:nowrap;min-width:70px;text-align:right;
-  }
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
+            --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
 
-  /* ── MAIN LAYOUT ── */
-  main{max-width:860px;margin:0 auto;padding:40px 24px 80px;position:relative;z-index:1;}
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.5rem;
+            --text-2xl: 2rem;
+        }
 
-  /* ── SECTION BLOCKS ── */
-  .section-block{
-    margin-bottom:56px;
-    animation:fadeUp .5s ease both;
-  }
-  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        [data-theme="dark"] {
+            --color-bg: #171614;
+            --color-surface: #1c1b19;
+            --color-surface-2: #201f1d;
+            --color-surface-offset: #1d1c1a;
+            --color-divider: #262523;
+            --color-border: #393836;
+            --color-text: #cdccca;
+            --color-text-muted: #797876;
+            --color-primary: #4f98a3;
+            --color-primary-hover: #227f8b;
+            --color-success: #6daa45;
+            --color-error: #d163a7;
+        }
 
-  .section-header{
-    display:flex;align-items:flex-start;gap:20px;
-    margin-bottom:28px;padding-bottom:20px;
-    border-bottom:1px solid var(--border);
-  }
-  .section-badge{
-    flex-shrink:0;
-    width:52px;height:52px;border-radius:10px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-family:'JetBrains Mono',monospace;
-    font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#fff;
-  }
-  .section-badge .num{font-size:20px;font-weight:700;line-height:1;}
-  .s1-color{background:var(--s1);}
-  .s2-color{background:var(--s2);}
-  .s3-color{background:var(--s3);}
-  .s4-color{background:var(--s4);}
-  .s5-color{background:var(--s5);}
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .section-meta h2{
-    font-family:'Cormorant Garamond',serif;
-    font-size:1.75rem;font-weight:600;color:var(--cream);
-    line-height:1.2;
-  }
-  .section-meta .type-tag{
-    display:inline-block;margin-top:6px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;letter-spacing:2px;text-transform:uppercase;
-    padding:3px 10px;border-radius:3px;
-  }
-  .section-meta p{margin-top:8px;font-size:14px;color:var(--muted);font-style:italic;}
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            line-height: 1.6;
+            padding: var(--space-4);
+        }
 
-  /* ── QUESTIONS ── */
-  .question-card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:12px;padding:24px 28px;
-    margin-bottom:16px;
-    transition:border-color .2s;
-    position:relative;overflow:hidden;
-  }
-  .question-card::before{
-    content:'';
-    position:absolute;left:0;top:0;bottom:0;width:3px;
-    background:var(--border);transition:background .2s;
-  }
-  .question-card.answered::before{background:var(--gold);}
-  .question-card.correct-card::before{background:var(--green);}
-  .question-card.wrong-card::before{background:var(--red);}
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-  .q-number{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;letter-spacing:2px;color:var(--muted);
-    margin-bottom:10px;
-  }
-  .q-text{
-    font-size:15px;color:var(--cream);
-    line-height:1.65;margin-bottom:16px;
-  }
-  .q-text strong{color:var(--gold-light);}
-  .blank{
-    display:inline-block;
-    border-bottom:2px solid var(--gold);
-    min-width:90px;text-align:center;
-    font-style:italic;color:var(--muted);
-    padding:0 4px;
-  }
+        header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+            padding: var(--space-8);
+            background: var(--color-surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+        }
 
-  /* Multiple Choice */
-  .options{display:flex;flex-direction:column;gap:10px;}
-  .option-label{
-    display:flex;align-items:center;gap:14px;
-    background:var(--surface2);
-    border:1px solid var(--border);border-radius:8px;
-    padding:11px 16px;cursor:pointer;
-    transition:all .2s;
-  }
-  .option-label:hover{border-color:var(--gold);background:#1e2234;}
-  .option-label input[type="radio"]{
-    accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;
-  }
-  .option-letter{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;color:var(--gold);
-    width:16px;flex-shrink:0;
-  }
-  .option-label.selected{border-color:var(--gold);background:#1e2234;}
-  .option-label.correct-opt{border-color:var(--green)!important;background:#0d2018!important;}
-  .option-label.wrong-opt{border-color:var(--red)!important;background:#200d0d!important;}
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--text-2xl);
+            color: var(--color-primary);
+            margin-bottom: var(--space-2);
+        }
 
-  /* Fill in the blank */
-  .fill-input{
-    width:100%;background:var(--surface2);
-    border:1px solid var(--border);border-radius:8px;
-    padding:10px 16px;color:var(--cream);
-    font-family:'Source Serif 4',serif;font-size:15px;
-    outline:none;transition:border-color .2s;
-  }
-  .fill-input:focus{border-color:var(--gold);}
-  .fill-input.correct-input{border-color:var(--green);background:#0d2018;}
-  .fill-input.wrong-input{border-color:var(--red);background:#200d0d;}
+        .subtitle {
+            color: var(--color-text-muted);
+            font-size: var(--text-lg);
+        }
 
-  /* Error Identification */
-  .error-sentence{
-    font-size:16px;line-height:2;color:var(--cream);
-    margin-bottom:14px;
-  }
-  .underline-opt{
-    display:inline-block;
-    border-bottom:2px solid var(--blue);
-    cursor:pointer;padding:0 2px;
-    transition:all .2s;
-  }
-  .underline-opt:hover{background:rgba(91,141,238,.15);}
-  .underline-opt.selected-error{
-    background:rgba(201,162,39,.2);
-    border-color:var(--gold);
-  }
-  .underline-opt.correct-error{
-    background:rgba(77,184,122,.2)!important;
-    border-color:var(--green)!important;
-    color:var(--green);
-  }
-  .underline-opt.wrong-error{
-    background:rgba(224,82,82,.2)!important;
-    border-color:var(--red)!important;
-    color:var(--red);
-  }
-  .error-instruction{
-    font-size:13px;color:var(--muted);font-style:italic;margin-bottom:12px;
-  }
+        .section-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-md);
+            display: none;
+        }
 
-  /* Transformation */
-  .transform-prompt{
-    font-size:14px;color:var(--muted);margin-bottom:8px;
-    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
-  }
-  .transform-base{
-    font-size:15px;color:var(--cream);margin-bottom:14px;
-    padding:10px 14px;background:var(--surface2);border-radius:6px;
-    border-left:3px solid var(--s4);font-style:italic;
-  }
+        .section-card.active {
+            display: block;
+        }
 
-  /* Perfect Modals */
-  .modal-context{
-    font-size:14px;color:var(--muted);padding:12px 16px;
-    background:var(--surface2);border-radius:8px;border-left:3px solid var(--s5);
-    margin-bottom:14px;font-style:italic;line-height:1.6;
-  }
+        .section-header {
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--color-divider);
+        }
 
-  /* ── FEEDBACK ── */
-  .feedback-panel{
-    display:none;margin-top:20px;
-    border-radius:10px;padding:20px 24px;
-    border:1px solid var(--border);
-    animation:feedbackIn .35s ease;
-  }
-  @keyframes feedbackIn{from{opacity:0;transform:scaleY(.9);transform-origin:top}to{opacity:1;transform:scaleY(1)}}
-  .feedback-panel.all-correct{
-    background:rgba(77,184,122,.08);border-color:#2a5e3f;
-  }
-  .feedback-panel.has-errors{
-    background:rgba(224,82,82,.06);border-color:#5e2a2a;
-  }
-  .feedback-title{
-    font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;
-    margin-bottom:12px;display:flex;align-items:center;gap:10px;
-  }
-  .feedback-score{
-    font-family:'JetBrains Mono',monospace;font-size:14px;
-    margin-bottom:16px;
-  }
-  .error-item{
-    margin-bottom:18px;padding:14px 16px;
-    background:rgba(224,82,82,.06);border-radius:8px;
-    border:1px solid #3a1e1e;
-  }
-  .error-item:last-child{margin-bottom:0}
-  .error-q-ref{
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    color:var(--red);letter-spacing:1px;margin-bottom:6px;
-  }
-  .error-given{font-size:13px;color:var(--muted);margin-bottom:4px;}
-  .error-given span{color:var(--red);}
-  .error-correct{font-size:13px;color:var(--muted);margin-bottom:8px;}
-  .error-correct span{color:var(--green);}
-  .error-explain{
-    font-size:13px;color:#b8c0d4;line-height:1.6;
-    border-top:1px solid #2a1e1e;padding-top:8px;margin-top:8px;
-  }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            color: var(--color-primary);
+        }
 
-  /* ── SUBMIT BUTTON ── */
-  .submit-section{
-    display:flex;justify-content:center;
-    margin-top:28px;padding-top:24px;
-    border-top:1px solid var(--border);
-  }
-  .submit-btn{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;letter-spacing:2px;text-transform:uppercase;
-    background:var(--gold);color:#0c0e14;
-    border:none;border-radius:8px;padding:14px 40px;
-    cursor:pointer;transition:all .2s;font-weight:700;
-  }
-  .submit-btn:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,162,39,.25);}
-  .submit-btn:active{transform:translateY(0);}
-  .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+        .question-block {
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            background: var(--color-surface-2);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+        }
 
-  /* ── FINAL SCORE ── */
-  #final-section{
-    display:none;text-align:center;
-    padding:60px 40px;
-    background:var(--surface);border:1px solid var(--border);border-radius:16px;
-    margin-top:40px;
-  }
-  .final-title{
-    font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;
-    color:var(--cream);margin-bottom:8px;
-  }
-  .final-title em{font-style:italic;color:var(--gold-light);}
-  .final-score-big{
-    font-family:'Cormorant Garamond',serif;font-size:6rem;font-weight:700;
-    line-height:1;margin:24px 0;
-  }
-  .final-grade{
-    font-family:'JetBrains Mono',monospace;font-size:12px;
-    letter-spacing:3px;margin-bottom:24px;
-  }
-  .grade-breakdown{
-    display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:28px;
-  }
-  .grade-chip{
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    border:1px solid var(--border);border-radius:6px;
-    padding:8px 16px;color:var(--muted);
-  }
-  .grade-chip span{color:var(--cream);font-weight:700;}
+        .question-text {
+            font-weight: 500;
+            margin-bottom: var(--space-3);
+            font-size: var(--text-lg);
+        }
 
-  /* Responsive */
-  @media(max-width:600px){
-    h1{font-size:2rem}
-    .section-header{flex-direction:column;gap:12px}
-    .question-card{padding:18px 16px}
-    .options{gap:8px}
-  }
-</style>
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: var(--space-2);
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: var(--space-3);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: var(--color-primary);
+            background: var(--color-surface-offset);
+        }
+
+        input[type="radio"] {
+            margin-right: var(--space-3);
+            accent-color: var(--color-primary);
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        input[type="radio"]:checked + .option-text {
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: var(--text-base);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            width: 100%;
+            margin-top: var(--space-4);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-divider);
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-6);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--color-primary);
+            width: 20%;
+            transition: width 0.3s ease;
+        }
+
+        .feedback {
+            margin-top: var(--space-2);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            display: none;
+            font-weight: 500;
+        }
+
+        .feedback.correct {
+            display: block;
+            background: rgba(67, 122, 34, 0.1);
+            color: var(--color-success);
+            border: 1px solid var(--color-success);
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background: rgba(161, 44, 123, 0.1);
+            color: var(--color-error);
+            border: 1px solid var(--color-error);
+        }
+
+        .results-container {
+            text-align: center;
+            display: none;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 auto var(--space-6);
+            font-family: var(--font-display);
+            box-shadow: var(--shadow-md);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: var(--space-4);
+            right: var(--space-4);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: var(--space-2);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .disabled-label {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-
-<header>
-  <div class="exam-label">Summit 1 · Third Edition · Final Assessment</div>
-  <h1>Advanced English<br><em>Proficiency Examination</em></h1>
-  <p class="subtitle">Grammar &amp; Vocabulary · Units 1–9 · 50 Questions</p>
-  <div class="meta-row">
-    <div class="meta-chip">50 Questions</div>
-    <div class="meta-chip">5 Question Types</div>
-    <div class="meta-chip">Instant Feedback</div>
-    <div class="meta-chip">Grammar Explanations</div>
-  </div>
-</header>
-
-<div id="progress-bar-wrap">
-  <div id="progress-label">0 / 50 answered</div>
-  <div id="progress-track"><div id="progress-fill"></div></div>
-  <div id="score-display">—</div>
-</div>
-
-<main>
-
-<!-- ══════════════════════════════════════════
-     SECTION 1 — MULTIPLE CHOICE (Q1–10)
-     Infinitives & Gerunds · Units 1 & 2
-════════════════════════════════════════════ -->
-<section class="section-block" id="sec1">
-  <div class="section-header">
-    <div class="section-badge s1-color">
-      <span class="num">I</span>
-      <span>Part</span>
-    </div>
-    <div class="section-meta">
-      <h2>Multiple Choice</h2>
-      <span class="type-tag" style="background:rgba(123,94,167,.2);color:#c4a8f0;">Questions 1 – 10</span>
-      <p>Infinitives, gerunds, and personality adjectives. Choose the single best answer for each item.</p>
-    </div>
-  </div>
-
-  <!-- Q1 -->
-  <div class="question-card" id="qc1">
-    <div class="q-number">QUESTION 01</div>
-    <div class="q-text">It is important for every professional <strong>___</strong> deadlines seriously. Which form correctly completes the sentence?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q1" value="A"/><span class="option-letter">A</span>taking</label>
-      <label class="option-label"><input type="radio" name="q1" value="B"/><span class="option-letter">B</span>to take</label>
-      <label class="option-label"><input type="radio" name="q1" value="C"/><span class="option-letter">C</span>take</label>
-      <label class="option-label"><input type="radio" name="q1" value="D"/><span class="option-letter">D</span>taken</label>
-    </div>
-  </div>
-
-  <!-- Q2 -->
-  <div class="question-card" id="qc2">
-    <div class="q-number">QUESTION 02</div>
-    <div class="q-text">She <strong>got</strong> her assistant <strong>___</strong> the report before noon. Choose the correct option.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q2" value="A"/><span class="option-letter">A</span>finishing</label>
-      <label class="option-label"><input type="radio" name="q2" value="B"/><span class="option-letter">B</span>finish</label>
-      <label class="option-label"><input type="radio" name="q2" value="C"/><span class="option-letter">C</span>to finish</label>
-      <label class="option-label"><input type="radio" name="q2" value="D"/><span class="option-letter">D</span>finished</label>
-    </div>
-  </div>
-
-  <!-- Q3 -->
-  <div class="question-card" id="qc3">
-    <div class="q-number">QUESTION 03</div>
-    <div class="q-text">He is known <strong>___</strong> one of the best architects in the city. Select the correct infinitive form.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q3" value="A"/><span class="option-letter">A</span>being</label>
-      <label class="option-label"><input type="radio" name="q3" value="B"/><span class="option-letter">B</span>to have been</label>
-      <label class="option-label"><input type="radio" name="q3" value="C"/><span class="option-letter">C</span>to be</label>
-      <label class="option-label"><input type="radio" name="q3" value="D"/><span class="option-letter">D</span>been</label>
-    </div>
-  </div>
-
-  <!-- Q4 -->
-  <div class="question-card" id="qc4">
-    <div class="q-number">QUESTION 04</div>
-    <div class="q-text">Maria admitted <strong>___</strong> her homework the night before the exam — not a week in advance.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q4" value="A"/><span class="option-letter">A</span>to do</label>
-      <label class="option-label"><input type="radio" name="q4" value="B"/><span class="option-letter">B</span>doing</label>
-      <label class="option-label"><input type="radio" name="q4" value="C"/><span class="option-letter">C</span>to have done</label>
-      <label class="option-label"><input type="radio" name="q4" value="D"/><span class="option-letter">D</span>done</label>
-    </div>
-  </div>
-
-  <!-- Q5 -->
-  <div class="question-card" id="qc5">
-    <div class="q-number">QUESTION 05</div>
-    <div class="q-text">The manager told the team <strong>___</strong> the new protocol immediately. (Reported speech with imperative)</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q5" value="A"/><span class="option-letter">A</span>implementing</label>
-      <label class="option-label"><input type="radio" name="q5" value="B"/><span class="option-letter">B</span>implement</label>
-      <label class="option-label"><input type="radio" name="q5" value="C"/><span class="option-letter">C</span>to implement</label>
-      <label class="option-label"><input type="radio" name="q5" value="D"/><span class="option-letter">D</span>would implement</label>
-    </div>
-  </div>
-
-  <!-- Q6 -->
-  <div class="question-card" id="qc6">
-    <div class="q-number">QUESTION 06</div>
-    <div class="q-text">Which sentence is grammatically CORRECT regarding parallelism?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q6" value="A"/><span class="option-letter">A</span>She likes reading, to write, and to paint.</label>
-      <label class="option-label"><input type="radio" name="q6" value="B"/><span class="option-letter">B</span>She likes reading, writing, and painting.</label>
-      <label class="option-label"><input type="radio" name="q6" value="C"/><span class="option-letter">C</span>She likes to read, writing, and paint.</label>
-      <label class="option-label"><input type="radio" name="q6" value="D"/><span class="option-letter">D</span>She likes read, write, and painting.</label>
-    </div>
-  </div>
-
-  <!-- Q7 -->
-  <div class="question-card" id="qc7">
-    <div class="q-number">QUESTION 07</div>
-    <div class="q-text">I remember <strong>___</strong> her at the conference years ago — she was speaking on stage. (The action happened before remembering.)</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q7" value="A"/><span class="option-letter">A</span>to meet</label>
-      <label class="option-label"><input type="radio" name="q7" value="B"/><span class="option-letter">B</span>to have met</label>
-      <label class="option-label"><input type="radio" name="q7" value="C"/><span class="option-letter">C</span>meeting</label>
-      <label class="option-label"><input type="radio" name="q7" value="D"/><span class="option-letter">D</span>having met</label>
-    </div>
-  </div>
-
-  <!-- Q8 -->
-  <div class="question-card" id="qc8">
-    <div class="q-number">QUESTION 08</div>
-    <div class="q-text">Which adjective best describes someone who always completes tasks without being told and takes initiative on their own?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q8" value="A"/><span class="option-letter">A</span>Submissive</label>
-      <label class="option-label"><input type="radio" name="q8" value="B"/><span class="option-letter">B</span>Indifferent</label>
-      <label class="option-label"><input type="radio" name="q8" value="C"/><span class="option-letter">C</span>Self-directed</label>
-      <label class="option-label"><input type="radio" name="q8" value="D"/><span class="option-letter">D</span>Impulsive</label>
-    </div>
-  </div>
-
-  <!-- Q9 -->
-  <div class="question-card" id="qc9">
-    <div class="q-number">QUESTION 09</div>
-    <div class="q-text">He stopped <strong>___</strong> his old friend on the street — they hadn't seen each other in years. (The stopping was in order to greet.)</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q9" value="A"/><span class="option-letter">A</span>greeting</label>
-      <label class="option-label"><input type="radio" name="q9" value="B"/><span class="option-letter">B</span>to greet</label>
-      <label class="option-label"><input type="radio" name="q9" value="C"/><span class="option-letter">C</span>greet</label>
-      <label class="option-label"><input type="radio" name="q9" value="D"/><span class="option-letter">D</span>greeted</label>
-    </div>
-  </div>
-
-  <!-- Q10 -->
-  <div class="question-card" id="qc10">
-    <div class="q-number">QUESTION 10</div>
-    <div class="q-text">They suggested <strong>___</strong> the project deadline by one week due to unforeseen complications.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q10" value="A"/><span class="option-letter">A</span>to extend</label>
-      <label class="option-label"><input type="radio" name="q10" value="B"/><span class="option-letter">B</span>extend</label>
-      <label class="option-label"><input type="radio" name="q10" value="C"/><span class="option-letter">C</span>extending</label>
-      <label class="option-label"><input type="radio" name="q10" value="D"/><span class="option-letter">D</span>extended</label>
-    </div>
-  </div>
-
-  <div class="submit-section">
-    <button class="submit-btn" id="submit1" onclick="evaluateSection(1)">Evaluate Questions 1–10 →</button>
-  </div>
-  <div class="feedback-panel" id="fb1"></div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     SECTION 2 — FILL IN THE BLANK (Q11–20)
-     Noun Clauses · Quantifiers · Past Unreal Conditional · Units 3 & 4
-════════════════════════════════════════════ -->
-<section class="section-block" id="sec2">
-  <div class="section-header">
-    <div class="section-badge s2-color">
-      <span class="num">II</span>
-      <span>Part</span>
-    </div>
-    <div class="section-meta">
-      <h2>Fill in the Blank</h2>
-      <span class="type-tag" style="background:rgba(46,134,171,.2);color:#7ec8e3;">Questions 11 – 20</span>
-      <p>Type the correct word or phrase. Focus on noun clauses, quantifiers, and past unreal conditionals.</p>
-    </div>
-  </div>
-
-  <!-- Q11 -->
-  <div class="question-card" id="qc11">
-    <div class="q-number">QUESTION 11</div>
-    <div class="q-text">I was surprised by <strong>___</strong> she reacted so calmly to the news. (Use a subordinating conjunction to form a noun clause as object.)</div>
-    <input class="fill-input" id="q11" placeholder="Type one word…" autocomplete="off"/>
-  </div>
-
-  <!-- Q12 -->
-  <div class="question-card" id="qc12">
-    <div class="q-number">QUESTION 12</div>
-    <div class="q-text">There are <strong>___</strong> solutions to climate change, but none is easy to implement. (Choose: <em>few</em> or <em>a few</em> — implies they exist but are limited.)</div>
-    <input class="fill-input" id="q12" placeholder="Type one or two words…" autocomplete="off"/>
-  </div>
-
-  <!-- Q13 -->
-  <div class="question-card" id="qc13">
-    <div class="q-number">QUESTION 13</div>
-    <div class="q-text">If the government <strong>had invested</strong> in renewable energy earlier, pollution <strong>___</strong> significantly by now. (Past unreal conditional — result clause.)</div>
-    <input class="fill-input" id="q13" placeholder="Type the full verb phrase…" autocomplete="off"/>
-  </div>
-
-  <!-- Q14 -->
-  <div class="question-card" id="qc14">
-    <div class="q-number">QUESTION 14</div>
-    <div class="q-text">Do you know <strong>___</strong> the conference will begin? (Embedded question — use a question word.)</div>
-    <input class="fill-input" id="q14" placeholder="Type one word…" autocomplete="off"/>
-  </div>
-
-  <!-- Q15 -->
-  <div class="question-card" id="qc15">
-    <div class="q-number">QUESTION 15</div>
-    <div class="q-text">It is essential that every citizen <strong>___</strong> their social responsibility. (Subjunctive in impersonal expression — base verb form.)</div>
-    <input class="fill-input" id="q15" placeholder="Type one word…" autocomplete="off"/>
-  </div>
-
-  <!-- Q16 -->
-  <div class="question-card" id="qc16">
-    <div class="q-number">QUESTION 16</div>
-    <div class="q-text">She spent <strong>___</strong> time on the project, but it was enough to finish it. (<em>little</em> or <em>a little</em> — implies a small but sufficient amount.)</div>
-    <input class="fill-input" id="q16" placeholder="Type one or two words…" autocomplete="off"/>
-  </div>
-
-  <!-- Q17 -->
-  <div class="question-card" id="qc17">
-    <div class="q-number">QUESTION 17</div>
-    <div class="q-text">By next December, archaeologists <strong>___</strong> the entire site for three years. (Future perfect continuous — complete the verb phrase.)</div>
-    <input class="fill-input" id="q17" placeholder="Type the full verb phrase…" autocomplete="off"/>
-  </div>
-
-  <!-- Q18 -->
-  <div class="question-card" id="qc18">
-    <div class="q-number">QUESTION 18</div>
-    <div class="q-text">Had the explorers brought more supplies, they <strong>___</strong> able to continue the journey. (Inverted past unreal conditional — result clause.)</div>
-    <input class="fill-input" id="q18" placeholder="Type the full verb phrase…" autocomplete="off"/>
-  </div>
-
-  <!-- Q19 -->
-  <div class="question-card" id="qc19">
-    <div class="q-number">QUESTION 19</div>
-    <div class="q-text">What strikes me most is <strong>___</strong> the team managed to finish under such pressure. (Noun clause as subject complement — use a conjunction.)</div>
-    <input class="fill-input" id="q19" placeholder="Type one word…" autocomplete="off"/>
-  </div>
-
-  <!-- Q20 -->
-  <div class="question-card" id="qc20">
-    <div class="q-number">QUESTION 20</div>
-    <div class="q-text"><strong>___</strong> of the volunteers arrived on time — only a handful showed up before sunset. (Quantifier suggesting a small proportion — negative connotation.)</div>
-    <input class="fill-input" id="q20" placeholder="Type one or two words…" autocomplete="off"/>
-  </div>
-
-  <div class="submit-section">
-    <button class="submit-btn" id="submit2" onclick="evaluateSection(2)">Evaluate Questions 11–20 →</button>
-  </div>
-  <div class="feedback-panel" id="fb2"></div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     SECTION 3 — ERROR IDENTIFICATION (Q21–30)
-     Conjunctions · Adverbs · Verb Tenses · Units 5 & 6
-════════════════════════════════════════════ -->
-<section class="section-block" id="sec3">
-  <div class="section-header">
-    <div class="section-badge s3-color">
-      <span class="num">III</span>
-      <span>Part</span>
-    </div>
-    <div class="section-meta">
-      <h2>Error Identification</h2>
-      <span class="type-tag" style="background:rgba(224,123,57,.2);color:#f5a86e;">Questions 21 – 30</span>
-      <p>Each sentence contains one grammatical error. Click on the underlined word or phrase that is incorrect.</p>
-    </div>
-  </div>
-
-  <!-- Q21 -->
-  <div class="question-card" id="qc21">
-    <div class="q-number">QUESTION 21</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      She dresses <span class="underline-opt" data-q="21" data-part="A" onclick="selectError(this)">very elegant</span> for every occasion, which is why people always <span class="underline-opt" data-q="21" data-part="B" onclick="selectError(this)">admire</span> her <span class="underline-opt" data-q="21" data-part="C" onclick="selectError(this)">personal style</span>.
-    </div>
-  </div>
-
-  <!-- Q22 -->
-  <div class="question-card" id="qc22">
-    <div class="q-number">QUESTION 22</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      I have lived in this city <span class="underline-opt" data-q="22" data-part="A" onclick="selectError(this)">since</span> ten years, and I <span class="underline-opt" data-q="22" data-part="B" onclick="selectError(this)">still enjoy</span> discovering <span class="underline-opt" data-q="22" data-part="C" onclick="selectError(this)">new neighborhoods</span>.
-    </div>
-  </div>
-
-  <!-- Q23 -->
-  <div class="question-card" id="qc23">
-    <div class="q-number">QUESTION 23</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      Neither the director <span class="underline-opt" data-q="23" data-part="A" onclick="selectError(this)">or</span> the producers <span class="underline-opt" data-q="23" data-part="B" onclick="selectError(this)">were</span> aware of the <span class="underline-opt" data-q="23" data-part="C" onclick="selectError(this)">budget overrun</span> until last week.
-    </div>
-  </div>
-
-  <!-- Q24 -->
-  <div class="question-card" id="qc24">
-    <div class="q-number">QUESTION 24</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      He <span class="underline-opt" data-q="24" data-part="A" onclick="selectError(this)">use to</span> wake up at 5 AM every day when he <span class="underline-opt" data-q="24" data-part="B" onclick="selectError(this)">was</span> training for the <span class="underline-opt" data-q="24" data-part="C" onclick="selectError(this)">marathon</span>.
-    </div>
-  </div>
-
-  <!-- Q25 -->
-  <div class="question-card" id="qc25">
-    <div class="q-number">QUESTION 25</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      <span class="underline-opt" data-q="25" data-part="A" onclick="selectError(this)">Both</span> of the applicants <span class="underline-opt" data-q="25" data-part="B" onclick="selectError(this)">has</span> impressive portfolios and strong recommendation letters from their professors.
-      <span class="underline-opt" data-q="25" data-part="C" onclick="selectError(this)">(no error in remaining part)</span>
-    </div>
-  </div>
-
-  <!-- Q26 -->
-  <div class="question-card" id="qc26">
-    <div class="q-number">QUESTION 26</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      She performed <span class="underline-opt" data-q="26" data-part="A" onclick="selectError(this)">brilliantly</span> at the audition; <span class="underline-opt" data-q="26" data-part="B" onclick="selectError(this)">neither</span> did her partner, who forgot two entire verses.
-      <span class="underline-opt" data-q="26" data-part="C" onclick="selectError(this)">(no further error)</span>
-    </div>
-  </div>
-
-  <!-- Q27 -->
-  <div class="question-card" id="qc27">
-    <div class="q-number">QUESTION 27</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      <span class="underline-opt" data-q="27" data-part="A" onclick="selectError(this)">Every one of</span> the students in the advanced class <span class="underline-opt" data-q="27" data-part="B" onclick="selectError(this)">are expected</span> to submit a research paper by Friday.
-      <span class="underline-opt" data-q="27" data-part="C" onclick="selectError(this)">(no error in remaining part)</span>
-    </div>
-  </div>
-
-  <!-- Q28 -->
-  <div class="question-card" id="qc28">
-    <div class="q-number">QUESTION 28</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      I was going to study abroad, but I <span class="underline-opt" data-q="28" data-part="A" onclick="selectError(this)">decided</span> <span class="underline-opt" data-q="28" data-part="B" onclick="selectError(this)">staying</span> home because my family needed me at that time.
-      <span class="underline-opt" data-q="28" data-part="C" onclick="selectError(this)">(no further error)</span>
-    </div>
-  </div>
-
-  <!-- Q29 -->
-  <div class="question-card" id="qc29">
-    <div class="q-number">QUESTION 29</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      When I was young, I <span class="underline-opt" data-q="29" data-part="A" onclick="selectError(this)">would spend</span> summers at my grandparents' farm; <span class="underline-opt" data-q="29" data-part="B" onclick="selectError(this)">I would love</span> the smell of fresh bread in the mornings — it was truly magical.
-      <span class="underline-opt" data-q="29" data-part="C" onclick="selectError(this)">(no further error)</span>
-    </div>
-  </div>
-
-  <!-- Q30 -->
-  <div class="question-card" id="qc30">
-    <div class="q-number">QUESTION 30</div>
-    <div class="error-instruction">Click on the underlined part that contains the error:</div>
-    <div class="error-sentence">
-      The fashion industry <span class="underline-opt" data-q="30" data-part="A" onclick="selectError(this)">is changing</span> rapidly; <span class="underline-opt" data-q="30" data-part="B" onclick="selectError(this)">several of</span> designers <span class="underline-opt" data-q="30" data-part="C" onclick="selectError(this)">are now prioritizing</span> sustainability over profit.
-    </div>
-  </div>
-
-  <div class="submit-section">
-    <button class="submit-btn" id="submit3" onclick="evaluateSection(3)">Evaluate Questions 21–30 →</button>
-  </div>
-  <div class="feedback-panel" id="fb3"></div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     SECTION 4 — SENTENCE TRANSFORMATION (Q31–40)
-     Passive Voice · Comparatives · Units 7 & 8
-════════════════════════════════════════════ -->
-<section class="section-block" id="sec4">
-  <div class="section-header">
-    <div class="section-badge s4-color">
-      <span class="num">IV</span>
-      <span>Part</span>
-    </div>
-    <div class="section-meta">
-      <h2>Sentence Transformation</h2>
-      <span class="type-tag" style="background:rgba(58,175,169,.2);color:#7ee8e4;">Questions 31 – 40</span>
-      <p>Rewrite each sentence using the structure indicated. Your answer must preserve the original meaning.</p>
-    </div>
-  </div>
-
-  <!-- Q31 -->
-  <div class="question-card" id="qc31">
-    <div class="q-number">QUESTION 31</div>
-    <div class="transform-prompt">→ REWRITE IN THE PASSIVE VOICE (simple present)</div>
-    <div class="transform-base">The company launches a new product every quarter.</div>
-    <input class="fill-input" id="q31" placeholder="A new product is…" autocomplete="off"/>
-  </div>
-
-  <!-- Q32 -->
-  <div class="question-card" id="qc32">
-    <div class="q-number">QUESTION 32</div>
-    <div class="transform-prompt">→ REWRITE IN THE PASSIVE VOICE (present perfect)</div>
-    <div class="transform-base">Scientists have discovered a new species of deep-sea fish.</div>
-    <input class="fill-input" id="q32" placeholder="A new species of deep-sea fish has…" autocomplete="off"/>
-  </div>
-
-  <!-- Q33 -->
-  <div class="question-card" id="qc33">
-    <div class="q-number">QUESTION 33</div>
-    <div class="transform-prompt">→ REWRITE AS A PASSIVE QUESTION (simple past)</div>
-    <div class="transform-base">Did the director approve the final script?</div>
-    <input class="fill-input" id="q33" placeholder="Was the final script…" autocomplete="off"/>
-  </div>
-
-  <!-- Q34 -->
-  <div class="question-card" id="qc34">
-    <div class="q-number">QUESTION 34</div>
-    <div class="transform-prompt">→ COMPLETE USING A COMPARATIVE STRUCTURE (as…as)</div>
-    <div class="transform-base">Digital advertising is equally effective compared to television advertising.</div>
-    <input class="fill-input" id="q34" placeholder="Digital advertising is as…" autocomplete="off"/>
-  </div>
-
-  <!-- Q35 -->
-  <div class="question-card" id="qc35">
-    <div class="q-number">QUESTION 35</div>
-    <div class="transform-prompt">→ REWRITE USING THE SUPERLATIVE + PRESENT PERFECT</div>
-    <div class="transform-base">No other campaign has been more controversial than this one.</div>
-    <input class="fill-input" id="q35" placeholder="This is the most…" autocomplete="off"/>
-  </div>
-
-  <!-- Q36 -->
-  <div class="question-card" id="qc36">
-    <div class="q-number">QUESTION 36</div>
-    <div class="transform-prompt">→ REWRITE IN THE PASSIVE VOICE (future with will)</div>
-    <div class="transform-base">The company will release the new ad campaign next Monday.</div>
-    <input class="fill-input" id="q36" placeholder="The new ad campaign will be…" autocomplete="off"/>
-  </div>
-
-  <!-- Q37 -->
-  <div class="question-card" id="qc37">
-    <div class="q-number">QUESTION 37</div>
-    <div class="transform-prompt">→ REWRITE USING "TEND TO" TO EXPRESS TENDENCY</div>
-    <div class="transform-base">Consumers usually prefer familiar brands over new ones.</div>
-    <input class="fill-input" id="q37" placeholder="Consumers tend to…" autocomplete="off"/>
-  </div>
-
-  <!-- Q38 -->
-  <div class="question-card" id="qc38">
-    <div class="q-number">QUESTION 38</div>
-    <div class="transform-prompt">→ REWRITE USING "THE + COMPARATIVE, THE + COMPARATIVE"</div>
-    <div class="transform-base">If you practice more, you improve more quickly.</div>
-    <input class="fill-input" id="q38" placeholder="The more you practice…" autocomplete="off"/>
-  </div>
-
-  <!-- Q39 -->
-  <div class="question-card" id="qc39">
-    <div class="q-number">QUESTION 39</div>
-    <div class="transform-prompt">→ REWRITE IN THE PASSIVE VOICE (past continuous)</div>
-    <div class="transform-base">Workers were installing new software on all the computers.</div>
-    <input class="fill-input" id="q39" placeholder="New software was being…" autocomplete="off"/>
-  </div>
-
-  <!-- Q40 -->
-  <div class="question-card" id="qc40">
-    <div class="q-number">QUESTION 40</div>
-    <div class="transform-prompt">→ REWRITE USING "WOULD RATHER" TO EXPRESS PREFERENCE</div>
-    <div class="transform-base">I prefer shopping online to going to a physical store.</div>
-    <input class="fill-input" id="q40" placeholder="I would rather…" autocomplete="off"/>
-  </div>
-
-  <div class="submit-section">
-    <button class="submit-btn" id="submit4" onclick="evaluateSection(4)">Evaluate Questions 31–40 →</button>
-  </div>
-  <div class="feedback-panel" id="fb4"></div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     SECTION 5 — PERFECT MODALS / SPECULATION (Q41–50)
-     Unit 9: Mysteries of the Past
-════════════════════════════════════════════ -->
-<section class="section-block" id="sec5">
-  <div class="section-header">
-    <div class="section-badge s5-color">
-      <span class="num">V</span>
-      <span>Part</span>
-    </div>
-    <div class="section-meta">
-      <h2>Perfect Modals &amp; Speculation</h2>
-      <span class="type-tag" style="background:rgba(201,64,64,.2);color:#f08080;">Questions 41 – 50</span>
-      <p>Choose the modal that best expresses the degree of certainty indicated. Read each context carefully.</p>
-    </div>
-  </div>
-
-  <!-- Q41 -->
-  <div class="question-card" id="qc41">
-    <div class="q-number">QUESTION 41</div>
-    <div class="modal-context">Context: The explorers' camp was completely empty. Food was untouched, fires were still lit, and all equipment was left behind. The departure was not planned.</div>
-    <div class="q-text">The expedition team <strong>___</strong> left voluntarily — the evidence strongly suggests they were forced to flee suddenly.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q41" value="A"/><span class="option-letter">A</span>must have</label>
-      <label class="option-label"><input type="radio" name="q41" value="B"/><span class="option-letter">B</span>could have</label>
-      <label class="option-label"><input type="radio" name="q41" value="C"/><span class="option-letter">C</span>can't have</label>
-      <label class="option-label"><input type="radio" name="q41" value="D"/><span class="option-letter">D</span>might have</label>
-    </div>
-  </div>
-
-  <!-- Q42 -->
-  <div class="question-card" id="qc42">
-    <div class="q-number">QUESTION 42</div>
-    <div class="modal-context">Context: Archaeologists found a large stone structure deep in the jungle. Its purpose is completely unknown. Several theories exist, none confirmed.</div>
-    <div class="q-text">The ancient structure <strong>___</strong> served as a temple, a marketplace, or even an astronomical observatory — researchers are not certain.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q42" value="A"/><span class="option-letter">A</span>must have</label>
-      <label class="option-label"><input type="radio" name="q42" value="B"/><span class="option-letter">B</span>might have</label>
-      <label class="option-label"><input type="radio" name="q42" value="C"/><span class="option-letter">C</span>had to have</label>
-      <label class="option-label"><input type="radio" name="q42" value="D"/><span class="option-letter">D</span>can't have</label>
-    </div>
-  </div>
-
-  <!-- Q43 -->
-  <div class="question-card" id="qc43">
-    <div class="q-number">QUESTION 43</div>
-    <div class="modal-context">Context: The medieval castle walls are 4 meters thick and required an estimated 10,000 workers. This type of construction demands extreme resources and planning — it was absolutely necessary.</div>
-    <div class="q-text">Building such fortifications <strong>___</strong> required an enormous amount of labor, resources, and royal authorization.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q43" value="A"/><span class="option-letter">A</span>might have</label>
-      <label class="option-label"><input type="radio" name="q43" value="B"/><span class="option-letter">B</span>could have</label>
-      <label class="option-label"><input type="radio" name="q43" value="C"/><span class="option-letter">C</span>had to have</label>
-      <label class="option-label"><input type="radio" name="q43" value="D"/><span class="option-letter">D</span>can't have</label>
-    </div>
-  </div>
-
-  <!-- Q44 -->
-  <div class="question-card" id="qc44">
-    <div class="q-number">QUESTION 44</div>
-    <div class="modal-context">Context: The artifact was carbon-dated to 3,000 BCE. The civilization responsible was believed to have no metallurgical knowledge at that time. The artifact is made of refined steel.</div>
-    <div class="q-text">This artifact <strong>___</strong> been produced by that civilization — the technology simply did not exist then.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q44" value="A"/><span class="option-letter">A</span>must have</label>
-      <label class="option-label"><input type="radio" name="q44" value="B"/><span class="option-letter">B</span>could have</label>
-      <label class="option-label"><input type="radio" name="q44" value="C"/><span class="option-letter">C</span>might have</label>
-      <label class="option-label"><input type="radio" name="q44" value="D"/><span class="option-letter">D</span>can't have</label>
-    </div>
-  </div>
-
-  <!-- Q45 -->
-  <div class="question-card" id="qc45">
-    <div class="q-number">QUESTION 45</div>
-    <div class="modal-context">Context: Investigators found fingerprints, DNA, and two witnesses placing a suspect at the crime scene. The evidence is overwhelming.</div>
-    <div class="q-text">Given all the evidence, he <strong>___</strong> been at the scene — there is no reasonable doubt about it.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q45" value="A"/><span class="option-letter">A</span>might have</label>
-      <label class="option-label"><input type="radio" name="q45" value="B"/><span class="option-letter">B</span>could have</label>
-      <label class="option-label"><input type="radio" name="q45" value="C"/><span class="option-letter">C</span>must have</label>
-      <label class="option-label"><input type="radio" name="q45" value="D"/><span class="option-letter">D</span>can't have</label>
-    </div>
-  </div>
-
-  <!-- Q46 -->
-  <div class="question-card" id="qc46">
-    <div class="q-number">QUESTION 46</div>
-    <div class="q-text">Which sentence uses a perfect modal <strong>in the passive voice</strong> correctly?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q46" value="A"/><span class="option-letter">A</span>The tomb must have been sealed centuries ago by priests.</label>
-      <label class="option-label"><input type="radio" name="q46" value="B"/><span class="option-letter">B</span>The tomb must have seal centuries ago by priests.</label>
-      <label class="option-label"><input type="radio" name="q46" value="C"/><span class="option-letter">C</span>The tomb must be sealed centuries ago by priests.</label>
-      <label class="option-label"><input type="radio" name="q46" value="D"/><span class="option-letter">D</span>The tomb must sealed centuries ago by priests.</label>
-    </div>
-  </div>
-
-  <!-- Q47 -->
-  <div class="question-card" id="qc47">
-    <div class="q-number">QUESTION 47</div>
-    <div class="modal-context">Context: A traveler claims to have seen a strange light in the sky over the desert. The phenomenon was not photographed and no other witnesses came forward.</div>
-    <div class="q-text">The light <strong>___</strong> been a meteor, a military aircraft, or even a drone — we simply cannot confirm anything.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q47" value="A"/><span class="option-letter">A</span>must have</label>
-      <label class="option-label"><input type="radio" name="q47" value="B"/><span class="option-letter">B</span>can't have</label>
-      <label class="option-label"><input type="radio" name="q47" value="C"/><span class="option-letter">C</span>could have</label>
-      <label class="option-label"><input type="radio" name="q47" value="D"/><span class="option-letter">D</span>had to have</label>
-    </div>
-  </div>
-
-  <!-- Q48 -->
-  <div class="question-card" id="qc48">
-    <div class="q-number">QUESTION 48</div>
-    <div class="q-text">Which short response correctly agrees with: <em>"I haven't solved the mystery yet."</em></div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q48" value="A"/><span class="option-letter">A</span>"Neither have I."</label>
-      <label class="option-label"><input type="radio" name="q48" value="B"/><span class="option-letter">B</span>"So have I."</label>
-      <label class="option-label"><input type="radio" name="q48" value="C"/><span class="option-letter">C</span>"Neither I have."</label>
-      <label class="option-label"><input type="radio" name="q48" value="D"/><span class="option-letter">D</span>"Nor I haven't."</label>
-    </div>
-  </div>
-
-  <!-- Q49 -->
-  <div class="question-card" id="qc49">
-    <div class="q-number">QUESTION 49</div>
-    <div class="modal-context">Context: A famous explorer disappeared in 1924 near the summit of a Himalayan peak. His body was found 75 years later, high on the mountain — suggesting he had climbed very far.</div>
-    <div class="q-text">Based on where his body was found, Mallory <strong>___</strong> reached the summit before dying — it is a genuine and plausible possibility.</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q49" value="A"/><span class="option-letter">A</span>can't have</label>
-      <label class="option-label"><input type="radio" name="q49" value="B"/><span class="option-letter">B</span>had to have</label>
-      <label class="option-label"><input type="radio" name="q49" value="C"/><span class="option-letter">C</span>must have</label>
-      <label class="option-label"><input type="radio" name="q49" value="D"/><span class="option-letter">D</span>could have</label>
-    </div>
-  </div>
-
-  <!-- Q50 -->
-  <div class="question-card" id="qc50">
-    <div class="q-number">QUESTION 50</div>
-    <div class="q-text">Which sentence is grammatically INCORRECT in its use of a perfect modal?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q50" value="A"/><span class="option-letter">A</span>She must have forgotten her passport — she always does that.</label>
-      <label class="option-label"><input type="radio" name="q50" value="B"/><span class="option-letter">B</span>They might have taken a different route to avoid the storm.</label>
-      <label class="option-label"><input type="radio" name="q50" value="C"/><span class="option-letter">C</span>He can't have knew about the plan — no one told him.</label>
-      <label class="option-label"><input type="radio" name="q50" value="D"/><span class="option-letter">D</span>The artifact could have been buried there for centuries.</label>
-    </div>
-  </div>
-
-  <div class="submit-section">
-    <button class="submit-btn" id="submit5" onclick="evaluateSection(5)">Evaluate Questions 41–50 →</button>
-  </div>
-  <div class="feedback-panel" id="fb5"></div>
-</section>
-
-<!-- FINAL SCORE -->
-<div id="final-section">
-  <div class="final-title">Examination <em>Complete</em></div>
-  <div id="final-score-big" class="final-score-big" style="color:var(--gold)"></div>
-  <div id="final-grade" class="final-grade"></div>
-  <div id="grade-breakdown" class="grade-breakdown"></div>
-  <p style="margin-top:28px;color:var(--muted);font-size:14px;">Review the feedback panels above each section for detailed explanations.</p>
-</div>
-
-</main>
-
-<script>
-// ── ANSWER KEY ──────────────────────────────────────────────────────
-const answers = {
-  // Section 1 — Multiple Choice
-  q1: { correct:'B', type:'mc' },
-  q2: { correct:'C', type:'mc' },
-  q3: { correct:'C', type:'mc' },
-  q4: { correct:'B', type:'mc' },
-  q5: { correct:'C', type:'mc' },
-  q6: { correct:'B', type:'mc' },
-  q7: { correct:'C', type:'mc' },
-  q8: { correct:'C', type:'mc' },
-  q9: { correct:'B', type:'mc' },
-  q10:{ correct:'C', type:'mc' },
-
-  // Section 2 — Fill in the blank (accepted answers, lowercase for comparison)
-  q11:{ correct:['how','the way'], type:'fill', display:'how' },
-  q12:{ correct:['a few'], type:'fill', display:'a few' },
-  q13:{ correct:['would have been reduced','would have reduced','would have decreased','would have dropped'], type:'fill', display:'would have been reduced' },
-  q14:{ correct:['when','what time'], type:'fill', display:'when' },
-  q15:{ correct:['fulfill','acknowledge','accept','understand','recognize'], type:'fill', display:'fulfill (base verb form)' },
-  q16:{ correct:['a little'], type:'fill', display:'a little' },
-  q17:{ correct:['will have been excavating','will have been exploring','will have been studying'], type:'fill', display:'will have been excavating' },
-  q18:{ correct:['would have been','would have'], type:'fill', display:'would have been' },
-  q19:{ correct:['how','that'], type:'fill', display:'how' },
-  q20:{ correct:['few','very few','only a few'], type:'fill', display:'Few' },
-
-  // Section 3 — Error identification (correct part to click)
-  q21:{ correct:'A', type:'error' },
-  q22:{ correct:'A', type:'error' },
-  q23:{ correct:'A', type:'error' },
-  q24:{ correct:'A', type:'error' },
-  q25:{ correct:'B', type:'error' },
-  q26:{ correct:'B', type:'error' },
-  q27:{ correct:'B', type:'error' },
-  q28:{ correct:'B', type:'error' },
-  q29:{ correct:'B', type:'error' },
-  q30:{ correct:'B', type:'error' },
-
-  // Section 4 — Transformation (keywords to check)
-  q31:{ correct:['is launched','is released'], type:'transform', display:'A new product is launched every quarter (by the company).' },
-  q32:{ correct:['has been discovered'], type:'transform', display:'A new species of deep-sea fish has been discovered (by scientists).' },
-  q33:{ correct:['was the final script approved'], type:'transform', display:'Was the final script approved by the director?' },
-  q34:{ correct:['as effective as television advertising','as effective as tv advertising'], type:'transform', display:'Digital advertising is as effective as television advertising.' },
-  q35:{ correct:['most controversial campaign','most controversial'], type:'transform', display:"This is the most controversial campaign there has ever been." },
-  q36:{ correct:['will be released'], type:'transform', display:'The new ad campaign will be released next Monday.' },
-  q37:{ correct:['tend to prefer familiar brands','tend to choose familiar brands'], type:'transform', display:'Consumers tend to prefer familiar brands over new ones.' },
-  q38:{ correct:['the more you improve','the faster you improve','the more quickly you improve'], type:'transform', display:'The more you practice, the more quickly you improve.' },
-  q39:{ correct:['was being installed'], type:'transform', display:'New software was being installed on all the computers.' },
-  q40:{ correct:['would rather shop online','would rather shop online than go'], type:'transform', display:'I would rather shop online than go to a physical store.' },
-
-  // Section 5 — Perfect modals
-  q41:{ correct:'C', type:'mc' },
-  q42:{ correct:'B', type:'mc' },
-  q43:{ correct:'C', type:'mc' },
-  q44:{ correct:'D', type:'mc' },
-  q45:{ correct:'C', type:'mc' },
-  q46:{ correct:'A', type:'mc' },
-  q47:{ correct:'C', type:'mc' },
-  q48:{ correct:'A', type:'mc' },
-  q49:{ correct:'D', type:'mc' },
-  q50:{ correct:'C', type:'mc' },
-};
-
-// ── EXPLANATIONS ────────────────────────────────────────────────────
-const explanations = {
-  q1: 'After impersonal expressions like "It is important/essential/necessary," English uses the infinitive (to + verb). The subject infinitive construction requires "to take," not "taking" or bare "take."',
-  q2: 'The causative structure "get + object + infinitive" requires the full infinitive (to + verb). "Get her assistant to finish" is correct. Compare with "have + object + bare infinitive" (have her assistant finish).',
-  q3: '"Be known to be" is the correct passive infinitive construction. "He is said/known/believed + to be" follows the pattern of reporting verbs with passive infinitives.',
-  q4: '"Admit + gerund" is the standard pattern. When the action precedes the reporting verb, a gerund is used: "admitted doing," not "to do." The perfect gerund "having done" could also work but is less common.',
-  q5: 'In reported speech, imperatives are replaced by the full infinitive: "told them to implement." The structure is: reporting verb (told) + object + to + base verb.',
-  q6: 'Parallelism requires all items in a list to use the same grammatical form. Only option B uses consistent gerunds: "reading, writing, and painting."',
-  q7: '"Remember + gerund" = remember a past experience (the action happened first). "Remember + infinitive" = remember to do something in the future. Since the meeting happened in the past, "meeting" is correct.',
-  q8: '"Self-directed" means someone who works independently, takes initiative, and doesn\'t need supervision. "Impulsive" means acting without thinking; "submissive" means overly obedient; "indifferent" means not caring.',
-  q9: '"Stop + infinitive" = stop in order to do something (purpose). "Stop + gerund" = quit doing something. He stopped walking in order to greet his friend, so "to greet" is correct.',
-  q10: '"Suggest + gerund" is the required pattern. Unlike "recommend" which can use an infinitive clause, "suggest" always takes a gerund or a that-clause: "suggested extending" or "suggested that they extend."',
-
-  q11: '"How" introduces a noun clause that functions as the object of "by." It means "in what way" or "the way in which." The sentence structure is: surprised + by + how + subject + verb.',
-  q12: '"A few" means a small number, but enough — it carries a positive connotation. "Few" (without article) means almost none and is negative. Since the sentence says "but none is easy," solutions DO exist, so "a few" is correct.',
-  q13: 'In the past unreal conditional (Type 3), the result clause uses "would have + past participle." Since pollution is the subject, the passive "would have been reduced" is most natural, though active forms also work.',
-  q14: 'Embedded questions use statement word order: "Do you know + when + subject + verb." The question word "when" introduces the embedded question. "What time" also works.',
-  q15: 'After "It is essential/important/necessary/vital that + subject," English uses the subjunctive mood — the base form of the verb (no -s, no conjugation): "that every citizen fulfill" (not fulfills).',
-  q16: '"A little" means a small but sufficient amount of an uncountable noun — it has a positive connotation. "Little" (without article) means almost none and is negative. Since it was "enough to finish," "a little" is correct.',
-  q17: 'The future perfect continuous = "will have been + verb-ing." It expresses an action that will be in progress over a duration up to a point in the future. "Will have been excavating for three years" is correct.',
-  q18: 'The inverted past unreal conditional omits "if" and inverts the auxiliary: "Had + subject + past participle, subject + would have + past participle." Result clause: "would have been able to continue."',
-  q19: '"How" introduces a noun clause as subject complement after "is." It emphasizes the manner of the action. "That" also works but changes the nuance slightly (focusing on the fact, not the manner).',
-  q20: '"Few" (without article) is used to express a very small number with a negative connotation — almost none. "Only a handful showed up" confirms this negative, insufficient quantity. "Very few" is also acceptable.',
-
-  q21: '"Very elegant" is incorrect because "elegant" is an adjective, but it modifies the verb "dresses" — so an adverb is needed: "very elegantly." Adverbs of manner modify verbs, not other nouns.',
-  q22: '"Since" is used with a specific point in time (since 2010, since Tuesday). For a duration of time, "for" is required: "I have lived here for ten years." This is one of the most common errors in English.',
-  q23: 'The conjunction "neither…nor" is a paired correlative conjunction. "Neither…or" is incorrect — the second part must always be "nor," not "or." The correct form: "Neither the director nor the producers were aware…"',
-  q24: '"Use to" is incorrect in this context. The correct form for past habits is "used to" (with -d). In questions and negatives, "use to" appears without -d (Did he use to…? / He didn\'t use to…), but in affirmative statements, it\'s "used to."',
-  q25: '"Both" takes a plural verb. However, "both of the applicants HAS" is incorrect — it should be "have." Subject-verb agreement rule: "both" is always plural and requires a plural verb.',
-  q26: 'The conjunction "neither" here is used incorrectly. "Neither did her partner" means "her partner also did NOT perform well." But the context says her partner forgot verses — this contradicts her brilliant performance. The correct conjunction is "nor" or "but neither did" meaning the partner also failed. The error is using "neither" when "but neither" is needed, OR the logical connector should be different altogether.',
-  q27: '"Every one of + plural noun" takes a singular verb: "Every one of the students IS expected." Although "students" is plural, "every one" acts as a singular subject. This is subject-verb agreement with singular quantifiers.',
-  q28: '"Decided + infinitive" is required. The verb "decide" is followed by an infinitive, not a gerund. "Decided staying" is incorrect — it should be "decided to stay." Compare: "enjoyed staying" (enjoy takes gerund).',
-  q29: '"Would" can express habitual past actions for activities/routines. However, "would love" is incorrect when expressing a stative meaning (love, hate, know, believe). For states, "used to love" is required. "Would spend" is fine because spending is an activity.',
-  q30: '"Several of" must be followed by a determiner + noun: "several of THE designers" or "several designers" (no "of"). "Several of designers" without an article/determiner is grammatically incorrect.',
-
-  q31: 'Simple present passive = "is/are + past participle." The agent (by the company) is optional. Correct: "A new product is launched every quarter (by the company)."',
-  q32: 'Present perfect passive = "has/have been + past participle." Since "a new species" is singular, use "has been discovered." Passive removes the agent (scientists) from the subject position.',
-  q33: 'Passive question in simple past = "Was/Were + subject + past participle?" The active subject "the director" becomes "by the director" (agent phrase). Correct: "Was the final script approved by the director?"',
-  q34: '"As + adjective + as" expresses equality. Correct: "Digital advertising is as effective as television advertising." Make sure the adjective (effective) stays in its base form — no comparative ending.',
-  q35: 'Superlative + present perfect = "This is the most + adjective + [noun] + I/we have ever…" Correct: "This is the most controversial campaign (that) we have ever seen." The present perfect marks "ever."',
-  q36: 'Future passive = "will be + past participle." Correct: "The new ad campaign will be released next Monday (by the company)." The agent is optional.',
-  q37: '"Tend to + base verb" expresses a general tendency. Correct: "Consumers tend to prefer familiar brands over new ones." The infinitive follows "tend to" directly.',
-  q38: 'The double comparative structure: "The + comparative, the + comparative." Correct: "The more you practice, the more quickly you improve." Both clauses need the comparative form.',
-  q39: 'Past continuous passive = "was/were being + past participle." Since "new software" is singular, use "was being installed." This tense expresses an ongoing action in the past that was interrupted or in progress.',
-  q40: '"Would rather + bare infinitive" (for the preferred action) + "than + bare infinitive" (for the rejected option). Correct: "I would rather shop online than go to a physical store."',
-
-  q41: '"Can\'t have" expresses near-certain impossibility about the past. The evidence (untouched food, lit fires) makes voluntary departure virtually impossible. This is the strongest negative deduction.',
-  q42: '"Might have" expresses genuine uncertainty with multiple possible explanations. When there are several competing theories and none is confirmed, "might have" correctly signals low-certainty speculation.',
-  q43: '"Had to have" expresses logical necessity in the past — something that was absolutely required given the circumstances. 10,000 workers and 4-meter walls make authorization and resources a logical certainty.',
-  q44: '"Can\'t have" expresses logical impossibility. Since the civilization had no metallurgical knowledge, it is impossible (not just unlikely) that they produced refined steel. This eliminates "might" or "must."',
-  q45: '"Must have" expresses near-certain positive deduction based on strong evidence. Fingerprints, DNA, and two witnesses together create overwhelming evidence — this is the highest degree of positive certainty.',
-  q46: 'Passive perfect modal = "modal + have been + past participle." Option A correctly forms: "must have been sealed." Options B–D omit "been" or use incorrect verb forms.',
-  q47: '"Could have" expresses possibility when multiple explanations exist and none can be confirmed. It is weaker than "must have" and more open than "might have" when presenting a list of possibilities.',
-  q48: '"Neither have I" is the correct short response to agree with a negative present perfect statement. Structure: Neither/Nor + auxiliary verb + subject. "So have I" would agree with a positive statement.',
-  q49: '"Could have" expresses a plausible past possibility — something that may have happened but cannot be confirmed. The body location suggests it\'s possible but not certain. "Must have" would express near-certainty, which the context doesn\'t support.',
-  q50: '"Can\'t have knew" is incorrect. After modal + have, the next verb must be a past participle, not a simple past. Correct: "can\'t have KNOWN." All other sentences use perfect modals correctly.',
-};
-
-// ── SECTION DATA ────────────────────────────────────────────────────
-const sections = {
-  1:{ qs:['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'], title:'Multiple Choice' },
-  2:{ qs:['q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'], title:'Fill in the Blank' },
-  3:{ qs:['q21','q22','q23','q24','q25','q26','q27','q28','q29','q30'], title:'Error Identification' },
-  4:{ qs:['q31','q32','q33','q34','q35','q36','q37','q38','q39','q40'], title:'Sentence Transformation' },
-  5:{ qs:['q41','q42','q43','q44','q45','q46','q47','q48','q49','q50'], title:'Perfect Modals' },
-};
-
-const sectionScores = {1:null,2:null,3:null,4:null,5:null};
-let totalAnswered = 0;
-
-// ── RADIO LISTENER ──────────────────────────────────────────────────
-document.querySelectorAll('input[type="radio"]').forEach(r=>{
-  r.addEventListener('change',()=>{
-    const name = r.name;
-    document.querySelectorAll(`input[name="${name}"]`).forEach(x=>x.closest('.option-label').classList.remove('selected'));
-    r.closest('.option-label').classList.add('selected');
-    updateProgress();
-    const card = document.getElementById('qc'+name.slice(1));
-    if(card) card.classList.add('answered');
-  });
-});
-
-// ── FILL INPUT LISTENER ─────────────────────────────────────────────
-document.querySelectorAll('.fill-input').forEach(inp=>{
-  inp.addEventListener('input',()=>{
-    const card = document.getElementById('qc'+inp.id.slice(1));
-    if(card) card.classList.toggle('answered', inp.value.trim().length>0);
-    updateProgress();
-  });
-});
-
-// ── ERROR SELECTION ─────────────────────────────────────────────────
-function selectError(el){
-  const q = el.dataset.q;
-  document.querySelectorAll(`[data-q="${q}"]`).forEach(x=>x.classList.remove('selected-error'));
-  el.classList.add('selected-error');
-  const card = document.getElementById('qc'+q);
-  if(card) card.classList.add('answered');
-  updateProgress();
-}
-
-// ── PROGRESS ────────────────────────────────────────────────────────
-function updateProgress(){
-  let answered=0, total=50;
-  for(let i=1;i<=10;i++){
-    if(document.querySelector(`input[name="q${i}"]:checked`)) answered++;
-  }
-  for(let i=11;i<=20;i++){
-    const el=document.getElementById('q'+i);
-    if(el&&el.value.trim().length>0) answered++;
-  }
-  for(let i=21;i<=30;i++){
-    if(document.querySelector(`[data-q="${i}"].selected-error`)) answered++;
-  }
-  for(let i=31;i<=40;i++){
-    const el=document.getElementById('q'+i);
-    if(el&&el.value.trim().length>0) answered++;
-  }
-  for(let i=41;i<=50;i++){
-    if(document.querySelector(`input[name="q${i}"]:checked`)) answered++;
-  }
-  totalAnswered=answered;
-  document.getElementById('progress-label').textContent=`${answered} / ${total} answered`;
-  document.getElementById('progress-fill').style.width=`${(answered/total)*100}%`;
-  // Calc total score if sections done
-  let total_score=0, sections_done=0;
-  for(let s=1;s<=5;s++){
-    if(sectionScores[s]!==null){total_score+=sectionScores[s];sections_done++;}
-  }
-  document.getElementById('score-display').textContent = sections_done>0 ? `${total_score}/${sections_done*10}` : '—';
-}
-
-// ── EVALUATION ──────────────────────────────────────────────────────
-function evaluateSection(secNum){
-  const sec = sections[secNum];
-  let correct=0, errors=[];
-
-  sec.qs.forEach(qId=>{
-    const ans = answers[qId];
-    let userAns=null, isCorrect=false;
-
-    if(ans.type==='mc'){
-      const r=document.querySelector(`input[name="${qId}"]:checked`);
-      userAns = r?r.value:null;
-      isCorrect = userAns===ans.correct;
-    } else if(ans.type==='fill'){
-      const el=document.getElementById(qId);
-      userAns = el?el.value.trim().toLowerCase():'';
-      isCorrect = ans.correct.some(a=> userAns===a || userAns.includes(a) || a.includes(userAns) && userAns.length>=3);
-    } else if(ans.type==='transform'){
-      const el=document.getElementById(qId);
-      userAns = el?el.value.trim().toLowerCase():'';
-      isCorrect = ans.correct.some(a=> userAns.includes(a));
-    } else if(ans.type==='error'){
-      const sel=document.querySelector(`[data-q="${qId.slice(1)}"].selected-error`);
-      userAns = sel?sel.dataset.part:null;
-      isCorrect = userAns===ans.correct;
-    }
-
-    const cardNum = qId.slice(1);
-    const card = document.getElementById('qc'+cardNum);
-
-    if(isCorrect){
-      correct++;
-      if(card){ card.classList.remove('wrong-card'); card.classList.add('correct-card'); }
-    } else {
-      if(card){ card.classList.remove('correct-card'); card.classList.add('wrong-card'); }
-      errors.push({qId, userAns, ans});
-    }
-
-    // Visual feedback on options
-    if(ans.type==='mc'){
-      document.querySelectorAll(`input[name="${qId}"]`).forEach(r=>{
-        const lbl=r.closest('.option-label');
-        lbl.classList.remove('correct-opt','wrong-opt');
-        if(r.value===ans.correct) lbl.classList.add('correct-opt');
-        else if(r.checked) lbl.classList.add('wrong-opt');
-        r.disabled=true;
-      });
-    }
-    if(ans.type==='fill'||ans.type==='transform'){
-      const el=document.getElementById(qId);
-      if(el){
-        el.classList.remove('correct-input','wrong-input');
-        el.classList.add(isCorrect?'correct-input':'wrong-input');
-        el.disabled=true;
-      }
-    }
-    if(ans.type==='error'){
-      document.querySelectorAll(`[data-q="${cardNum}"]`).forEach(el=>{
-        el.classList.remove('correct-error','wrong-error');
-        if(el.dataset.part===ans.correct) el.classList.add('correct-error');
-        else if(el.classList.contains('selected-error')) el.classList.add('wrong-error');
-        el.style.pointerEvents='none';
-      });
-    }
-  });
-
-  sectionScores[secNum] = correct;
-
-  // Build feedback HTML
-  const fb = document.getElementById('fb'+secNum);
-  fb.style.display='block';
-  const isAllCorrect = errors.length===0;
-  fb.className='feedback-panel '+(isAllCorrect?'all-correct':'has-errors');
-
-  let html=`
-    <div class="feedback-title">
-      ${isAllCorrect ? '✦ Perfect Score' : '⚑ Results for '+sec.title}
-    </div>
-    <div class="feedback-score" style="color:${correct>=8?'var(--green)':correct>=5?'var(--gold)':'var(--red)'}">
-      Score: ${correct} / 10 &nbsp;·&nbsp; ${correct*10}%
-    </div>
-  `;
-
-  if(isAllCorrect){
-    html+=`<p style="color:var(--green);font-size:14px;">Excellent work! All 10 answers in this section are correct.</p>`;
-  } else {
-    html+=`<div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Review the ${errors.length} incorrect answer${errors.length>1?'s':''} below:</div>`;
-    errors.forEach(({qId, userAns, ans})=>{
-      const num = qId.slice(1);
-      let givenDisplay = userAns ? userAns : '<em style="color:var(--muted)">No answer given</em>';
-      let correctDisplay = '';
-
-      if(ans.type==='mc'){
-        correctDisplay = `${ans.correct}`;
-      } else if(ans.type==='fill'||ans.type==='transform'){
-        correctDisplay = ans.display;
-      } else if(ans.type==='error'){
-        const parts={A:'Underlined Part A',B:'Underlined Part B',C:'Underlined Part C'};
-        correctDisplay = parts[ans.correct]||ans.correct;
-        givenDisplay = userAns ? (parts[userAns]||userAns) : '<em>No selection</em>';
-      }
-
-      html+=`
-        <div class="error-item">
-          <div class="error-q-ref">✗ Question ${num.padStart(2,'0')}</div>
-          <div class="error-given">Your answer: <span>${givenDisplay}</span></div>
-          <div class="error-correct">Correct answer: <span>${correctDisplay}</span></div>
-          <div class="error-explain">📚 <strong>Explanation:</strong> ${explanations[qId]||'Review this grammar point in your textbook.'}</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <i data-lucide="moon"></i>
+    </button>
+
+    <div class="container">
+        <header>
+            <h1>Evaluación Educativa</h1>
+            <p class="subtitle">Basado en Delors, Metacognición y el Sistema Educativo Salvadoreño</p>
+        </header>
+
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
-      `;
-    });
-  }
-  fb.innerHTML=html;
 
-  // Disable submit
-  document.getElementById('submit'+secNum).disabled=true;
-  document.getElementById('submit'+secNum).textContent='✓ Section Evaluated';
+        <form id="quizForm">
+            <!-- Sección 1: Los Cuatro Pilares de la Educación (1-10) -->
+            <div class="section-card active" id="section-1">
+                <div class="section-header">
+                    <h2 class="section-title">Sección 1: Los Cuatro Pilares de la Educación</h2>
+                    <p class="subtitle">Preguntas 1 al 10</p>
+                </div>
 
-  updateProgress();
-  checkFinalScore();
-  fb.scrollIntoView({behavior:'smooth',block:'start'});
-}
+                <!-- Q1 -->
+                <div class="question-block" id="q-1">
+                    <p class="question-text">1. Según Jacques Delors, ¿qué exige el siglo XXI a la educación frente al creciente volumen de información?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="A"> <span class="option-text">A) Transmitir solo conocimientos técnicos especializados</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="B"> <span class="option-text">B) Proporcionar las cartas náuticas y la brújula para navegar en un mundo complejo</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="C"> <span class="option-text">C) Aumentar la carga horaria de las asignaturas teóricas</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-1"></div>
+                </div>
 
-// ── FINAL SCORE ──────────────────────────────────────────────────────
-function checkFinalScore(){
-  const done = Object.values(sectionScores).filter(v=>v!==null).length;
-  if(done<5) return;
+                <!-- Q2 -->
+                <div class="question-block" id="q-2">
+                    <p class="question-text">2. ¿Por qué es inadecuado responder puramente de forma cuantitativa a la demanda de educación actual?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="A"> <span class="option-text">A) Porque ya no basta acumular una reserva inicial de conocimientos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="B"> <span class="option-text">B) Porque faltan escuelas y profesores</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="C"> <span class="option-text">C) Porque los alumnos pierden el interés rápidamente</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-2"></div>
+                </div>
 
-  const total = Object.values(sectionScores).reduce((a,b)=>a+b,0);
-  const pct = total*2;
+                <!-- Q3 -->
+                <div class="question-block" id="q-3">
+                    <p class="question-text">3. El pilar "Aprender a conocer" se refiere principalmente a:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="A"> <span class="option-text">A) Memorizar enciclopedias enteras</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="B"> <span class="option-text">B) Adquirir los instrumentos de la comprensión y el placer de descubrir</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="C"> <span class="option-text">C) Conocer las leyes del mercado laboral</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-3"></div>
+                </div>
 
-  let grade, color;
-  if(pct>=90){grade='A — Outstanding';color='var(--green)';}
-  else if(pct>=80){grade='B — Proficient';color='var(--gold)';}
-  else if(pct>=70){grade='C — Competent';color='var(--gold)';}
-  else if(pct>=60){grade='D — Developing';color='var(--s3)';}
-  else{grade='F — Needs Improvement';color='var(--red)';}
+                <!-- Q4 -->
+                <div class="question-block" id="q-4">
+                    <p class="question-text">4. ¿Qué sugiere el texto sobre el aprendizaje de la memoria en la era de la información?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="A"> <span class="option-text">A) Que ha perdido su utilidad por el almacenamiento de datos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="B"> <span class="option-text">B) Que debe suprimirse de las escuelas por ser tedioso</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="C"> <span class="option-text">C) Que debe cultivarse como una facultad humana irreductible al automatismo</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-4"></div>
+                </div>
 
-  const fs = document.getElementById('final-section');
-  fs.style.display='block';
-  document.getElementById('final-score-big').textContent=`${total}/50`;
-  document.getElementById('final-score-big').style.color=color;
-  document.getElementById('final-grade').textContent=grade+` · ${pct}%`;
-  document.getElementById('final-grade').style.color=color;
+                <!-- Q5 -->
+                <div class="question-block" id="q-5">
+                    <p class="question-text">5. En las economías modernas, el concepto de "Aprender a hacer" ha evolucionado hacia:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="A"> <span class="option-text">A) El dominio de tareas puramente físicas</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="B"> <span class="option-text">B) La sustitución de la calificación profesional por la competencia personal</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="C"> <span class="option-text">C) La fabricación rutinaria de objetos materiales</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-5"></div>
+                </div>
 
-  const labels=['Multiple Choice','Fill in the Blank','Error ID','Transformation','Perfect Modals'];
-  let breakdown='';
-  [1,2,3,4,5].forEach(i=>{
-    breakdown+=`<div class="grade-chip">${labels[i-1]}: <span>${sectionScores[i]}/10</span></div>`;
-  });
-  document.getElementById('grade-breakdown').innerHTML=breakdown;
-  fs.scrollIntoView({behavior:'smooth',block:'start'});
-}
-</script>
+                <!-- Q6 -->
+                <div class="question-block" id="q-6">
+                    <p class="question-text">6. ¿Qué habilidades se requieren cada vez más debido a la desmaterialización del trabajo y los servicios?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="A"> <span class="option-text">A) Aptitud para las relaciones interpersonales y comunicación</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="B"> <span class="option-text">B) Fuerza física y resistencia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="C"> <span class="option-text">C) Capacidad de operar maquinaria pesada</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-block" id="q-7">
+                    <p class="question-text">7. "Aprender a vivir juntos" implica dos orientaciones principales. ¿Cuáles son?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="A"> <span class="option-text">A) Competir y ganar en el mercado</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="B"> <span class="option-text">B) El descubrimiento del otro y la participación en proyectos comunes</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="C"> <span class="option-text">C) El aislamiento cultural y la asimilación forzada</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-block" id="q-8">
+                    <p class="question-text">8. ¿Qué riesgo conlleva el simple contacto entre grupos diferentes si están en situación de competencia?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A"> <span class="option-text">A) Automáticamente genera paz</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="B"> <span class="option-text">B) Puede agravar tensiones latentes y generar conflictos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="C"> <span class="option-text">C) Aumenta la productividad económica</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-block" id="q-9">
+                    <p class="question-text">9. El pilar "Aprender a ser" tiene como función esencial:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="A"> <span class="option-text">A) Conferir la libertad de pensamiento, juicio y desarrollo global de la persona</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="B"> <span class="option-text">B) Normalizar la conducta de los individuos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="C"> <span class="option-text">C) Preparar exclusivamente para un oficio industrial</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-block" id="q-10">
+                    <p class="question-text">10. ¿Qué advierte el texto sobre el arte y la poesía en la escuela actual?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="A"> <span class="option-text">A) Que deben ser reemplazados por computación</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="B"> <span class="option-text">B) Que son una pérdida de tiempo productivo</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="C"> <span class="option-text">C) Que deberían recuperar un lugar más importante frente a la enseñanza puramente utilitaria</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-10"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(1)">Evaluar Sección 1 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
+            </div>
+
+            <!-- Sección 2: Metacognición (11-20) -->
+            <div class="section-card" id="section-2">
+                <div class="section-header">
+                    <h2 class="section-title">Sección 2: Metacognición y Aprender a Aprender</h2>
+                    <p class="subtitle">Preguntas 11 al 20</p>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question-block" id="q-11">
+                    <p class="question-text">11. A diferencia del alumno reactivo, ¿cuál es una característica del Aprendiz Intencional?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="A"> <span class="option-text">A) Depende de instrucciones externas</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="B"> <span class="option-text">B) Regula su propia conducta y transfiere el conocimiento</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="C"> <span class="option-text">C) Su aprendizaje termina en el aula</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-block" id="q-12">
+                    <p class="question-text">12. Según Flavell, la metacognición se define como:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="A"> <span class="option-text">A) Acumular muchos datos rápidamente</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="B"> <span class="option-text">B) Pensar sobre el propio pensamiento</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="C"> <span class="option-text">C) Leer de manera veloz</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question-block" id="q-13">
+                    <p class="question-text">13. En la anatomía de la metacognición, el "Saber Declarativo" (Conocimiento) incluye:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="A"> <span class="option-text">A) La persona, la tarea y la estrategia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="B"> <span class="option-text">B) Solo las calificaciones obtenidas</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="C"> <span class="option-text">C) La habilidad de memorizar fechas</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-block" id="q-14">
+                    <p class="question-text">14. ¿Cuáles son las tres dimensiones del "Triángulo del Rendimiento"?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="A"> <span class="option-text">A) Lectura, escritura y matemáticas</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="B"> <span class="option-text">B) Cognición, Metacognición y Motivación</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="C"> <span class="option-text">C) Maestro, alumno y familia</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-block" id="q-15">
+                    <p class="question-text">15. Mientras la Cognición "resuelve el problema" (el trabajador), la Metacognición actúa como el "Gerente" que se encarga de:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q15" value="A"> <span class="option-text">A) Codificar y almacenar información</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q15" value="B"> <span class="option-text">B) Planificar, supervisar y evaluar la estrategia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q15" value="C"> <span class="option-text">C) Olvidar la información irrelevante</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question-block" id="q-16">
+                    <p class="question-text">16. ¿Qué es el "Entrenamiento Metacognitivo"?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q16" value="A"> <span class="option-text">A) Exigir tareas sin explicar el porqué</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q16" value="B"> <span class="option-text">B) Inducir al alumno a comprobar por sí mismo la efectividad de la estrategia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q16" value="C"> <span class="option-text">C) Enseñar repetición mecánica</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-16"></div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="question-block" id="q-17">
+                    <p class="question-text">17. En la "Filosofía de la Transferencia Gradual", ¿cuál es el orden correcto del proceso?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q17" value="A"> <span class="option-text">A) Práctica Individual -> Guiada -> Explícita</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q17" value="B"> <span class="option-text">B) Instrucción Explícita -> Práctica Guiada -> Cooperativa -> Individual</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q17" value="C"> <span class="option-text">C) Práctica Cooperativa -> Individual -> Instrucción</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question-block" id="q-18">
+                    <p class="question-text">18. Durante la etapa de "Instrucción Explícita", ¿qué técnica clave utiliza el profesor?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q18" value="A"> <span class="option-text">A) Modelado Cognitivo (pensar en voz alta)</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q18" value="B"> <span class="option-text">B) Ausencia total en el aula</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q18" value="C"> <span class="option-text">C) Castigar los errores</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question-block" id="q-19">
+                    <p class="question-text">19. En la "Práctica Individual" (Autonomía alcanzada), ¿cuál es la herramienta clave del estudiante?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q19" value="A"> <span class="option-text">A) Esperar la instrucción del maestro</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q19" value="B"> <span class="option-text">B) Copiar el trabajo de los compañeros</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q19" value="C"> <span class="option-text">C) Uso de guías de auto-interrogación internalizadas</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question-block" id="q-20">
+                    <p class="question-text">20. ¿Cuál es el "Prerrequisito Fundamental" expuesto al final del documento de Metacognición?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q20" value="A"> <span class="option-text">A) Escuelas con mejor tecnología</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q20" value="B"> <span class="option-text">B) Para formar alumnos metacognitivos, necesitamos educadores metacognitivos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q20" value="C"> <span class="option-text">C) Más horas de clase a la semana</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-20"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(2)">Evaluar Sección 2 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
+            </div>
+
+            <!-- Sección 3: Fundamentos Curriculares - Contexto y Principios (21-30) -->
+            <div class="section-card" id="section-3">
+                <div class="section-header">
+                    <h2 class="section-title">Sección 3: Fundamentos Curriculares - Contexto y Principios</h2>
+                    <p class="subtitle">Preguntas 21 al 30</p>
+                </div>
+
+                <!-- Q21 -->
+                <div class="question-block" id="q-21">
+                    <p class="question-text">21. ¿Qué documento legal establece el "cultivo del espíritu crítico, ecología y el poder creador del trabajo"?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q21" value="A"> <span class="option-text">A) Ley General de Educación</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q21" value="B"> <span class="option-text">B) Los Acuerdos de Chapultepec</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q21" value="C"> <span class="option-text">C) Constitución de la República</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-21"></div>
+                </div>
+
+                <!-- Q22 -->
+                <div class="question-block" id="q-22">
+                    <p class="question-text">22. El currículo nacional tiene un ADN constructivista, lo que significa que:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q22" value="A"> <span class="option-text">A) El alumno es un receptor pasivo</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q22" value="B"> <span class="option-text">B) El maestro es el único dueño del conocimiento</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q22" value="C"> <span class="option-text">C) El alumno es el constructor intransferible de su aprendizaje partiendo de su experiencia</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-22"></div>
+                </div>
+
+                <!-- Q23 -->
+                <div class="question-block" id="q-23">
+                    <p class="question-text">23. ¿Qué principio rector exige el "equilibrio entre el desarrollo biopsicomotriz, cognitivo y socioafectivo"?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q23" value="A"> <span class="option-text">A) Flexibilidad</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q23" value="B"> <span class="option-text">B) Integralidad</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q23" value="C"> <span class="option-text">C) Interdisciplinariedad</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-23"></div>
+                </div>
+
+                <!-- Q24 -->
+                <div class="question-block" id="q-24">
+                    <p class="question-text">24. En las dimensiones de planificación, el nivel "Macrocurricular" corresponde a:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q24" value="A"> <span class="option-text">A) La planificación didáctica del docente</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q24" value="B"> <span class="option-text">B) El Proyecto Educativo Institucional (PEI)</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q24" value="C"> <span class="option-text">C) Fines del sistema educativo y objetivos a nivel Nacional</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-24"></div>
+                </div>
+
+                <!-- Q25 -->
+                <div class="question-block" id="q-25">
+                    <p class="question-text">25. El rol del maestro en la matriz de actores se define como:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q25" value="A"> <span class="option-text">A) Facilitador y guía con liderazgo democrático</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q25" value="B"> <span class="option-text">B) Transmisor autoritario de información</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q25" value="C"> <span class="option-text">C) Supervisor rígido</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-25"></div>
+                </div>
+
+                <!-- Q26 -->
+                <div class="question-block" id="q-26">
+                    <p class="question-text">26. El Proyecto Educativo Institucional (PEI) se ubica en la dimensión de planificación:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q26" value="A"> <span class="option-text">A) Mesocurricular</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q26" value="B"> <span class="option-text">B) Macrocurricular</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q26" value="C"> <span class="option-text">C) Microcurricular (Institucional)</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-26"></div>
+                </div>
+
+                <!-- Q27 -->
+                <div class="question-block" id="q-27">
+                    <p class="question-text">27. Según el currículo nacional, ¿qué valor tiene el error en el aprendizaje?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q27" value="A"> <span class="option-text">A) Es una falla que debe ser castigada</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q27" value="B"> <span class="option-text">B) Es una fuente de aprendizaje (aprender a aprender)</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q27" value="C"> <span class="option-text">C) Es irrelevante para la nota final</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-27"></div>
+                </div>
+
+                <!-- Q28 -->
+                <div class="question-block" id="q-28">
+                    <p class="question-text">28. ¿Qué papel juegan la familia y la comunidad en el ecosistema educativo?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q28" value="A"> <span class="option-text">A) Espectadores lejanos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q28" value="B"> <span class="option-text">B) Solo aportan económicamente</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q28" value="C"> <span class="option-text">C) Co-gestores, fuente de recursos e instructores voluntarios</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-28"></div>
+                </div>
+
+                <!-- Q29 -->
+                <div class="question-block" id="q-29">
+                    <p class="question-text">29. El principio de "Gradualidad y Articulación" asegura:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q29" value="A"> <span class="option-text">A) Que haya rupturas constantes entre niveles</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q29" value="B"> <span class="option-text">B) Progresión sistémica sin rupturas entre etapas evolutivas</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q29" value="C"> <span class="option-text">C) Que solo los mejores estudiantes avancen</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-29"></div>
+                </div>
+
+                <!-- Q30 -->
+                <div class="question-block" id="q-30">
+                    <p class="question-text">30. El rol de los técnicos del MINED ha pasado de ser supervisores rígidos a:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q30" value="A"> <span class="option-text">A) Promotores que acompañan y asesoran el desarrollo en el aula</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q30" value="B"> <span class="option-text">B) Jueces calificadores</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q30" value="C"> <span class="option-text">C) Creadores exclusivos del PEI</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-30"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(3)">Evaluar Sección 3 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
+            </div>
+
+            <!-- Sección 4: Estructura del Sistema Educativo (31-40) -->
+            <div class="section-card" id="section-4">
+                <div class="section-header">
+                    <h2 class="section-title">Sección 4: Niveles y Estructura del Sistema Educativo</h2>
+                    <p class="subtitle">Preguntas 31 al 40</p>
+                </div>
+
+                <!-- Q31 -->
+                <div class="question-block" id="q-31">
+                    <p class="question-text">31. ¿Cuál es el logro psicológico principal en la Fase 3 (26m-47m) de la Educación Inicial?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q31" value="A"> <span class="option-text">A) Inicio de la marcha</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q31" value="B"> <span class="option-text">B) Conquista de la autonomía progresiva</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q31" value="C"> <span class="option-text">C) Lectura fluida</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-31"></div>
+                </div>
+
+                <!-- Q32 -->
+                <div class="question-block" id="q-32">
+                    <p class="question-text">32. La Sección 3 de Educación Parvularia se centra en:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q32" value="A"> <span class="option-text">A) Aprestamiento directo para lecto-escritura, cálculo y cooperación</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q32" value="B"> <span class="option-text">B) Especialización vocacional</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q32" value="C"> <span class="option-text">C) Trabajo de campo agrícola</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-32"></div>
+                </div>
+
+                <!-- Q33 -->
+                <div class="question-block" id="q-33">
+                    <p class="question-text">33. En Educación Básica, el Ciclo 2 (4° a 6° Grado) se caracteriza por:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q33" value="A"> <span class="option-text">A) Desarrollo de lecto-escritura inicial</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q33" value="B"> <span class="option-text">B) Orientación universitaria intensiva</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q33" value="C"> <span class="option-text">C) Afianzamiento social, rigor metodológico y trabajo cooperativo independiente</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-33"></div>
+                </div>
+
+                <!-- Q34 -->
+                <div class="question-block" id="q-34">
+                    <p class="question-text">34. El enfoque del Bachillerato General es:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q34" value="A"> <span class="option-text">A) Inserción laboral industrial inmediata</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q34" value="B"> <span class="option-text">B) Propedéutico y humanista, preparando para la universidad</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q34" value="C"> <span class="option-text">C) Exclusivamente deportivo</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-34"></div>
+                </div>
+
+                <!-- Q35 -->
+                <div class="question-block" id="q-35">
+                    <p class="question-text">35. Los tres pilares de la Educación Superior son:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q35" value="A"> <span class="option-text">A) Matemáticas, Lenguaje y Ciencias</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q35" value="B"> <span class="option-text">B) Docencia, Investigación y Proyección Social</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q35" value="C"> <span class="option-text">C) Agricultura, Industria y Servicios</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-35"></div>
+                </div>
+
+                <!-- Q36 -->
+                <div class="question-block" id="q-36">
+                    <p class="question-text">36. El módulo de Educación Especial tiene un enfoque basado en:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q36" value="A"> <span class="option-text">A) Aislamiento total del alumno</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q36" value="B"> <span class="option-text">B) Normalización, Integración y Sectorización (adapta, no aísla)</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q36" value="C"> <span class="option-text">C) Eliminar el currículo regular</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-36"></div>
+                </div>
+
+                <!-- Q37 -->
+                <div class="question-block" id="q-37">
+                    <p class="question-text">37. ¿Qué modalidad ofrece educación básica a distancia estructurada por macro-problemas sociales?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q37" value="A"> <span class="option-text">A) INED</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q37" value="B"> <span class="option-text">B) PREBAD</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q37" value="C"> <span class="option-text">C) Educación Parvularia</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-37"></div>
+                </div>
+
+                <!-- Q38 -->
+                <div class="question-block" id="q-38">
+                    <p class="question-text">38. El Ciclo 3 de Educación Básica (7° a 9° Grado) pone un fuerte énfasis en:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q38" value="A"> <span class="option-text">A) Lecto-escritura inicial</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q38" value="B"> <span class="option-text">B) Orientación vocacional y resolución de problemas complejos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q38" value="C"> <span class="option-text">C) Control de esfínteres</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-38"></div>
+                </div>
+
+                <!-- Q39 -->
+                <div class="question-block" id="q-39">
+                    <p class="question-text">39. El Bachillerato Técnico-Vocacional está diseñado para:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q39" value="A"> <span class="option-text">A) Retrasar el ingreso al mundo adulto</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q39" value="B"> <span class="option-text">B) Formar exclusivamente para carreras científicas puras</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q39" value="C"> <span class="option-text">C) La inserción productiva inmediata mediante opciones especializadas</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-39"></div>
+                </div>
+
+                <!-- Q40 -->
+                <div class="question-block" id="q-40">
+                    <p class="question-text">40. En el currículo salvadoreño, ¿qué nivel es considerado la "cúspide de especialización"?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q40" value="A"> <span class="option-text">A) Educación Básica</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q40" value="B"> <span class="option-text">B) Educación Superior</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q40" value="C"> <span class="option-text">C) Educación Media</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-40"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(4)">Evaluar Sección 4 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
+            </div>
+
+            <!-- Sección 5: Ejes Transversales y Perfil Ciudadano (41-50) -->
+            <div class="section-card" id="section-5">
+                <div class="section-header">
+                    <h2 class="section-title">Sección 5: Ejes Transversales y Perfil Ciudadano</h2>
+                    <p class="subtitle">Preguntas 41 al 50</p>
+                </div>
+
+                <!-- Q41 -->
+                <div class="question-block" id="q-41">
+                    <p class="question-text">41. ¿Cuál de los siguientes es un "Eje Transversal" del sistema educativo?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q41" value="A"> <span class="option-text">A) Matemática avanzada</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q41" value="B"> <span class="option-text">B) Educación Ambiental (sensibilidad ecológica)</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q41" value="C"> <span class="option-text">C) Gramática histórica</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-41"></div>
+                </div>
+
+                <!-- Q42 -->
+                <div class="question-block" id="q-42">
+                    <p class="question-text">42. El eje transversal de "Igualdad de Oportunidades" busca principalmente:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q42" value="A"> <span class="option-text">A) La eliminación de estereotipos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q42" value="B"> <span class="option-text">B) Dar la misma nota a todos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q42" value="C"> <span class="option-text">C) Que todos estudien la misma carrera</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-42"></div>
+                </div>
+
+                <!-- Q43 -->
+                <div class="question-block" id="q-43">
+                    <p class="question-text">43. El eje de "Educación en Población" se refiere a:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q43" value="A"> <span class="option-text">A) Contar personas en censos</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q43" value="B"> <span class="option-text">B) Conciencia demográfica</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q43" value="C"> <span class="option-text">C) Fomentar la migración rural</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-43"></div>
+                </div>
+
+                <!-- Q44 -->
+                <div class="question-block" id="q-44">
+                    <p class="question-text">44. ¿En qué niveles se aplican los Ejes Transversales?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q44" value="A"> <span class="option-text">A) Solo en Educación Básica</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q44" value="B"> <span class="option-text">B) Solo en Educación Media</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q44" value="C"> <span class="option-text">C) En todos los niveles (Inicial, Básica, Media y Superior)</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-44"></div>
+                </div>
+
+                <!-- Q45 -->
+                <div class="question-block" id="q-45">
+                    <p class="question-text">45. En el Perfil del Ciudadano Salvadoreño, la dimensión "Ética y Democracia" se evidencia al:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q45" value="A"> <span class="option-text">A) Practicar activamente deberes, derechos y defender la paz y la justicia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q45" value="B"> <span class="option-text">B) Ignorar las leyes locales</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q45" value="C"> <span class="option-text">C) Buscar el interés puramente individualista</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-45"></div>
+                </div>
+
+                <!-- Q46 -->
+                <div class="question-block" id="q-46">
+                    <p class="question-text">46. El eje transversal de "Educación para el Consumidor" persigue:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q46" value="A"> <span class="option-text">A) Comprar compulsivamente</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q46" value="B"> <span class="option-text">B) Formar hábitos responsables frente al mercado</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q46" value="C"> <span class="option-text">C) Evitar cualquier tipo de comercio</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-46"></div>
+                </div>
+
+                <!-- Q47 -->
+                <div class="question-block" id="q-47">
+                    <p class="question-text">47. "Poseer herramientas para el autoaprendizaje, investigación y formación permanente" es parte de la dimensión del ciudadano referida a:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q47" value="A"> <span class="option-text">A) Ética y Democracia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q47" value="B"> <span class="option-text">B) Identidad y Conciencia</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q47" value="C"> <span class="option-text">C) Constructivismo y Aprendizaje</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-47"></div>
+                </div>
+
+                <!-- Q48 -->
+                <div class="question-block" id="q-48">
+                    <p class="question-text">48. El eje "Preventiva Integral" trata sobre:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q48" value="A"> <span class="option-text">A) Protección de riesgos sociales</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q48" value="B"> <span class="option-text">B) Seguros de vida obligatorios</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q48" value="C"> <span class="option-text">C) Mantenimiento de infraestructura escolar</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-48"></div>
+                </div>
+
+                <!-- Q49 -->
+                <div class="question-block" id="q-49">
+                    <p class="question-text">49. El eje transversal de "Educación en Derechos Humanos" promueve:</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q49" value="A"> <span class="option-text">A) Convivencia y pluralidad</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q49" value="B"> <span class="option-text">B) La imposición de una sola cultura</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q49" value="C"> <span class="option-text">C) Memorizar códigos penales</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-49"></div>
+                </div>
+
+                <!-- Q50 -->
+                <div class="question-block" id="q-50">
+                    <p class="question-text">50. Según la síntesis final del documento curricular, ¿cuál es el único fin de la maquinaria del sistema educativo?</p>
+                    <ul class="options-list">
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q50" value="A"> <span class="option-text">A) Esculpir a la persona humana</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q50" value="B"> <span class="option-text">B) Generar obreros eficientes</span></label></li>
+                        <li class="option-item"><label class="option-label"><input type="radio" name="q50" value="C"> <span class="option-text">C) Cumplir con cuotas de matrícula</span></label></li>
+                    </ul>
+                    <div class="feedback" id="fb-50"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="evaluarFinal()">Finalizar y Ver Score Total <i data-lucide="check-circle" style="margin-left: 8px;"></i></button>
+            </div>
+        </form>
+
+        <div class="section-card results-container" id="results">
+            <h2 class="section-title" style="margin-bottom: var(--space-6);">Resultado Final</h2>
+            <div class="score-circle" id="finalScore">0%</div>
+            <p class="subtitle" id="scoreMessage" style="margin-bottom: var(--space-6);"></p>
+            <button class="btn btn-primary" onclick="location.reload()">Reintentar Evaluación</button>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // Respuestas correctas
+        const respuestasCorrectas = {
+            q1: 'B', q2: 'A', q3: 'B', q4: 'C', q5: 'B', q6: 'A', q7: 'B', q8: 'B', q9: 'A', q10: 'C',
+            q11: 'B', q12: 'B', q13: 'A', q14: 'B', q15: 'B', q16: 'B', q17: 'B', q18: 'A', q19: 'C', q20: 'B',
+            q21: 'A', q22: 'C', q23: 'B', q24: 'C', q25: 'A', q26: 'C', q27: 'B', q28: 'C', q29: 'B', q30: 'A',
+            q31: 'B', q32: 'A', q33: 'C', q34: 'B', q35: 'B', q36: 'B', q37: 'B', q38: 'B', q39: 'C', q40: 'B',
+            q41: 'B', q42: 'A', q43: 'B', q44: 'C', q45: 'A', q46: 'B', q47: 'C', q48: 'A', q49: 'A', q50: 'A'
+        };
+
+        let scoreAcumulado = 0;
+
+        function evaluarSeccion(seccion) {
+            const start = (seccion - 1) * 10 + 1;
+            const end = seccion * 10;
+            let contestadas = 0;
+            let correctasSeccion = 0;
+
+            // Verificar si contestó todas las de la sección
+            for (let i = start; i <= end; i++) {
+                const radios = document.getElementsByName('q' + i);
+                let check = false;
+                for (let j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) check = true;
+                }
+                if (check) contestadas++;
+            }
+
+            if (contestadas < 10) {
+                alert('Por favor contesta todas las 10 preguntas de esta sección antes de avanzar.');
+                return;
+            }
+
+            // Evaluar y dar feedback
+            for (let i = start; i <= end; i++) {
+                const radios = document.getElementsByName('q' + i);
+                let seleccion = '';
+                for (let j = 0; j < radios.length; j++) {
+                    radios[j].parentElement.classList.add('disabled-label'); // deshabilitar inputs
+                    if (radios[j].checked) seleccion = radios[j].value;
+                }
+
+                const fbDiv = document.getElementById('fb-' + i);
+                if (seleccion === respuestasCorrectas['q' + i]) {
+                    fbDiv.className = 'feedback correct';
+                    fbDiv.innerHTML = '<i data-lucide="check-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Correcto';
+                    correctasSeccion++;
+                    scoreAcumulado++;
+                } else {
+                    fbDiv.className = 'feedback incorrect';
+                    fbDiv.innerHTML = '<i data-lucide="x-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Incorrecto. La respuesta era ' + respuestasCorrectas['q' + i];
+                }
+            }
+            lucide.createIcons();
+
+            alert(`Obtuviste ${correctasSeccion} de 10 correctas en esta sección.`);
+
+            // Pasar a la siguiente sección
+            setTimeout(() => {
+                document.getElementById('section-' + seccion).classList.remove('active');
+                document.getElementById('section-' + (seccion + 1)).classList.add('active');
+
+                // Actualizar barra progreso
+                const progress = ((seccion) / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 800);
+        }
+
+        function evaluarFinal() {
+            const seccion = 5;
+            const start = 41;
+            const end = 50;
+            let contestadas = 0;
+
+            for (let i = start; i <= end; i++) {
+                const radios = document.getElementsByName('q' + i);
+                let check = false;
+                for (let j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) check = true;
+                }
+                if (check) contestadas++;
+            }
+
+            if (contestadas < 10) {
+                alert('Por favor contesta todas las últimas 10 preguntas.');
+                return;
+            }
+
+            // Evaluar última sección
+            for (let i = start; i <= end; i++) {
+                const radios = document.getElementsByName('q' + i);
+                let seleccion = '';
+                for (let j = 0; j < radios.length; j++) {
+                    radios[j].parentElement.classList.add('disabled-label');
+                    if (radios[j].checked) seleccion = radios[j].value;
+                }
+
+                const fbDiv = document.getElementById('fb-' + i);
+                if (seleccion === respuestasCorrectas['q' + i]) {
+                    fbDiv.className = 'feedback correct';
+                    fbDiv.innerHTML = '<i data-lucide="check-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Correcto';
+                    scoreAcumulado++;
+                } else {
+                    fbDiv.className = 'feedback incorrect';
+                    fbDiv.innerHTML = '<i data-lucide="x-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Incorrecto. La respuesta era ' + respuestasCorrectas['q' + i];
+                }
+            }
+            lucide.createIcons();
+
+            setTimeout(() => {
+                document.getElementById('section-5').classList.remove('active');
+                document.getElementById('results').classList.add('active');
+                document.getElementById('progressFill').style.width = '100%';
+
+                const percentage = (scoreAcumulado / 50) * 100;
+                document.getElementById('finalScore').innerText = percentage + '%';
+
+                let msg = "";
+                if(percentage >= 90) msg = "¡Excelente dominio de los tres temas!";
+                else if(percentage >= 70) msg = "Buen trabajo, tienes sólidos conocimientos educativos.";
+                else msg = "Buen intento. Te recomendamos repasar los documentos base.";
+
+                document.getElementById('scoreMessage').innerText = msg;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 800);
+        }
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i data-lucide="moon"></i>';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i data-lucide="sun"></i>';
+            }
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
