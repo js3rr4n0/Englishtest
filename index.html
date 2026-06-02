@@ -1,1049 +1,599 @@
-
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación Educativa Integral</title>
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Cuestionario: Ámbitos del Obrar Humano</title>
     <style>
-        :root, [data-theme="light"] {
-            --color-bg: #f7f6f2;
-            --color-surface: #ffffff;
-            --color-surface-2: #fbfbf9;
-            --color-surface-offset: #f3f0ec;
-            --color-divider: #dcd9d5;
-            --color-border: #d4d1ca;
-            --color-text: #28251d;
-            --color-text-muted: #7a7974;
-            --color-primary: #01696f;
-            --color-primary-hover: #0c4e54;
-            --color-success: #437a22;
-            --color-error: #a12c7b;
-
-            --font-display: 'Cabinet Grotesk', sans-serif;
-            --font-body: 'Satoshi', sans-serif;
-
-            --space-1: 0.25rem;
-            --space-2: 0.5rem;
-            --space-3: 0.75rem;
-            --space-4: 1rem;
-            --space-6: 1.5rem;
-            --space-8: 2rem;
-            --space-12: 3rem;
-
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
-            --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
-
-            --text-sm: 0.875rem;
-            --text-base: 1rem;
-            --text-lg: 1.125rem;
-            --text-xl: 1.5rem;
-            --text-2xl: 2rem;
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #d4edda;
+            --success-border: #c3e6cb;
+            --success-text: #155724;
+            --error: #f8d7da;
+            --error-border: #f5c6cb;
+            --error-text: #721c24;
+            --bg: #f8f9fa;
         }
-
-        [data-theme="dark"] {
-            --color-bg: #171614;
-            --color-surface: #1c1b19;
-            --color-surface-2: #201f1d;
-            --color-surface-offset: #1d1c1a;
-            --color-divider: #262523;
-            --color-border: #393836;
-            --color-text: #cdccca;
-            --color-text-muted: #797876;
-            --color-primary: #4f98a3;
-            --color-primary-hover: #227f8b;
-            --color-success: #6daa45;
-            --color-error: #d163a7;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
-            font-family: var(--font-body);
-            color: var(--color-text);
-            background-color: var(--color-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: #333;
             line-height: 1.6;
-            padding: var(--space-4);
+            padding: 20px;
+            margin: 0;
         }
-
         .container {
             max-width: 800px;
             margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-
-        header {
-            text-align: center;
-            margin-bottom: var(--space-8);
-            padding: var(--space-8);
-            background: var(--color-surface);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-sm);
-        }
-
         h1 {
-            font-family: var(--font-display);
-            font-size: var(--text-2xl);
-            color: var(--color-primary);
-            margin-bottom: var(--space-2);
+            color: var(--primary);
+            text-align: center;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
         }
-
-        .subtitle {
-            color: var(--color-text-muted);
-            font-size: var(--text-lg);
+        h2 {
+            color: var(--secondary);
+            margin-top: 0;
         }
-
-        .section-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-xl);
-            padding: var(--space-6);
-            margin-bottom: var(--space-8);
-            box-shadow: var(--shadow-md);
-            display: none;
+        .progress {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: right;
+            margin-bottom: 20px;
         }
-
-        .section-card.active {
-            display: block;
-        }
-
-        .section-header {
-            margin-bottom: var(--space-6);
-            padding-bottom: var(--space-4);
-            border-bottom: 1px solid var(--color-divider);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: var(--text-xl);
-            color: var(--color-primary);
-        }
-
         .question-block {
-            margin-bottom: var(--space-6);
-            padding: var(--space-4);
-            background: var(--color-surface-2);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--color-border);
+            background: #fff;
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
         }
-
         .question-text {
-            font-weight: 500;
-            margin-bottom: var(--space-3);
-            font-size: var(--text-lg);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
-
-        .options-list {
-            list-style: none;
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-
-        .option-item {
-            margin-bottom: var(--space-2);
-        }
-
         .option-label {
             display: flex;
             align-items: center;
-            padding: var(--space-3);
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-md);
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s, border-color 0.2s;
         }
-
         .option-label:hover {
-            border-color: var(--color-primary);
-            background: var(--color-surface-offset);
+            background: #f1f2f6;
         }
-
-        input[type="radio"] {
-            margin-right: var(--space-3);
-            accent-color: var(--color-primary);
-            width: 1.2rem;
-            height: 1.2rem;
+        .option-label input {
+            margin-right: 15px;
+            transform: scale(1.2);
         }
-
-        input[type="radio"]:checked + .option-text {
-            font-weight: 600;
-            color: var(--color-primary);
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-left: 4px solid var(--secondary);
+            background-color: #f1f8ff;
+            font-size: 0.95em;
+            color: #2c3e50;
+            border-radius: 0 6px 6px 0;
         }
-
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-3) var(--space-6);
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            font-size: var(--text-base);
-            cursor: pointer;
-            transition: all 0.2s;
+            display: inline-block;
+            background: var(--secondary);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 6px;
             border: none;
-            width: 100%;
-            margin-top: var(--space-4);
-        }
-
-        .btn-primary {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--color-primary-hover);
-            transform: translateY(-2px);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: var(--color-divider);
-            border-radius: var(--radius-full);
-            margin-bottom: var(--space-6);
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--color-primary);
-            width: 20%;
-            transition: width 0.3s ease;
-        }
-
-        .feedback {
-            margin-top: var(--space-2);
-            padding: var(--space-3);
-            border-radius: var(--radius-md);
-            display: none;
-            font-weight: 500;
-        }
-
-        .feedback.correct {
-            display: block;
-            background: rgba(67, 122, 34, 0.1);
-            color: var(--color-success);
-            border: 1px solid var(--color-success);
-        }
-
-        .feedback.incorrect {
-            display: block;
-            background: rgba(161, 44, 123, 0.1);
-            color: var(--color-error);
-            border: 1px solid var(--color-error);
-        }
-
-        .results-container {
-            text-align: center;
-            display: none;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 0 auto var(--space-6);
-            font-family: var(--font-display);
-            box-shadow: var(--shadow-md);
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: var(--space-4);
-            right: var(--space-4);
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            padding: var(--space-2);
-            border-radius: 50%;
             cursor: pointer;
-            box-shadow: var(--shadow-sm);
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
-
-        .disabled-label {
-            pointer-events: none;
-            opacity: 0.8;
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .correct-opt {
+            background-color: var(--success) !important;
+            border-color: var(--success-border) !important;
+            color: var(--success-text);
+            font-weight: bold;
+        }
+        .incorrect-opt {
+            background-color: var(--error) !important;
+            border-color: var(--error-border) !important;
+            color: var(--error-text);
+        }
+        .score-display {
+            display: none;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #e8f8f5;
+            color: #27ae60;
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-        <i data-lucide="moon"></i>
-    </button>
 
-    <div class="container">
-        <header>
-            <h1>Evaluación Educativa</h1>
-            <p class="subtitle">Basado en Delors, Metacognición y el Sistema Educativo Salvadoreño</p>
-        </header>
-
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <form id="quizForm">
-            <!-- Sección 1: Los Cuatro Pilares de la Educación (1-10) -->
-            <div class="section-card active" id="section-1">
-                <div class="section-header">
-                    <h2 class="section-title">Sección 1: Los Cuatro Pilares de la Educación</h2>
-                    <p class="subtitle">Preguntas 1 al 10</p>
-                </div>
-
-                <!-- Q1 -->
-                <div class="question-block" id="q-1">
-                    <p class="question-text">1. Según Jacques Delors, ¿qué exige el siglo XXI a la educación frente al creciente volumen de información?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="A"> <span class="option-text">A) Transmitir solo conocimientos técnicos especializados</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="B"> <span class="option-text">B) Proporcionar las cartas náuticas y la brújula para navegar en un mundo complejo</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="C"> <span class="option-text">C) Aumentar la carga horaria de las asignaturas teóricas</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-1"></div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="question-block" id="q-2">
-                    <p class="question-text">2. ¿Por qué es inadecuado responder puramente de forma cuantitativa a la demanda de educación actual?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="A"> <span class="option-text">A) Porque ya no basta acumular una reserva inicial de conocimientos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="B"> <span class="option-text">B) Porque faltan escuelas y profesores</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="C"> <span class="option-text">C) Porque los alumnos pierden el interés rápidamente</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-2"></div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="question-block" id="q-3">
-                    <p class="question-text">3. El pilar "Aprender a conocer" se refiere principalmente a:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="A"> <span class="option-text">A) Memorizar enciclopedias enteras</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="B"> <span class="option-text">B) Adquirir los instrumentos de la comprensión y el placer de descubrir</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="C"> <span class="option-text">C) Conocer las leyes del mercado laboral</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-3"></div>
-                </div>
-
-                <!-- Q4 -->
-                <div class="question-block" id="q-4">
-                    <p class="question-text">4. ¿Qué sugiere el texto sobre el aprendizaje de la memoria en la era de la información?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="A"> <span class="option-text">A) Que ha perdido su utilidad por el almacenamiento de datos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="B"> <span class="option-text">B) Que debe suprimirse de las escuelas por ser tedioso</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="C"> <span class="option-text">C) Que debe cultivarse como una facultad humana irreductible al automatismo</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-4"></div>
-                </div>
-
-                <!-- Q5 -->
-                <div class="question-block" id="q-5">
-                    <p class="question-text">5. En las economías modernas, el concepto de "Aprender a hacer" ha evolucionado hacia:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="A"> <span class="option-text">A) El dominio de tareas puramente físicas</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="B"> <span class="option-text">B) La sustitución de la calificación profesional por la competencia personal</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="C"> <span class="option-text">C) La fabricación rutinaria de objetos materiales</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-5"></div>
-                </div>
-
-                <!-- Q6 -->
-                <div class="question-block" id="q-6">
-                    <p class="question-text">6. ¿Qué habilidades se requieren cada vez más debido a la desmaterialización del trabajo y los servicios?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="A"> <span class="option-text">A) Aptitud para las relaciones interpersonales y comunicación</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="B"> <span class="option-text">B) Fuerza física y resistencia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="C"> <span class="option-text">C) Capacidad de operar maquinaria pesada</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-6"></div>
-                </div>
-
-                <!-- Q7 -->
-                <div class="question-block" id="q-7">
-                    <p class="question-text">7. "Aprender a vivir juntos" implica dos orientaciones principales. ¿Cuáles son?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="A"> <span class="option-text">A) Competir y ganar en el mercado</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="B"> <span class="option-text">B) El descubrimiento del otro y la participación en proyectos comunes</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="C"> <span class="option-text">C) El aislamiento cultural y la asimilación forzada</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-7"></div>
-                </div>
-
-                <!-- Q8 -->
-                <div class="question-block" id="q-8">
-                    <p class="question-text">8. ¿Qué riesgo conlleva el simple contacto entre grupos diferentes si están en situación de competencia?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A"> <span class="option-text">A) Automáticamente genera paz</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="B"> <span class="option-text">B) Puede agravar tensiones latentes y generar conflictos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="C"> <span class="option-text">C) Aumenta la productividad económica</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-8"></div>
-                </div>
-
-                <!-- Q9 -->
-                <div class="question-block" id="q-9">
-                    <p class="question-text">9. El pilar "Aprender a ser" tiene como función esencial:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="A"> <span class="option-text">A) Conferir la libertad de pensamiento, juicio y desarrollo global de la persona</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="B"> <span class="option-text">B) Normalizar la conducta de los individuos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="C"> <span class="option-text">C) Preparar exclusivamente para un oficio industrial</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-9"></div>
-                </div>
-
-                <!-- Q10 -->
-                <div class="question-block" id="q-10">
-                    <p class="question-text">10. ¿Qué advierte el texto sobre el arte y la poesía en la escuela actual?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="A"> <span class="option-text">A) Que deben ser reemplazados por computación</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="B"> <span class="option-text">B) Que son una pérdida de tiempo productivo</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="C"> <span class="option-text">C) Que deberían recuperar un lugar más importante frente a la enseñanza puramente utilitaria</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-10"></div>
-                </div>
-
-                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(1)">Evaluar Sección 1 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
-            </div>
-
-            <!-- Sección 2: Metacognición (11-20) -->
-            <div class="section-card" id="section-2">
-                <div class="section-header">
-                    <h2 class="section-title">Sección 2: Metacognición y Aprender a Aprender</h2>
-                    <p class="subtitle">Preguntas 11 al 20</p>
-                </div>
-
-                <!-- Q11 -->
-                <div class="question-block" id="q-11">
-                    <p class="question-text">11. A diferencia del alumno reactivo, ¿cuál es una característica del Aprendiz Intencional?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="A"> <span class="option-text">A) Depende de instrucciones externas</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="B"> <span class="option-text">B) Regula su propia conducta y transfiere el conocimiento</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q11" value="C"> <span class="option-text">C) Su aprendizaje termina en el aula</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-11"></div>
-                </div>
-
-                <!-- Q12 -->
-                <div class="question-block" id="q-12">
-                    <p class="question-text">12. Según Flavell, la metacognición se define como:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="A"> <span class="option-text">A) Acumular muchos datos rápidamente</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="B"> <span class="option-text">B) Pensar sobre el propio pensamiento</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q12" value="C"> <span class="option-text">C) Leer de manera veloz</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-12"></div>
-                </div>
-
-                <!-- Q13 -->
-                <div class="question-block" id="q-13">
-                    <p class="question-text">13. En la anatomía de la metacognición, el "Saber Declarativo" (Conocimiento) incluye:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="A"> <span class="option-text">A) La persona, la tarea y la estrategia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="B"> <span class="option-text">B) Solo las calificaciones obtenidas</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q13" value="C"> <span class="option-text">C) La habilidad de memorizar fechas</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-13"></div>
-                </div>
-
-                <!-- Q14 -->
-                <div class="question-block" id="q-14">
-                    <p class="question-text">14. ¿Cuáles son las tres dimensiones del "Triángulo del Rendimiento"?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="A"> <span class="option-text">A) Lectura, escritura y matemáticas</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="B"> <span class="option-text">B) Cognición, Metacognición y Motivación</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q14" value="C"> <span class="option-text">C) Maestro, alumno y familia</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-14"></div>
-                </div>
-
-                <!-- Q15 -->
-                <div class="question-block" id="q-15">
-                    <p class="question-text">15. Mientras la Cognición "resuelve el problema" (el trabajador), la Metacognición actúa como el "Gerente" que se encarga de:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q15" value="A"> <span class="option-text">A) Codificar y almacenar información</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q15" value="B"> <span class="option-text">B) Planificar, supervisar y evaluar la estrategia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q15" value="C"> <span class="option-text">C) Olvidar la información irrelevante</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-15"></div>
-                </div>
-
-                <!-- Q16 -->
-                <div class="question-block" id="q-16">
-                    <p class="question-text">16. ¿Qué es el "Entrenamiento Metacognitivo"?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q16" value="A"> <span class="option-text">A) Exigir tareas sin explicar el porqué</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q16" value="B"> <span class="option-text">B) Inducir al alumno a comprobar por sí mismo la efectividad de la estrategia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q16" value="C"> <span class="option-text">C) Enseñar repetición mecánica</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-16"></div>
-                </div>
-
-                <!-- Q17 -->
-                <div class="question-block" id="q-17">
-                    <p class="question-text">17. En la "Filosofía de la Transferencia Gradual", ¿cuál es el orden correcto del proceso?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q17" value="A"> <span class="option-text">A) Práctica Individual -> Guiada -> Explícita</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q17" value="B"> <span class="option-text">B) Instrucción Explícita -> Práctica Guiada -> Cooperativa -> Individual</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q17" value="C"> <span class="option-text">C) Práctica Cooperativa -> Individual -> Instrucción</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-17"></div>
-                </div>
-
-                <!-- Q18 -->
-                <div class="question-block" id="q-18">
-                    <p class="question-text">18. Durante la etapa de "Instrucción Explícita", ¿qué técnica clave utiliza el profesor?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q18" value="A"> <span class="option-text">A) Modelado Cognitivo (pensar en voz alta)</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q18" value="B"> <span class="option-text">B) Ausencia total en el aula</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q18" value="C"> <span class="option-text">C) Castigar los errores</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-18"></div>
-                </div>
-
-                <!-- Q19 -->
-                <div class="question-block" id="q-19">
-                    <p class="question-text">19. En la "Práctica Individual" (Autonomía alcanzada), ¿cuál es la herramienta clave del estudiante?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q19" value="A"> <span class="option-text">A) Esperar la instrucción del maestro</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q19" value="B"> <span class="option-text">B) Copiar el trabajo de los compañeros</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q19" value="C"> <span class="option-text">C) Uso de guías de auto-interrogación internalizadas</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-19"></div>
-                </div>
-
-                <!-- Q20 -->
-                <div class="question-block" id="q-20">
-                    <p class="question-text">20. ¿Cuál es el "Prerrequisito Fundamental" expuesto al final del documento de Metacognición?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q20" value="A"> <span class="option-text">A) Escuelas con mejor tecnología</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q20" value="B"> <span class="option-text">B) Para formar alumnos metacognitivos, necesitamos educadores metacognitivos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q20" value="C"> <span class="option-text">C) Más horas de clase a la semana</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-20"></div>
-                </div>
-
-                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(2)">Evaluar Sección 2 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
-            </div>
-
-            <!-- Sección 3: Fundamentos Curriculares - Contexto y Principios (21-30) -->
-            <div class="section-card" id="section-3">
-                <div class="section-header">
-                    <h2 class="section-title">Sección 3: Fundamentos Curriculares - Contexto y Principios</h2>
-                    <p class="subtitle">Preguntas 21 al 30</p>
-                </div>
-
-                <!-- Q21 -->
-                <div class="question-block" id="q-21">
-                    <p class="question-text">21. ¿Qué documento legal establece el "cultivo del espíritu crítico, ecología y el poder creador del trabajo"?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q21" value="A"> <span class="option-text">A) Ley General de Educación</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q21" value="B"> <span class="option-text">B) Los Acuerdos de Chapultepec</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q21" value="C"> <span class="option-text">C) Constitución de la República</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-21"></div>
-                </div>
-
-                <!-- Q22 -->
-                <div class="question-block" id="q-22">
-                    <p class="question-text">22. El currículo nacional tiene un ADN constructivista, lo que significa que:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q22" value="A"> <span class="option-text">A) El alumno es un receptor pasivo</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q22" value="B"> <span class="option-text">B) El maestro es el único dueño del conocimiento</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q22" value="C"> <span class="option-text">C) El alumno es el constructor intransferible de su aprendizaje partiendo de su experiencia</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-22"></div>
-                </div>
-
-                <!-- Q23 -->
-                <div class="question-block" id="q-23">
-                    <p class="question-text">23. ¿Qué principio rector exige el "equilibrio entre el desarrollo biopsicomotriz, cognitivo y socioafectivo"?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q23" value="A"> <span class="option-text">A) Flexibilidad</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q23" value="B"> <span class="option-text">B) Integralidad</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q23" value="C"> <span class="option-text">C) Interdisciplinariedad</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-23"></div>
-                </div>
-
-                <!-- Q24 -->
-                <div class="question-block" id="q-24">
-                    <p class="question-text">24. En las dimensiones de planificación, el nivel "Macrocurricular" corresponde a:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q24" value="A"> <span class="option-text">A) La planificación didáctica del docente</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q24" value="B"> <span class="option-text">B) El Proyecto Educativo Institucional (PEI)</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q24" value="C"> <span class="option-text">C) Fines del sistema educativo y objetivos a nivel Nacional</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-24"></div>
-                </div>
-
-                <!-- Q25 -->
-                <div class="question-block" id="q-25">
-                    <p class="question-text">25. El rol del maestro en la matriz de actores se define como:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q25" value="A"> <span class="option-text">A) Facilitador y guía con liderazgo democrático</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q25" value="B"> <span class="option-text">B) Transmisor autoritario de información</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q25" value="C"> <span class="option-text">C) Supervisor rígido</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-25"></div>
-                </div>
-
-                <!-- Q26 -->
-                <div class="question-block" id="q-26">
-                    <p class="question-text">26. El Proyecto Educativo Institucional (PEI) se ubica en la dimensión de planificación:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q26" value="A"> <span class="option-text">A) Mesocurricular</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q26" value="B"> <span class="option-text">B) Macrocurricular</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q26" value="C"> <span class="option-text">C) Microcurricular (Institucional)</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-26"></div>
-                </div>
-
-                <!-- Q27 -->
-                <div class="question-block" id="q-27">
-                    <p class="question-text">27. Según el currículo nacional, ¿qué valor tiene el error en el aprendizaje?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q27" value="A"> <span class="option-text">A) Es una falla que debe ser castigada</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q27" value="B"> <span class="option-text">B) Es una fuente de aprendizaje (aprender a aprender)</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q27" value="C"> <span class="option-text">C) Es irrelevante para la nota final</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-27"></div>
-                </div>
-
-                <!-- Q28 -->
-                <div class="question-block" id="q-28">
-                    <p class="question-text">28. ¿Qué papel juegan la familia y la comunidad en el ecosistema educativo?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q28" value="A"> <span class="option-text">A) Espectadores lejanos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q28" value="B"> <span class="option-text">B) Solo aportan económicamente</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q28" value="C"> <span class="option-text">C) Co-gestores, fuente de recursos e instructores voluntarios</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-28"></div>
-                </div>
-
-                <!-- Q29 -->
-                <div class="question-block" id="q-29">
-                    <p class="question-text">29. El principio de "Gradualidad y Articulación" asegura:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q29" value="A"> <span class="option-text">A) Que haya rupturas constantes entre niveles</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q29" value="B"> <span class="option-text">B) Progresión sistémica sin rupturas entre etapas evolutivas</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q29" value="C"> <span class="option-text">C) Que solo los mejores estudiantes avancen</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-29"></div>
-                </div>
-
-                <!-- Q30 -->
-                <div class="question-block" id="q-30">
-                    <p class="question-text">30. El rol de los técnicos del MINED ha pasado de ser supervisores rígidos a:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q30" value="A"> <span class="option-text">A) Promotores que acompañan y asesoran el desarrollo en el aula</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q30" value="B"> <span class="option-text">B) Jueces calificadores</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q30" value="C"> <span class="option-text">C) Creadores exclusivos del PEI</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-30"></div>
-                </div>
-
-                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(3)">Evaluar Sección 3 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
-            </div>
-
-            <!-- Sección 4: Estructura del Sistema Educativo (31-40) -->
-            <div class="section-card" id="section-4">
-                <div class="section-header">
-                    <h2 class="section-title">Sección 4: Niveles y Estructura del Sistema Educativo</h2>
-                    <p class="subtitle">Preguntas 31 al 40</p>
-                </div>
-
-                <!-- Q31 -->
-                <div class="question-block" id="q-31">
-                    <p class="question-text">31. ¿Cuál es el logro psicológico principal en la Fase 3 (26m-47m) de la Educación Inicial?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q31" value="A"> <span class="option-text">A) Inicio de la marcha</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q31" value="B"> <span class="option-text">B) Conquista de la autonomía progresiva</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q31" value="C"> <span class="option-text">C) Lectura fluida</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-31"></div>
-                </div>
-
-                <!-- Q32 -->
-                <div class="question-block" id="q-32">
-                    <p class="question-text">32. La Sección 3 de Educación Parvularia se centra en:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q32" value="A"> <span class="option-text">A) Aprestamiento directo para lecto-escritura, cálculo y cooperación</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q32" value="B"> <span class="option-text">B) Especialización vocacional</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q32" value="C"> <span class="option-text">C) Trabajo de campo agrícola</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-32"></div>
-                </div>
-
-                <!-- Q33 -->
-                <div class="question-block" id="q-33">
-                    <p class="question-text">33. En Educación Básica, el Ciclo 2 (4° a 6° Grado) se caracteriza por:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q33" value="A"> <span class="option-text">A) Desarrollo de lecto-escritura inicial</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q33" value="B"> <span class="option-text">B) Orientación universitaria intensiva</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q33" value="C"> <span class="option-text">C) Afianzamiento social, rigor metodológico y trabajo cooperativo independiente</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-33"></div>
-                </div>
-
-                <!-- Q34 -->
-                <div class="question-block" id="q-34">
-                    <p class="question-text">34. El enfoque del Bachillerato General es:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q34" value="A"> <span class="option-text">A) Inserción laboral industrial inmediata</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q34" value="B"> <span class="option-text">B) Propedéutico y humanista, preparando para la universidad</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q34" value="C"> <span class="option-text">C) Exclusivamente deportivo</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-34"></div>
-                </div>
-
-                <!-- Q35 -->
-                <div class="question-block" id="q-35">
-                    <p class="question-text">35. Los tres pilares de la Educación Superior son:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q35" value="A"> <span class="option-text">A) Matemáticas, Lenguaje y Ciencias</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q35" value="B"> <span class="option-text">B) Docencia, Investigación y Proyección Social</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q35" value="C"> <span class="option-text">C) Agricultura, Industria y Servicios</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-35"></div>
-                </div>
-
-                <!-- Q36 -->
-                <div class="question-block" id="q-36">
-                    <p class="question-text">36. El módulo de Educación Especial tiene un enfoque basado en:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q36" value="A"> <span class="option-text">A) Aislamiento total del alumno</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q36" value="B"> <span class="option-text">B) Normalización, Integración y Sectorización (adapta, no aísla)</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q36" value="C"> <span class="option-text">C) Eliminar el currículo regular</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-36"></div>
-                </div>
-
-                <!-- Q37 -->
-                <div class="question-block" id="q-37">
-                    <p class="question-text">37. ¿Qué modalidad ofrece educación básica a distancia estructurada por macro-problemas sociales?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q37" value="A"> <span class="option-text">A) INED</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q37" value="B"> <span class="option-text">B) PREBAD</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q37" value="C"> <span class="option-text">C) Educación Parvularia</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-37"></div>
-                </div>
-
-                <!-- Q38 -->
-                <div class="question-block" id="q-38">
-                    <p class="question-text">38. El Ciclo 3 de Educación Básica (7° a 9° Grado) pone un fuerte énfasis en:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q38" value="A"> <span class="option-text">A) Lecto-escritura inicial</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q38" value="B"> <span class="option-text">B) Orientación vocacional y resolución de problemas complejos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q38" value="C"> <span class="option-text">C) Control de esfínteres</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-38"></div>
-                </div>
-
-                <!-- Q39 -->
-                <div class="question-block" id="q-39">
-                    <p class="question-text">39. El Bachillerato Técnico-Vocacional está diseñado para:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q39" value="A"> <span class="option-text">A) Retrasar el ingreso al mundo adulto</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q39" value="B"> <span class="option-text">B) Formar exclusivamente para carreras científicas puras</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q39" value="C"> <span class="option-text">C) La inserción productiva inmediata mediante opciones especializadas</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-39"></div>
-                </div>
-
-                <!-- Q40 -->
-                <div class="question-block" id="q-40">
-                    <p class="question-text">40. En el currículo salvadoreño, ¿qué nivel es considerado la "cúspide de especialización"?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q40" value="A"> <span class="option-text">A) Educación Básica</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q40" value="B"> <span class="option-text">B) Educación Superior</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q40" value="C"> <span class="option-text">C) Educación Media</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-40"></div>
-                </div>
-
-                <button type="button" class="btn btn-primary" onclick="evaluarSeccion(4)">Evaluar Sección 4 y Continuar <i data-lucide="arrow-right" style="margin-left: 8px;"></i></button>
-            </div>
-
-            <!-- Sección 5: Ejes Transversales y Perfil Ciudadano (41-50) -->
-            <div class="section-card" id="section-5">
-                <div class="section-header">
-                    <h2 class="section-title">Sección 5: Ejes Transversales y Perfil Ciudadano</h2>
-                    <p class="subtitle">Preguntas 41 al 50</p>
-                </div>
-
-                <!-- Q41 -->
-                <div class="question-block" id="q-41">
-                    <p class="question-text">41. ¿Cuál de los siguientes es un "Eje Transversal" del sistema educativo?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q41" value="A"> <span class="option-text">A) Matemática avanzada</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q41" value="B"> <span class="option-text">B) Educación Ambiental (sensibilidad ecológica)</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q41" value="C"> <span class="option-text">C) Gramática histórica</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-41"></div>
-                </div>
-
-                <!-- Q42 -->
-                <div class="question-block" id="q-42">
-                    <p class="question-text">42. El eje transversal de "Igualdad de Oportunidades" busca principalmente:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q42" value="A"> <span class="option-text">A) La eliminación de estereotipos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q42" value="B"> <span class="option-text">B) Dar la misma nota a todos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q42" value="C"> <span class="option-text">C) Que todos estudien la misma carrera</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-42"></div>
-                </div>
-
-                <!-- Q43 -->
-                <div class="question-block" id="q-43">
-                    <p class="question-text">43. El eje de "Educación en Población" se refiere a:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q43" value="A"> <span class="option-text">A) Contar personas en censos</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q43" value="B"> <span class="option-text">B) Conciencia demográfica</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q43" value="C"> <span class="option-text">C) Fomentar la migración rural</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-43"></div>
-                </div>
-
-                <!-- Q44 -->
-                <div class="question-block" id="q-44">
-                    <p class="question-text">44. ¿En qué niveles se aplican los Ejes Transversales?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q44" value="A"> <span class="option-text">A) Solo en Educación Básica</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q44" value="B"> <span class="option-text">B) Solo en Educación Media</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q44" value="C"> <span class="option-text">C) En todos los niveles (Inicial, Básica, Media y Superior)</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-44"></div>
-                </div>
-
-                <!-- Q45 -->
-                <div class="question-block" id="q-45">
-                    <p class="question-text">45. En el Perfil del Ciudadano Salvadoreño, la dimensión "Ética y Democracia" se evidencia al:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q45" value="A"> <span class="option-text">A) Practicar activamente deberes, derechos y defender la paz y la justicia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q45" value="B"> <span class="option-text">B) Ignorar las leyes locales</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q45" value="C"> <span class="option-text">C) Buscar el interés puramente individualista</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-45"></div>
-                </div>
-
-                <!-- Q46 -->
-                <div class="question-block" id="q-46">
-                    <p class="question-text">46. El eje transversal de "Educación para el Consumidor" persigue:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q46" value="A"> <span class="option-text">A) Comprar compulsivamente</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q46" value="B"> <span class="option-text">B) Formar hábitos responsables frente al mercado</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q46" value="C"> <span class="option-text">C) Evitar cualquier tipo de comercio</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-46"></div>
-                </div>
-
-                <!-- Q47 -->
-                <div class="question-block" id="q-47">
-                    <p class="question-text">47. "Poseer herramientas para el autoaprendizaje, investigación y formación permanente" es parte de la dimensión del ciudadano referida a:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q47" value="A"> <span class="option-text">A) Ética y Democracia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q47" value="B"> <span class="option-text">B) Identidad y Conciencia</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q47" value="C"> <span class="option-text">C) Constructivismo y Aprendizaje</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-47"></div>
-                </div>
-
-                <!-- Q48 -->
-                <div class="question-block" id="q-48">
-                    <p class="question-text">48. El eje "Preventiva Integral" trata sobre:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q48" value="A"> <span class="option-text">A) Protección de riesgos sociales</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q48" value="B"> <span class="option-text">B) Seguros de vida obligatorios</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q48" value="C"> <span class="option-text">C) Mantenimiento de infraestructura escolar</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-48"></div>
-                </div>
-
-                <!-- Q49 -->
-                <div class="question-block" id="q-49">
-                    <p class="question-text">49. El eje transversal de "Educación en Derechos Humanos" promueve:</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q49" value="A"> <span class="option-text">A) Convivencia y pluralidad</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q49" value="B"> <span class="option-text">B) La imposición de una sola cultura</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q49" value="C"> <span class="option-text">C) Memorizar códigos penales</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-49"></div>
-                </div>
-
-                <!-- Q50 -->
-                <div class="question-block" id="q-50">
-                    <p class="question-text">50. Según la síntesis final del documento curricular, ¿cuál es el único fin de la maquinaria del sistema educativo?</p>
-                    <ul class="options-list">
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q50" value="A"> <span class="option-text">A) Esculpir a la persona humana</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q50" value="B"> <span class="option-text">B) Generar obreros eficientes</span></label></li>
-                        <li class="option-item"><label class="option-label"><input type="radio" name="q50" value="C"> <span class="option-text">C) Cumplir con cuotas de matrícula</span></label></li>
-                    </ul>
-                    <div class="feedback" id="fb-50"></div>
-                </div>
-
-                <button type="button" class="btn btn-primary" onclick="evaluarFinal()">Finalizar y Ver Score Total <i data-lucide="check-circle" style="margin-left: 8px;"></i></button>
-            </div>
-        </form>
-
-        <div class="section-card results-container" id="results">
-            <h2 class="section-title" style="margin-bottom: var(--space-6);">Resultado Final</h2>
-            <div class="score-circle" id="finalScore">0%</div>
-            <p class="subtitle" id="scoreMessage" style="margin-bottom: var(--space-6);"></p>
-            <button class="btn btn-primary" onclick="location.reload()">Reintentar Evaluación</button>
-        </div>
-    </div>
-
-    <script>
-        // Inicializar iconos
-        lucide.createIcons();
-
-        // Respuestas correctas
-        const respuestasCorrectas = {
-            q1: 'B', q2: 'A', q3: 'B', q4: 'C', q5: 'B', q6: 'A', q7: 'B', q8: 'B', q9: 'A', q10: 'C',
-            q11: 'B', q12: 'B', q13: 'A', q14: 'B', q15: 'B', q16: 'B', q17: 'B', q18: 'A', q19: 'C', q20: 'B',
-            q21: 'A', q22: 'C', q23: 'B', q24: 'C', q25: 'A', q26: 'C', q27: 'B', q28: 'C', q29: 'B', q30: 'A',
-            q31: 'B', q32: 'A', q33: 'C', q34: 'B', q35: 'B', q36: 'B', q37: 'B', q38: 'B', q39: 'C', q40: 'B',
-            q41: 'B', q42: 'A', q43: 'B', q44: 'C', q45: 'A', q46: 'B', q47: 'C', q48: 'A', q49: 'A', q50: 'A'
-        };
-
-        let scoreAcumulado = 0;
-
-        function evaluarSeccion(seccion) {
-            const start = (seccion - 1) * 10 + 1;
-            const end = seccion * 10;
-            let contestadas = 0;
-            let correctasSeccion = 0;
-
-            // Verificar si contestó todas las de la sección
-            for (let i = start; i <= end; i++) {
-                const radios = document.getElementsByName('q' + i);
-                let check = false;
-                for (let j = 0; j < radios.length; j++) {
-                    if (radios[j].checked) check = true;
+<div class="container">
+    <h1>Ámbitos del Obrar Humano</h1>
+    <div class="progress" id="progress">Tema 1 de 5</div>
+    
+    <div id="quiz-container"></div>
+
+    <div id="score-display" class="score-display"></div>
+    
+    <button id="btn-evaluar" class="btn" onclick="evaluarTema()">Evaluar Tema</button>
+    <button id="btn-siguiente" class="btn" style="display: none;" onclick="siguienteTema()">Siguiente Tema</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            tema: "Tema 1: La Acción",
+            preguntas: [
+                {
+                    q: "¿Por qué la acción es considerada una dimensión esencial del hombre?",
+                    o: ["Porque le permite dominar la naturaleza físicamente", "Porque expresa su dinamismo, desplegando sus potencialidades intrínsecas", "Porque es la única forma de conocimiento válido", "Porque es un mecanismo de supervivencia animal"],
+                    a: 1,
+                    e: "La acción es esencial porque la persona es un ser intrínsecamente activo; a través de ella se manifiesta, se modifica y se despliega [cite: 597, 603-608]."
+                },
+                {
+                    q: "¿Qué significa la expresión “yo actúo” dentro de la acción humana?",
+                    o: ["Que el individuo actúa condicionado por instintos", "Que la acción recae únicamente en el pensamiento", "Que el sujeto es la causa libre y genera la acción", "Que la acción es un proceso biológico automático"],
+                    a: 2,
+                    e: "Significa que el sujeto es la causa libre de la acción; yo como sujeto pongo libremente una acción en el mundo y la produzco [cite: 617, 622-623]."
+                },
+                {
+                    q: "¿Por qué incluso las omisiones pueden considerarse una forma de actuar?",
+                    o: ["Porque siempre implican un esfuerzo físico", "Porque requieren la autorización de otras personas", "Porque son descuidos involuntarios de la razón", "Porque representan una decisión voluntaria de no hacer nada"],
+                    a: 3,
+                    e: "Las omisiones son un modo específico de actuar porque implican la decisión consciente del individuo de no hacer nada[cite: 628]."
+                },
+                {
+                    q: "¿Qué relación existe entre la acción humana y la autorrealización de la persona?",
+                    o: ["La acción permite al ser humano lograr su plenitud y alcanzar lo que debe ser", "La autorrealización detiene la necesidad de realizar nuevas acciones", "La acción aleja al hombre de su verdadera esencia", "La acción humana y la autorrealización son conceptos opuestos"],
+                    a: 0,
+                    e: "La actividad humana nos permite lograr nuestra plenitud y autorrealización, alcanzando lo que intuimos que debemos ser [cite: 636-638]."
+                },
+                {
+                    q: "¿En qué consiste la dimensión objetiva de la acción?",
+                    o: ["En que la acción transforma el mundo y queda como una realidad distinta al sujeto", "En que la acción solo ocurre dentro de la mente", "En que la acción es imposible de juzgar", "En que la acción no tiene consecuencias externas"],
+                    a: 0,
+                    e: "La dimensión objetiva indica que la acción es transitiva, se transfiere al mundo o a objetos, modificándolos y presentándose como un hecho objetivable[cite: 644, 649, 657]."
+                },
+                {
+                    q: "¿En qué consiste la dimensión subjetiva de la acción?",
+                    o: ["En que la acción depende de las opiniones de los demás", "En que la acción permanece en el sujeto, modificándolo y desarrollándolo internamente", "En que la acción no puede ser evaluada moralmente", "En que la acción es irrelevante para la personalidad"],
+                    a: 1,
+                    e: "La dimensión subjetiva implica que la acción nunca sale completamente del interior de la persona, sino que la modifica y autodetermina[cite: 660, 664]."
+                },
+                {
+                    q: "¿Qué significa decir que la acción es transitiva?",
+                    o: ["Que solo dura un instante de tiempo", "Que transforma la propia intimidad del sujeto", "Que no permanece en el sujeto, sino que se transfiere al mundo, objetos o personas", "Que requiere un permiso social para ejecutarse"],
+                    a: 2,
+                    e: "La acción es transitiva porque sus efectos no se quedan solo en quien actúa, sino que se dirigen hacia el exterior y el mundo[cite: 657]."
+                },
+                {
+                    q: "¿Qué significa decir que la acción es intransitiva?",
+                    o: ["Que no tiene ningún tipo de efecto en la realidad", "Que permanece en el sujeto que la realiza, cambiándolo a él mismo", "Que no se puede comunicar a otras personas", "Que carece de un fin u objetivo claro"],
+                    a: 1,
+                    e: "La acción es intransitiva porque los efectos de actuar también recaen y permanecen en el interior del propio sujeto [cite: 664-665]."
+                },
+                {
+                    q: "¿Cuáles son los tres grandes tipos de acción humana según la tradición clásica?",
+                    o: ["Crear, destruir y omitir", "Hacer, obrar y contemplar", "Pensar, sentir y actuar", "Trabajar, descansar y estudiar"],
+                    a: 1,
+                    e: "La tradición clásica dividió la acción humana en hacer (producción), obrar (acción moral) y contemplar (acto intelectual) [cite: 682-685]."
+                },
+                {
+                    q: "¿Por qué no se pueden separar drásticamente los aspectos técnicos y morales de la acción?",
+                    o: ["Porque toda acción busca un objetivo externo (técnico) y modifica la intimidad del sujeto (moral) a la vez", "Porque la ética prohíbe la técnica", "Porque la sociedad exige que todo trabajo técnico sea religioso", "Porque son exactamente el mismo concepto sin ninguna diferencia"],
+                    a: 0,
+                    e: "Toda acción es realizada por un sujeto que busca un objetivo (hacer/técnica) pero que siempre modifica su intimidad al realizarla (obrar/moral) [cite: 712-713]."
                 }
-                if (check) contestadas++;
-            }
-
-            if (contestadas < 10) {
-                alert('Por favor contesta todas las 10 preguntas de esta sección antes de avanzar.');
-                return;
-            }
-
-            // Evaluar y dar feedback
-            for (let i = start; i <= end; i++) {
-                const radios = document.getElementsByName('q' + i);
-                let seleccion = '';
-                for (let j = 0; j < radios.length; j++) {
-                    radios[j].parentElement.classList.add('disabled-label'); // deshabilitar inputs
-                    if (radios[j].checked) seleccion = radios[j].value;
+            ]
+        },
+        {
+            tema: "Tema 2: El Lenguaje",
+            preguntas: [
+                {
+                    q: "¿Por qué el lenguaje es presentado como un ámbito fundamental de la acción humana?",
+                    o: ["Porque es el único medio de supervivencia física", "Porque nos identifica con nuestro propio ser, nos modifica y vivimos en él", "Porque es una invención moderna de la técnica", "Porque los animales también lo utilizan de igual manera"],
+                    a: 1,
+                    e: "El lenguaje es una realidad fundamental porque nos identifica, nos modifica, y habitamos en él, siendo la 'casa del ser' según Heidegger [cite: 161-169]."
+                },
+                {
+                    q: "¿Qué quiere decir que el lenguaje nos precede e influye?",
+                    o: ["Que el lenguaje determina el modo de ver el mundo, nuestro pensamiento y modula las relaciones", "Que nacemos con todos los idiomas ya aprendidos", "Que el lenguaje solo es útil en la infancia", "Que las palabras no tienen impacto real en la sociedad"],
+                    a: 0,
+                    e: "El lenguaje precede al individuo y determina el modo de ver el mundo, el pensamiento, y modula nuestras relaciones sociales [cite: 171-174]."
+                },
+                {
+                    q: "¿Cuál es una diferencia central entre el lenguaje animal y el lenguaje humano?",
+                    o: ["El animal usa palabras escritas, el humano solo orales", "El lenguaje humano es un rasgo específico asimilable al de los animales adiestrados", "El humano es productivo, creativo y de sistema abierto; el animal es un sistema cerrado", "No existe ninguna diferencia real comprobable"],
+                    a: 2,
+                    e: "El lenguaje humano es un sistema abierto, productivo y creativo, mientras que el animal tiende a ser un sistema cerrado con elementos fijos y limitados [cite: 196, 218-219, 227]."
+                },
+                {
+                    q: "¿Qué significa que el lenguaje humano sea un sistema abierto?",
+                    o: ["Que cualquiera puede inventar su propio idioma sin reglas", "Que puede producir un número infinito de palabras y construcciones", "Que se basa únicamente en los sonidos de la naturaleza", "Que no requiere de gramática ni sintaxis"],
+                    a: 1,
+                    e: "Ser un sistema abierto significa que tiene la capacidad de producir un número infinito de palabras y construcciones[cite: 219]."
+                },
+                {
+                    q: "¿En qué consiste la productividad y creatividad del lenguaje humano?",
+                    o: ["En que somos libres para decir cualquier cosa, sobre todo o sobre nada", "En la capacidad de imitar sonidos de animales", "En el uso de herramientas de escritura tecnológicas", "En que el vocabulario siempre se mantiene idéntico a través de los siglos"],
+                    a: 0,
+                    e: "La creatividad radica en que el ser humano es libre para expresar cualquier cosa, hablar sobre todo o sobre nada, a diferencia del sistema cerrado animal[cite: 226]."
+                },
+                {
+                    q: "¿Qué se entiende por estructura dual del lenguaje?",
+                    o: ["Que siempre participan dos personas en la conversación", "Que el lenguaje es el resultado de un proceso de composición: combinando unidades menores se logran unidades mayores", "Que las palabras tienen siempre dos significados exactos", "Que se basa en verdades y mentiras"],
+                    a: 1,
+                    e: "La estructura dual implica un proceso compositivo: al combinar unidades lingüísticas menores (letras/fonemas) se logran otras unidades mayores (palabras/frases) [cite: 229-231]."
+                },
+                {
+                    q: "¿Qué significa que la referencia lingüística sea simbólica y convencional?",
+                    o: ["Que las palabras tienen una relación física directa con los objetos", "Que las palabras son símbolos divinos inmutables", "Que la mayor parte de las palabras tienen una relación por acuerdo (convencional) con lo que significan", "Que solo se pueden usar símbolos matemáticos para comunicarse"],
+                    a: 2,
+                    e: "Es convencional porque al 'objeto mesa' se le asigna ese nombre por convención, pudiendo llamarse de otro modo en otros idiomas (ej. table, tavolo) [cite: 235-238]."
+                },
+                {
+                    q: "¿Qué es el desplazamiento en el lenguaje humano?",
+                    o: ["La capacidad de hablar mientras se camina", "El traslado físico de las palabras de un idioma a otro", "La capacidad de hablar de sucesos u objetos remotos en el tiempo y en el espacio", "El olvido de las palabras aprendidas en la infancia"],
+                    a: 2,
+                    e: "El desplazamiento es la facultad humana de hablar sobre sucesos, personas u objetos remotos tanto en el tiempo como en el espacio [cite: 240-241]."
+                },
+                {
+                    q: "¿Por qué se dice que el lenguaje tiene formación y transmisión cultural?",
+                    o: ["Porque se transmite genéticamente de padres a hijos", "Porque ningún lenguaje es producto de una sola persona, sino que se transmite de generación en generación", "Porque solo las personas cultas pueden hablar correctamente", "Porque requiere estudiar en una universidad para aprender a hablar"],
+                    a: 1,
+                    e: "El lenguaje se transmite de generación en generación y no es producto de una sola persona, lo que lo diferencia totalmente de la comunicación animal [cite: 244-247]."
+                },
+                {
+                    q: "¿Qué quiere decir Austin cuando afirma que con palabras también hacemos cosas?",
+                    o: ["Que el lenguaje sirve para construir objetos materiales", "Que el lenguaje no es meramente descriptivo sino realizativo; al hablar también actuamos", "Que debemos hablar menos y trabajar más físicamente", "Que la gramática es más importante que la acción moral"],
+                    a: 1,
+                    e: "Para Austin, el lenguaje no es solo descriptivo sino realizativo: al hablar no solo describimos cosas, sino que también las hacemos (ej. prometer, ordenar)[cite: 360]."
                 }
-
-                const fbDiv = document.getElementById('fb-' + i);
-                if (seleccion === respuestasCorrectas['q' + i]) {
-                    fbDiv.className = 'feedback correct';
-                    fbDiv.innerHTML = '<i data-lucide="check-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Correcto';
-                    correctasSeccion++;
-                    scoreAcumulado++;
-                } else {
-                    fbDiv.className = 'feedback incorrect';
-                    fbDiv.innerHTML = '<i data-lucide="x-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Incorrecto. La respuesta era ' + respuestasCorrectas['q' + i];
+            ]
+        },
+        {
+            tema: "Tema 3: El Trabajo",
+            preguntas: [
+                {
+                    q: "¿Cómo era entendido el trabajo en el mundo antiguo?",
+                    o: ["Como la más alta vocación intelectual", "Como una carga y necesidad de la naturaleza propia de las clases inferiores", "Como un medio de autorrealización personal", "Como un pasatiempo para los gobernantes"],
+                    a: 1,
+                    e: "En el mundo antiguo se consideraba una carga, una necesidad impuesta por la naturaleza, y era propia de las clases sociales inferiores[cite: 5, 7]."
+                },
+                {
+                    q: "¿Por qué en la antigüedad el trabajo se asociaba a las clases inferiores y a los esclavos?",
+                    o: ["Porque los esclavos eran los únicos que conocían las técnicas", "Porque se veía como una tarea instrumental que dejaba a los amos libres para la contemplación política e intelectual", "Porque los esclavos cobraban salarios más altos", "Porque era una imposición de las leyes comerciales modernas"],
+                    a: 1,
+                    e: "Trabajar era propio de esclavos, concebidos como meros instrumentos para realizar tareas instrumentales, dejando a los amos libres para las actividades humanas elevadas [cite: 13, 15-17]."
+                },
+                {
+                    q: "¿Qué cambio introduce el cristianismo en la comprensión del trabajo?",
+                    o: ["Condena todo trabajo físico", "Considera que solo los sacerdotes deben trabajar", "Deja de ser algo inferior para convertirse en un deber universal, integrado en la dimensión religiosa (Cristo fue trabajador manual)", "Propone que el trabajo es exclusivo de los esclavos"],
+                    a: 2,
+                    e: "Con el cristianismo, el trabajo dejó de ser considerado inferior, convirtiéndose en algo que todos debían realizar, encontrando un nuevo valor y sentido al purificar e imitar a Cristo [cite: 23-28, 47-48]."
+                },
+                {
+                    q: "¿Cómo adquiere el trabajo un sentido religioso en la Edad Media?",
+                    o: ["Al considerarse una forma exclusiva de magia", "Según Santo Tomás, sirve para eliminar vicios, adquirir virtudes, evitar el ocio y dar limosna", "Mediante la acumulación infinita de capital económico", "Porque sustituyó a la oración mental por completo"],
+                    a: 1,
+                    e: "Para Santo Tomás y la época medieval, la actividad manual tiene valor moral porque sirve para eliminar vicios, adquirir virtudes, evitar el ocio y dar limosna [cite: 58-62]."
+                },
+                {
+                    q: "¿Cuál fue la principal limitación de la visión medieval del trabajo?",
+                    o: ["No percatarse del valor del trabajo en sí mismo como obra, viéndolo solo como medio para lograr otros objetivos", "Prohibir el uso de herramientas de metal", "Exigir que hombres y mujeres trabajaran por igual", "Considerar que el trabajo era una maldición absoluta sin redención posible"],
+                    a: 0,
+                    e: "La principal limitación fue no advertir el valor del trabajo en sí mismo (el valor del trabajo como obra), sino considerarlo solamente como un medio para lograr otros objetivos[cite: 51, 52]."
+                },
+                {
+                    q: "¿Qué factores históricos favorecieron la invención moderna del trabajo?",
+                    o: ["La caída del Imperio Romano", "El desarrollo del comercio a gran escala, modificaciones en la naturaleza del Estado y el avance de la ciencia y la técnica", "El abandono masivo de las ciudades hacia el campo", "La prohibición de las máquinas industriales"],
+                    a: 1,
+                    e: "Surgió por el desarrollo del comercio a gran escala, cambios en el Estado, y porque el hombre, gracias a la técnica y la ciencia, comenzó a transformar el mundo conscientemente [cite: 70-75]."
+                },
+                {
+                    q: "¿Por qué en la sociedad moderna el trabajo pasa a verse como medio de autorrealización?",
+                    o: ["Porque se elimina el salario económico", "Porque el hombre, al producir y crear, despliega sus capacidades, ejerciendo su libertad individual", "Porque se obliga legalmente a todos a ser felices trabajando", "Porque el trabajo deja de requerir esfuerzo físico"],
+                    a: 1,
+                    e: "Se descubre el trabajo como ejercicio de libertad y creatividad; al producir y crear, el hombre se autorrealiza porque despliega y ejecuta sus posibilidades [cite: 77, 136-137]."
+                },
+                {
+                    q: "¿Qué implica la dimensión objetiva del trabajo?",
+                    o: ["Refleja su carácter productivo y transitivo, su capacidad de transformar el mundo y generar bienestar", "El impacto psicológico interno del trabajador", "El desarrollo exclusivo del intelecto", "La acumulación de pecados por el esfuerzo"],
+                    a: 0,
+                    e: "La dimensión objetiva refleja el carácter productivo y transitivo: transforma el mundo mediante la técnica, produciendo bienes, riqueza, bienestar y configurando la sociedad [cite: 120-123]."
+                },
+                {
+                    q: "¿Qué implica la dimensión subjetiva del trabajo?",
+                    o: ["El valor comercial del producto en el mercado", "El carácter autorreferencial; el hombre al trabajar no solo modifica la naturaleza, sino que se modifica a sí mismo", "La alienación total del obrero frente a la máquina", "El pago de impuestos al Estado"],
+                    a: 1,
+                    e: "Surge del carácter autorreferencial de la acción: al trabajar, el ser humano se realiza como hombre, modificándose a sí mismo y revirtiendo el efecto sobre su persona [cite: 124, 127-132]."
+                },
+                {
+                    q: "¿Cómo contribuye el trabajo a la formación moral y al desarrollo de la personalidad?",
+                    o: ["Aislando al individuo de la sociedad", "Eliminando toda necesidad de descanso", "A través de forjar el carácter, desarrollar virtudes, aprender a convivir, cooperar y contribuir al bienestar social", "Haciendo que el hombre olvide sus emociones"],
+                    a: 2,
+                    e: "A través del trabajo el hombre forja su carácter, desarrolla virtudes y aptitudes específicas, y aprende a convivir y a cooperar en beneficio de la sociedad [cite: 139-146]."
                 }
-            }
-            lucide.createIcons();
-
-            alert(`Obtuviste ${correctasSeccion} de 10 correctas en esta sección.`);
-
-            // Pasar a la siguiente sección
-            setTimeout(() => {
-                document.getElementById('section-' + seccion).classList.remove('active');
-                document.getElementById('section-' + (seccion + 1)).classList.add('active');
-
-                // Actualizar barra progreso
-                const progress = ((seccion) / 5) * 100;
-                document.getElementById('progressFill').style.width = progress + '%';
-
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 800);
+            ]
+        },
+        {
+            tema: "Tema 4: Relaciones (Los Otros)",
+            preguntas: [
+                {
+                    q: "¿Qué significa la afirmación 'no es bueno que el hombre esté solo'?",
+                    o: ["Que el hombre requiere únicamente de mascotas para ser feliz", "Que las cosas no satisfacen plenamente al hombre, pues no responden a sus necesidades interiores más elevadas", "Que el trabajo físico debe hacerse siempre en grupo", "Que la soledad es el estado perfecto pero inalcanzable"],
+                    a: 1,
+                    e: "Significa que la persona necesita de otros, pues las cosas materiales no satisfacen plenamente al hombre ni responden a sus necesidades interiores más elevadas[cite: 501, 508]."
+                },
+                {
+                    q: "¿Por qué las cosas no satisfacen plenamente al ser humano?",
+                    o: ["Porque se deterioran rápidamente con el tiempo", "Porque no responden a las necesidades más elevadas de su interior", "Porque son demasiado costosas", "Porque el hombre no puede dominarlas"],
+                    a: 1,
+                    e: "Las cosas no satisfacen plenamente al hombre porque no responden a las necesidades más elevadas de su interior[cite: 508]."
+                },
+                {
+                    q: "¿Cómo desaparece la soledad radical del hombre según el texto?",
+                    o: ["Únicamente mediante el trabajo intenso", "Acumulando conocimiento científico", "Con la aparición del 'otro', otra persona radicalmente distinta y a la vez igual (relación yo-tú)", "A través de la contemplación silenciosa exclusiva"],
+                    a: 2,
+                    e: "La soledad solo desaparece con la aparición del otro; alguien que no es una cosa ni un animal, sino otra persona, otro 'yo' interlocutor [cite: 511-513]."
+                },
+                {
+                    q: "¿Qué caracteriza la relación 'yo-tú'?",
+                    o: ["Ser puramente transaccional y económica", "Ser un diálogo con otro interlocutor igual, rico y con una gama práctica infinita de registros", "Ser un vínculo exclusivo entre superiores e inferiores", "Ser una relación instintiva basada en la supervivencia"],
+                    a: 1,
+                    e: "La relación 'yo-tú' establece un diálogo con otro 'yo' y es rica y difícil de clasificar por su gama práctica casi infinita de registros[cite: 513, 519]."
+                },
+                {
+                    q: "¿Qué se entiende por relación instrumental?",
+                    o: ["La interacción en un grupo musical", "Cuando el otro nos sirve fundamentalmente para conseguir un servicio o lograr un objetivo", "La profunda intimidad emocional entre dos personas", "El amor desinteresado por la humanidad"],
+                    a: 1,
+                    e: "Es el tipo de relación donde el otro sirve fundamentalmente como medio para obtener un servicio o lograr un objetivo, como interactuar con un farmacéutico [cite: 526-528]."
+                },
+                {
+                    q: "¿Qué es la actitud benevolente en las relaciones interpersonales?",
+                    o: ["Un profundo y exclusivo enamoramiento", "Una enemistad pasiva", "Una actitud positiva pero no excesivamente comprometida, como con compañeros de trabajo o conocidos", "Una relación de utilidad pura donde se ignora al otro como persona"],
+                    a: 2,
+                    e: "Es un nivel de simpatía social y actitud positiva sin compromisos profundos, típica de las interacciones habituales con compañeros de trabajo o conocidos [cite: 530-532]."
+                },
+                {
+                    q: "¿Por qué la amistad es considerada una de las relaciones interpersonales más importantes?",
+                    o: ["Porque garantiza beneficios económicos", "Porque necesitamos compartir nuestra vida y tener personas que se preocupen por nosotros y nos quieran", "Porque es un requisito legal en la sociedad", "Porque permite evitar las responsabilidades familiares"],
+                    a: 1,
+                    e: "Necesitamos tener amigos con quienes compartir nuestra vida, que nos quieran y se preocupen por nosotros; es una de las necesidades apremiantes [cite: 539-540, 543]."
+                },
+                {
+                    q: "¿Cuáles son las características esenciales de la verdadera amistad?",
+                    o: ["Interés económico, competencia y envidia mutua", "Afiliación política idéntica y convivencia forzada", "Amar al amigo como es, compañerismo, responsabilidad por el otro, querer su bien y dedicarle tiempo", "Relación puramente utilitaria y distante"],
+                    a: 2,
+                    e: "La verdadera amistad implica amar al amigo tal como es, tener compañerismo, sentirse responsable por él, y dedicarle tiempo y atención por buscar su propio bien [cite: 559-566]."
+                },
+                {
+                    q: "¿Por qué la amistad exige reciprocidad?",
+                    o: ["Para que los regalos tengan igual valor monetario", "Porque no se puede imponer ser amigo de alguien si no se desea; requiere correspondencia", "Porque la ley natural exige equilibrio biológico", "Porque si no hay reciprocidad se convierte automáticamente en amor romántico"],
+                    a: 1,
+                    e: "La amistad exige reciprocidad porque no se puede imponer; requiere correspondencia mutua para existir y cultivarse[cite: 552]."
+                },
+                {
+                    q: "¿Qué diferencia hay entre actitud amistosa y amistad en sentido estricto?",
+                    o: ["La primera dura toda la vida, la segunda es temporal", "La primera es un nivel superficial (benevolente), la segunda implica la subjetividad e intimidad profunda con pocas personas", "La actitud amistosa exige reciprocidad total, la estricta no", "No hay diferencia, son sinónimos absolutos"],
+                    a: 1,
+                    e: "La actitud amistosa es superficial (amistad benevolente con conocidos), mientras que la amistad en sentido estricto pone en juego la subjetividad y la intimidad profunda [cite: 556-557]."
+                }
+            ]
+        },
+        {
+            tema: "Tema 5: El Amor",
+            preguntas: [
+                {
+                    q: "¿Por qué se afirma que la palabra amor tiene muchos significados?",
+                    o: ["Porque no existe realmente", "Por la gran riqueza y diversidad de relaciones que encierra (cosas, uno mismo, amigos, pareja)", "Porque cada idioma la traduce con un concepto opuesto", "Porque es una invención del lenguaje comercial moderno"],
+                    a: 1,
+                    e: "La palabra amor ha significado muchas cosas debido a la gran riqueza de relaciones antropológicas que encierra, desde querer un helado hasta enamorarse [cite: 391-397]."
+                },
+                {
+                    q: "¿Cómo se define el amor como acto genérico de la voluntad?",
+                    o: ["Como el deseo egoísta de acumular", "Como el impulso irrefrenable y ciego hacia el placer", "Como la intención de 'querer el bien' y que se dirige a cualquier tipo de bien o fin (Santo Tomás)", "Como el repudio a las necesidades materiales"],
+                    a: 2,
+                    e: "Como acto genérico de la voluntad, el amor se dirige a cualquier bien y se define primariamente como 'querer el bien', siendo el fin u objetivo que mueve la acción [cite: 399-401, 406]."
+                },
+                {
+                    q: "¿Por qué el amor propio es considerado esencialmente bueno?",
+                    o: ["Porque nos aísla de los problemas sociales", "Porque cada persona es un ser digno y valioso, y es necesario cuidar de uno mismo como motor de nuestra actividad", "Porque demuestra superioridad sobre el resto de las personas", "Porque elimina la necesidad de amar a los demás"],
+                    a: 1,
+                    e: "Es esencialmente bueno porque somos seres dignos y valiosos; sería absurdo no amarse, y es necesario como motor de nuestra actividad para cuidarnos a nosotros mismos [cite: 411-415]."
+                },
+                {
+                    q: "¿Por qué el amor propio también puede confundirse con egoísmo?",
+                    o: ["Porque el amor propio exige donar todo a los demás", "Porque el hombre tiene especial facilidad para centrarse en sí mismo y en sus intereses, aislándose de quienes le rodean", "Porque la sociedad moderna prohíbe el amor propio", "Porque el egoísmo y el amor al prójimo son la misma cosa"],
+                    a: 1,
+                    e: "El amor propio tiene mala fama o se tilda de egoísta porque el hombre posee facilidad para centrarse excesivamente en su vida, olvidándose de los demás [cite: 429-430]."
+                },
+                {
+                    q: "¿En qué consiste el amor al prójimo?",
+                    o: ["En amar únicamente a los familiares consanguíneos", "En tolerar pacíficamente a los enemigos a la distancia", "En la voluntad de querer el bien del conjunto de personas que nos rodean, sin necesitar de un vínculo especial", "En realizar actos filantrópicos globales por fama"],
+                    a: 2,
+                    e: "Consiste en la voluntad de querer el bien de las personas que nos rodean (el prójimo), incluso sin que exista entre ellos un vínculo especial previo [cite: 434-436]."
+                },
+                {
+                    q: "¿Qué significa amar al otro con afirmación, cuidado y comprensión?",
+                    o: ["Adular a la persona constantemente para evitar conflictos", "Protegerlo, valorarlo, atenderlo y custodiarlo en la medida que lo necesite, incluyendo la acogida física", "Prestarle dinero exigiendo grandes intereses", "Forzar al otro a cumplir nuestras expectativas de vida"],
+                    a: 1,
+                    e: "Significa que hay que proteger al otro, cuidarlo, valorarlo, atenderlo y custodiarlo cuando lo necesita, incluso ofreciéndole un lugar y acogida [cite: 438-444]."
+                },
+                {
+                    q: "¿Qué expresa la frase 'te quiero' según el documento?",
+                    o: ["Un deseo pasajero por objetos inanimados", "Un nivel de relación superficial y benevolente", "El nivel más elevado del amor, reservado a amistades profundas, familia y el amor entre hombre y mujer", "Una expresión de dominación sobre la otra persona"],
+                    a: 2,
+                    e: "Es el nivel más elevado del amor, reservado para relaciones especialísimas como amistades particularmente profundas, vínculos familiares y el amor romántico [cite: 446-452]."
+                },
+                {
+                    q: "¿Cuáles son los rasgos exclusivos del amor profundo hacia una persona?",
+                    o: ["La indiferencia y la distancia emocional", "Que es tremendamente desprendido, extremadamente necesitante (deseo de estar juntos) e irremplazable", "El cálculo de beneficios y la temporalidad", "El compañerismo exclusivo en áreas de trabajo o estudio"],
+                    a: 1,
+                    e: "Estos rasgos exclusivos son que es tremendamente desprendido (dar la vida), muy necesitante (necesidad de presencia), y que vuelve a la persona irremplazable [cite: 453-460]."
+                },
+                {
+                    q: "¿Cómo surge el proceso de enamoramiento?",
+                    o: ["Es una decisión estricta de la voluntad intelectual", "A través de un pacto instrumental entre dos familias", "Sucede como un acontecimiento ligado al corazón, surgiendo de la atracción profunda y la complementariedad", "Exclusivamente por instinto de supervivencia biológica"],
+                    a: 2,
+                    e: "Surge no como una decisión de la voluntad, sino como algo que 'acontece' ligado al corazón, provocado por la atracción y una profunda complementariedad [cite: 471-477]."
+                },
+                {
+                    q: "¿Qué características presentan los falsos enamoramientos?",
+                    o: ["El compromiso a largo plazo y la estabilidad emocional", "El cuidado incondicional y la falta de interés físico", "Que se enfocan exclusivamente en la belleza externa, carecen de profundidad (flechazo momentáneo) o hay identificación errónea", "La comprensión y afirmación responsable del otro"],
+                    a: 2,
+                    e: "Los falsos enamoramientos se caracterizan por enfocar la relación en la belleza externa, la falta de profundidad, o la identificación errónea de la persona adecuada [cite: 486-490]."
+                }
+            ]
         }
+    ];
 
-        function evaluarFinal() {
-            const seccion = 5;
-            const start = 41;
-            const end = 50;
-            let contestadas = 0;
-
-            for (let i = start; i <= end; i++) {
-                const radios = document.getElementsByName('q' + i);
-                let check = false;
-                for (let j = 0; j < radios.length; j++) {
-                    if (radios[j].checked) check = true;
-                }
-                if (check) contestadas++;
-            }
-
-            if (contestadas < 10) {
-                alert('Por favor contesta todas las últimas 10 preguntas.');
-                return;
-            }
-
-            // Evaluar última sección
-            for (let i = start; i <= end; i++) {
-                const radios = document.getElementsByName('q' + i);
-                let seleccion = '';
-                for (let j = 0; j < radios.length; j++) {
-                    radios[j].parentElement.classList.add('disabled-label');
-                    if (radios[j].checked) seleccion = radios[j].value;
-                }
-
-                const fbDiv = document.getElementById('fb-' + i);
-                if (seleccion === respuestasCorrectas['q' + i]) {
-                    fbDiv.className = 'feedback correct';
-                    fbDiv.innerHTML = '<i data-lucide="check-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Correcto';
-                    scoreAcumulado++;
-                } else {
-                    fbDiv.className = 'feedback incorrect';
-                    fbDiv.innerHTML = '<i data-lucide="x-circle" style="width:16px;height:16px;margin-right:4px;vertical-align:text-bottom"></i> Incorrecto. La respuesta era ' + respuestasCorrectas['q' + i];
-                }
-            }
-            lucide.createIcons();
-
-            setTimeout(() => {
-                document.getElementById('section-5').classList.remove('active');
-                document.getElementById('results').classList.add('active');
-                document.getElementById('progressFill').style.width = '100%';
-
-                const percentage = (scoreAcumulado / 50) * 100;
-                document.getElementById('finalScore').innerText = percentage + '%';
-
-                let msg = "";
-                if(percentage >= 90) msg = "¡Excelente dominio de los tres temas!";
-                else if(percentage >= 70) msg = "Buen trabajo, tienes sólidos conocimientos educativos.";
-                else msg = "Buen intento. Te recomendamos repasar los documentos base.";
-
-                document.getElementById('scoreMessage').innerText = msg;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 800);
-        }
-
-        // Dark mode toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            const html = document.documentElement;
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.setAttribute('data-theme', 'light');
-                themeToggle.innerHTML = '<i data-lucide="moon"></i>';
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                themeToggle.innerHTML = '<i data-lucide="sun"></i>';
-            }
-            lucide.createIcons();
+    let currentTopicIndex = 0;
+    
+    function renderQuiz() {
+        const container = document.getElementById("quiz-container");
+        const topicData = quizData[currentTopicIndex];
+        
+        document.getElementById("progress").innerText = `Tema ${currentTopicIndex + 1} de ${quizData.length} — ${topicData.tema.replace('Tema '+(currentTopicIndex+1)+': ', '')}`;
+        
+        let html = `<h2>${topicData.tema}</h2>`;
+        
+        topicData.preguntas.forEach((p, qIndex) => {
+            html += `<div class="question-block" id="qblock-${qIndex}">`;
+            html += `<div class="question-text">${qIndex + 1}. ${p.q}</div>`;
+            html += `<div class="options">`;
+            
+            p.o.forEach((optText, optIndex) => {
+                html += `
+                    <label class="option-label" id="label-q${qIndex}-o${optIndex}">
+                        <input type="radio" name="q${qIndex}" value="${optIndex}">
+                        ${optText}
+                    </label>
+                `;
+            });
+            
+            html += `</div>`;
+            html += `<div class="explanation" id="exp-q${qIndex}"><strong>Explicación:</strong> ${p.e}</div>`;
+            html += `</div>`;
         });
-    </script>
+        
+        container.innerHTML = html;
+        document.getElementById("btn-evaluar").style.display = "inline-block";
+        document.getElementById("btn-evaluar").disabled = false;
+        document.getElementById("btn-siguiente").style.display = "none";
+        document.getElementById("score-display").style.display = "none";
+        window.scrollTo(0,0);
+    }
+
+    function evaluarTema() {
+        const topicData = quizData[currentTopicIndex];
+        let correctCount = 0;
+        let allAnswered = true;
+
+        // Verificar si todas están respondidas (opcional, pero buena práctica)
+        for (let i = 0; i < topicData.preguntas.length; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (!selected) {
+                allAnswered = false;
+                break;
+            }
+        }
+        
+        if(!allAnswered) {
+            alert("Por favor, selecciona una respuesta para todas las preguntas antes de evaluar.");
+            return;
+        }
+
+        // Evaluar
+        topicData.preguntas.forEach((p, qIndex) => {
+            const selectedOpt = document.querySelector(`input[name="q${qIndex}"]:checked`);
+            const selectedVal = selectedOpt ? parseInt(selectedOpt.value) : -1;
+            
+            // Marcar respuestas visualmente
+            p.o.forEach((_, optIndex) => {
+                const label = document.getElementById(`label-q${qIndex}-o${optIndex}`);
+                const radio = label.querySelector('input');
+                radio.disabled = true; // Desactivar
+                
+                if (optIndex === p.a) {
+                    label.classList.add("correct-opt");
+                } else if (optIndex === selectedVal && selectedVal !== p.a) {
+                    label.classList.add("incorrect-opt");
+                }
+            });
+            
+            if (selectedVal === p.a) {
+                correctCount++;
+            }
+            
+            // Mostrar explicación
+            document.getElementById(`exp-q${qIndex}`).style.display = "block";
+        });
+
+        // Mostrar puntuación
+        const scoreEl = document.getElementById("score-display");
+        scoreEl.innerText = `Obtuviste ${correctCount} de ${topicData.preguntas.length} respuestas correctas.`;
+        scoreEl.style.display = "block";
+
+        document.getElementById("btn-evaluar").style.display = "none";
+        
+        const nextBtn = document.getElementById("btn-siguiente");
+        nextBtn.style.display = "inline-block";
+        if(currentTopicIndex === quizData.length - 1) {
+            nextBtn.innerText = "Finalizar Cuestionario";
+        } else {
+            nextBtn.innerText = "Siguiente Tema";
+        }
+    }
+
+    function siguienteTema() {
+        if (currentTopicIndex < quizData.length - 1) {
+            currentTopicIndex++;
+            renderQuiz();
+        } else {
+            document.getElementById("quiz-container").innerHTML = `<h2>¡Cuestionario Finalizado!</h2><p style="text-align:center;">Has completado el repaso de todos los ámbitos del obrar humano. ¡Felicidades!</p>`;
+            document.getElementById("score-display").style.display = "none";
+            document.getElementById("btn-siguiente").style.display = "none";
+            document.getElementById("progress").style.display = "none";
+        }
+    }
+
+    // Iniciar renderizado
+    renderQuiz();
+</script>
+
 </body>
 </html>
